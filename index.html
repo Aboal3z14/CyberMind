@@ -3,13 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberMind</title>
+  <title>CyberMind Login</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Welcome to CyberMind</h1>
-  <button onclick="startGame()">Start Game</button>
+  <div class="container">
+    <h1>CyberMind Login</h1>
 
-  <script src="script.js"></script>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter your username" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter your password" />
+
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <div id="otp-notification" class="hidden">
+      📩 New email from <strong>security@cybermind.com</strong><br>
+      Your OTP code is: <strong id="otp-code"></strong>
+    </div>
+
+    <input type="text" id="otp-input" placeholder="Enter OTP code" class="hidden" />
+    <button onclick="verifyOTP()" id="verify-btn" class="hidden">Verify OTP</button>
+
+    <p id="result-message"></p>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
+
