@@ -2,29 +2,26 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تسجيل الدخول - سايبر مايند</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>سايبر مايند - تسجيل الدخول</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="login-card">
     <h1>تسجيل الدخول</h1>
 
-    <label for="username">اسم المستخدم:</label>
-    <input type="text" id="username" placeholder="ادخل اسم المستخدم" />
-
-    <label for="password">كلمة المرور:</label>
-    <input type="password" id="password" placeholder="ادخل كلمة المرور" />
+    <input type="text" id="username" placeholder="اسم المستخدم" />
+    <input type="password" id="password" placeholder="كلمة المرور" />
 
     <button onclick="sendOTP()">إرسال رمز التحقق</button>
 
     <div id="otp-notification" class="hidden">
-      📩 بريد إلكتروني جديد من <strong>security@cybermind.com</strong><br>
+      📩 بريد إلكتروني من security@cybermind.com<br />
       رمز التحقق الخاص بك هو: <strong id="otp-code"></strong>
     </div>
 
     <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" class="hidden" />
-    <button onclick="verifyOTP()" id="verify-btn" class="hidden">تحقق</button>
+    <button id="verify-btn" onclick="verifyOTP()" class="hidden">تحقق</button>
 
     <p id="result-message"></p>
   </div>
