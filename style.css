@@ -1,13 +1,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Cairo', sans-serif;
   background-color: #121212;
   color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  direction: rtl;
 }
 
 .container {
@@ -15,7 +16,7 @@ body {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
-  width: 300px;
+  width: 320px;
 }
 
 h1 {
@@ -61,7 +62,7 @@ button:hover {
   margin-top: 20px;
   background-color: #292929;
   padding: 10px;
-  border-left: 4px solid #00ffff;
+  border-right: 4px solid #00ffff;
   font-size: 14px;
   border-radius: 6px;
 }
