@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberMind Login</title>
+  <title>تسجيل الدخول - سايبر مايند</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>CyberMind Login</h1>
+    <h1>تسجيل الدخول</h1>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" placeholder="Enter your username" />
+    <label for="username">اسم المستخدم:</label>
+    <input type="text" id="username" placeholder="ادخل اسم المستخدم" />
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" placeholder="Enter your password" />
+    <label for="password">كلمة المرور:</label>
+    <input type="password" id="password" placeholder="ادخل كلمة المرور" />
 
-    <button onclick="sendOTP()">Send OTP</button>
+    <button onclick="sendOTP()">إرسال رمز التحقق</button>
 
     <div id="otp-notification" class="hidden">
-      📩 New email from <strong>security@cybermind.com</strong><br>
-      Your OTP code is: <strong id="otp-code"></strong>
+      📩 بريد إلكتروني جديد من <strong>security@cybermind.com</strong><br>
+      رمز التحقق الخاص بك هو: <strong id="otp-code"></strong>
     </div>
 
-    <input type="text" id="otp-input" placeholder="Enter OTP code" class="hidden" />
-    <button onclick="verifyOTP()" id="verify-btn" class="hidden">Verify OTP</button>
+    <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" class="hidden" />
+    <button onclick="verifyOTP()" id="verify-btn" class="hidden">تحقق</button>
 
     <p id="result-message"></p>
   </div>
@@ -32,4 +32,3 @@
   <script src="main.js"></script>
 </body>
 </html>
-
