@@ -2,30 +2,89 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سايبر مايند - تسجيل الدخول</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="login-card">
-    <h1>تسجيل الدخول</h1>
 
-    <input type="text" id="username" placeholder="اسم المستخدم" />
-    <input type="password" id="password" placeholder="كلمة المرور" />
+  <!-- ======================================
+  🌌 MATRIX BACKGROUND
+  ======================================= -->
+  <canvas id="matrix"></canvas>
 
-    <button onclick="sendOTP()">إرسال رمز التحقق</button>
-
-    <div id="otp-notification" class="hidden">
-      📩 بريد إلكتروني من security@cybermind.com<br />
-      رمز التحقق الخاص بك هو: <strong id="otp-code"></strong>
-    </div>
-
-    <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" class="hidden" />
-    <button id="verify-btn" onclick="verifyOTP()" class="hidden">تحقق</button>
-
-    <p id="result-message"></p>
+  <!-- ======================================
+  📩 OTP EMAIL TOAST (Fake Notification)
+  ======================================= -->
+  <div id="otp-toast" class="otp-toast hidden">
+    📩 بريد إلكتروني جديد من security@cybermind.com<br>
+    رمز التحقق: <strong id="otp-code">000000</strong>
   </div>
 
+  <!-- ======================================
+  🤖 CYBERBUDDY (Always Visible)
+  ======================================= -->
+  <div id="cyberbuddy" class="cyberbuddy" onmousedown="dragStart(event)">
+    🤖 <strong>سايبر بودي</strong><br>
+    مرحبًا! مستني تسجيل دخولك! 👀
+  </div>
+
+  <!-- ======================================
+  🎬 WELCOME SCREEN (First Page)
+  ======================================= -->
+  <div id="welcome-screen" class="welcome-screen">
+    <h1 class="game-title">💻 سايبر مايند 💻</h1>
+    <p class="subtitle">المحاكي الذكي للتوعية بالأمن السيبراني</p>
+    <button onclick="startGame()" class="start-btn">ابدأ اللعبة</button>
+  </div>
+
+  <!-- ======================================
+  🔐 LOGIN SCREEN (Shown After Welcome)
+  ======================================= -->
+  <div id="login-screen" class="hidden">
+    <div class="login-card">
+      <h1>تسجيل الدخول</h1>
+
+      <input type="text" id="username" placeholder="اسم المستخدم" />
+      <input type="password" id="password" placeholder="كلمة المرور" />
+
+      <div class="custom-checkbox">
+        <input type="checkbox" id="mfa-check" />
+        <label for="mfa-check">أريد تفعيل التحقق الثنائي (2FA)</label>
+      </div>
+
+      <button onclick="login()">تسجيل الدخول</button>
+
+      <div id="otp-area" class="hidden">
+        <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" />
+        <button onclick="verifyOTP()">تحقق</button>
+      </div>
+
+      <p id="result-message" class="error-message"></p>
+    </div>
+  </div>
+  <!-- ======================================
+  🎮 GAME MENU SCREEN
+  ======================================= -->
+  <div id="menu-screen" class="hidden">
+    <div class="menu-card">
+      <h1>القائمة الرئيسية</h1>
+      <button onclick="startLevel()">🧠 ابدأ المرحلة الأولى</button>
+      <button onclick="showBadges()">🏅 الشارات</button>
+      <button onclick="showSettings()">⚙️ الإعدادات</button>
+    </div>
+  </div>
+
+  <!-- ======================================
+  🔊 SCRIPTS & AUDIO
+  ======================================= -->
   <script src="main.js"></script>
+  <audio id="otp-sound" src="sounds/otp-sound.mp3" preload="auto"></audio>
+
+
+
+
+
+
 </body>
 </html>
