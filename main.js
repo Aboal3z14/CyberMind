@@ -48,39 +48,41 @@ function login() {
       document.getElementById("otp-toast").classList.add("hidden");
     }, 7000);
 
-} else {
-  result.style.color = "#00ff88";
-  result.textContent = "✅ تم التسجيل بنجاح!";
+  } else {
+    result.style.color = "#00ff88";
+    result.textContent = "✅ تم التسجيل بنجاح!";
 
-  // Show temporary loading message in CyberBuddy
-  cyberBuddy.innerHTML = `
-    🤖 <strong>سايبر بودي</strong><br>
-    جاري تحضير رد ذكي... 🔄
-  `;
-
-  // Get dynamic response from ChatGPT
-  getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية").then(response => {
+    // Show temporary loading message in CyberBuddy
     cyberBuddy.innerHTML = `
       🤖 <strong>سايبر بودي</strong><br>
-      ${response}
+      جاري تحضير رد ذكي... 🔄
     `;
-  }).catch(() => {
-    // Fallback if something goes wrong
-    cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️
-    `;
-  });
 
-  // Move to menu after short delay
-  setTimeout(() => {
-    document.getElementById("login-screen").classList.add("hidden");
-    document.getElementById("menu-screen").classList.remove("hidden");
-  }, 1500);
-}
+    console.log("✅ 2FA not enabled – Sending message to GPT");
 
+    // Get dynamic response from ChatGPT
+    getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
+      .then(response => {
+        console.log("🤖 Received response from GPT:", response);
+        cyberBuddy.innerHTML = `
+          🤖 <strong>سايبر بودي</strong><br>
+          ${response}
+        `;
+      }).catch((err) => {
+        console.error("❌ Error getting response from GPT:", err);
+        cyberBuddy.innerHTML = `
+          🤖 <strong>سايبر بودي</strong><br>
+          حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️
+        `;
+      });
+
+    // Move to menu after short delay
+    setTimeout(() => {
+      document.getElementById("login-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
+    }, 1500);
   }
-
+}
 
 function verifyOTP() {
   const input = document.getElementById("otp-input").value.trim();
@@ -100,8 +102,6 @@ function verifyOTP() {
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
     }, 1500);
-  
-
   } else {
     result.style.color = "#ff4d4d";
     result.textContent = "❌ الرمز غير صحيح. حاول مرة تانية.";
@@ -123,7 +123,6 @@ function showBadges() {
 function showSettings() {
   alert("⚙️ إعدادات اللعبة جاية قريب!");
 }
-
 
 // ============================================
 // 🧠 CYBERBUDDY MOVEMENT
@@ -207,9 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ============================================
-// 🧠 CyberBuddy API ChatGpt Link and Prompt
+// 🧠 CyberBuddy API ChatGPT Link and Prompt
 // ============================================
 async function getCyberBuddyResponse(userMessage) {
+  console.log("📤 Sending user message to backend:", userMessage);
+
   try {
     const response = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
       method: "POST",
@@ -222,33 +223,29 @@ async function getCyberBuddyResponse(userMessage) {
     });
 
     const data = await response.json();
+    console.log("📥 Response from backend:", data);
 
     if (response.ok && data && data.reply) {
       return data.reply;
     } else {
+      console.warn("⚠️ Backend did not return a valid reply.");
       return "😕 معرفتش أرد دلوقتي، جرب تاني بعد شوية!";
     }
+
   } catch (error) {
-    console.error("Error calling OpenAI:", error.response?.data || error.message || error);
-    res.status(500).json({
-      reply: "حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️"
-    });
+    console.error("❌ Error calling backend:", error);
+    return "حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️";
   }
-
 }
-
 
 async function triggerBuddyMessage(userAction) {
   const buddyBox = document.getElementById("cyberbuddy");
+  console.log("🔁 Triggering GPT for action:", userAction);
+
   buddyBox.innerHTML = "🤖 <strong>سايبر بودي</strong><br> ... بيحمّل الرد";
 
   const response = await getCyberBuddyResponse(userAction);
+
+  console.log("✅ Final GPT reply:", response);
   buddyBox.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
 }
-
-
-
-
-
-
-
