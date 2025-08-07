@@ -1,3 +1,66 @@
+/* ========================================
+🌌 MATRIX BACKGROUND
+======================================== */
+#matrix {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+/* ========================================
+🎬 WELCOME SCREEN
+======================================== */
+.welcome-screen {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  color: #00ffcc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 38px;
+  margin-bottom: 10px;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.start-btn {
+  padding: 12px 30px;
+  font-size: 18px;
+  background-color: #00ffcc;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 20px #00ffcc;
+  transition: transform 0.2s;
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ========================================
+🧠 GENERAL STYLES
+======================================== */
 body {
   margin: 0;
   padding: 0;
@@ -11,30 +74,45 @@ body {
   direction: rtl;
 }
 
-.login-card {
-  background-color: #1e1e2f;
-  padding: 30px;
-  border-radius: 15px;
-  width: 320px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  text-align: center;
-}
-
 h1 {
   color: #00ffff;
   margin-bottom: 20px;
   font-size: 24px;
 }
 
+.hidden {
+  display: none !important;
+}
+
+
+/* ========================================
+🔐 LOGIN CARD
+======================================== */
+.login-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  width: 320px;
+  z-index: 999;
+  position: relative;
+  color: #ffffff;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+/* ========================================
+✏️ INPUTS + BUTTONS
+======================================== */
 input {
   width: 100%;
   padding: 10px;
   margin-top: 12px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #00ffff;
   outline: none;
-  background-color: #2c2c3c;
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #00ffff;
   font-size: 15px;
 }
 
@@ -43,8 +121,9 @@ button {
   padding: 10px;
   margin-top: 15px;
   background-color: #00ffff;
+  color: #000;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   font-size: 15px;
@@ -55,21 +134,136 @@ button:hover {
   background-color: #00cccc;
 }
 
-#otp-notification {
-  margin-top: 20px;
-  background-color: #292929;
-  padding: 10px;
-  border-right: 4px solid #00ffff;
-  border-radius: 8px;
-  font-size: 14px;
-  display: none;
-}
-
-.hidden {
-  display: none;
+/* ========================================
+🔐 2FA / MFA SECTION
+======================================== */
+#otp-area input {
+  margin-top: 10px;
 }
 
 #result-message {
   margin-top: 12px;
   font-size: 14px;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.otp-toast {
+  position: fixed;
+  top: 20px;
+  right: 50%;
+  transform: translateX(50%);
+  background-color: #1e90ff;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* ========================================
+✅ CUSTOM CHECKBOX
+======================================== */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #00ffff;
+  position: relative;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00ffff;
+  background-color: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: #00ffff;
+}
+
+.custom-checkbox input[type="checkbox"]::after {
+  content: "✔";
+  font-size: 14px;
+  color: #000;
+  position: absolute;
+  top: 0;
+  right: 3px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+  opacity: 1;
+}
+
+.custom-checkbox label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+🤖 CYBERBUDDY
+======================================== */
+.cyberbuddy {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #333;
+  color: #00ffff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+  max-width: 80vw;
+  font-family: 'Cairo', sans-serif;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  cursor: move;
+  z-index: 999;
+  word-wrap: break-word;
+  line-height: 1.5;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+/* ========================================
+🎮 GAME MENU STYLING
+======================================== */
+.menu-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  width: 300px;
+  z-index: 10;
+  text-align: center;
+  color: #00ffff;
+  transition: all 0.3s ease;
+}
+
+#menu-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
 }
