@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================================
 async function getCyberBuddyResponse(userMessage) {
   try {
-    const response = await fetch("https://cybermind-backend-i44u.onrender.com/chat", {
+    const response = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -245,6 +245,7 @@ async function triggerBuddyMessage(userAction) {
   const response = await getCyberBuddyResponse(userAction);
   buddyBox.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
 }
+
 
 
 
