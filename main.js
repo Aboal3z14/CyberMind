@@ -229,9 +229,12 @@ async function getCyberBuddyResponse(userMessage) {
       return "😕 معرفتش أرد دلوقتي، جرب تاني بعد شوية!";
     }
   } catch (error) {
-    console.error("خطأ في الاتصال بالسيرفر:", error);
-    return "⚠️ حصلت مشكلة في الاتصال، جرّب تاني بعد شوية!";
+    console.error("Error calling OpenAI:", error.response?.data || error.message || error);
+    res.status(500).json({
+      reply: "حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️"
+    });
   }
+
 }
 
 
@@ -242,6 +245,7 @@ async function triggerBuddyMessage(userAction) {
   const response = await getCyberBuddyResponse(userAction);
   buddyBox.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
 }
+
 
 
 
