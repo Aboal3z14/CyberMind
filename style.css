@@ -242,74 +242,69 @@ button:hover {
 /* ========================================
 🎮 GAME MENU STYLING
 ======================================== */
-.menu-screen {
+.menu-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  width: 320px;
+  z-index: 999;
+  position: relative;
+  color: #ffffff;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+#menu-screen {
   position: fixed;
   top: 0;
   right: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 20;
 }
 
-.menu-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  padding: 40px 30px;
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  animation: fadeInUp 0.8s ease;
-}
-
-.menu-title {
-  font-size: 30px;
+#menu-screen h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
   color: #00ffff;
-  margin-bottom: 25px;
   text-shadow: 0 0 10px #00ffff;
 }
 
-.menu-btn {
+#menu-screen button {
   width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  font-size: 18px;
-  border-radius: 10px;
-  border: 1px solid #00ffff;
-  background: transparent;
-  color: #00ffff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px #00ffff55;
-}
-
-.menu-btn:hover {
+  padding: 12px;
+  margin-top: 15px;
   background-color: #00ffff;
   color: #000;
-  transform: scale(1.03);
-  box-shadow: 0 0 20px #00ffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 15px #00ffff33;
 }
 
-@keyframes fadeInUp {
+#menu-screen button:hover {
+  background-color: #00cccc;
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
