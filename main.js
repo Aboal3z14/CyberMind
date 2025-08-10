@@ -250,9 +250,9 @@ async function triggerBuddyMessage(userAction) {
   buddyBox.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
 }
 
-//<!-- ======================================
+// ======================================
 //  🏆 BADGES & SETTINGS OVERLAYS
-//  ======================================= -->
+//  ======================================= 
 // ===== OPEN / CLOSE OVERLAYS =====
 function openOverlay(id) {
     document.getElementById(id).classList.remove("hidden");
@@ -313,6 +313,7 @@ document.getElementById("resetProgress").addEventListener("click", () => {
         location.reload();
     }
 });
+
 
 
 
