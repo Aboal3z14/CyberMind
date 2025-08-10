@@ -253,8 +253,7 @@ async function triggerBuddyMessage(userAction) {
 <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
   ======================================= -->
-
-  // ===== OPEN / CLOSE OVERLAYS =====
+// ===== OPEN / CLOSE OVERLAYS =====
 function openOverlay(id) {
     document.getElementById(id).classList.remove("hidden");
 }
@@ -314,5 +313,7 @@ document.getElementById("resetProgress").addEventListener("click", () => {
         location.reload();
     }
 });
+
+
 
 
