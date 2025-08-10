@@ -253,66 +253,8 @@ async function triggerBuddyMessage(userAction) {
 <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
   ======================================= -->
-// ===== OPEN / CLOSE OVERLAYS =====
-function openOverlay(id) {
-    document.getElementById(id).classList.remove("hidden");
-}
-function closeOverlay(id) {
-    document.getElementById(id).classList.add("hidden");
-}
 
-// ===== BADGE UNLOCK FUNCTION =====
-function unlockBadge(id) {
-    let badge = document.querySelector(`.badge[data-id="${id}"]`);
-    if (badge && badge.classList.contains("locked")) {
-        badge.classList.remove("locked");
-        badge.querySelector("img").style.animation = "rotateBadge 8s linear infinite";
-        localStorage.setItem(`badge_${id}`, "unlocked");
 
-        // Play unlock sound if available
-        let audio = new Audio("unlock.mp3");
-        audio.play();
-    }
-}
-
-// ===== LOAD BADGE STATES =====
-document.querySelectorAll(".badge").forEach(badge => {
-    let id = badge.getAttribute("data-id");
-    if (localStorage.getItem(`badge_${id}`) === "unlocked") {
-        badge.classList.remove("locked");
-        badge.querySelector("img").style.animation = "rotateBadge 8s linear infinite";
-    }
-});
-
-// ===== SETTINGS =====
-document.getElementById("musicToggle").checked = localStorage.getItem("music") === "on";
-document.getElementById("sfxToggle").checked = localStorage.getItem("sfx") === "on";
-document.getElementById("volumeSlider").value = localStorage.getItem("volume") || 50;
-document.getElementById("themeSelect").value = localStorage.getItem("theme") || "matrix";
-
-document.getElementById("musicToggle").addEventListener("change", e => {
-    localStorage.setItem("music", e.target.checked ? "on" : "off");
-});
-
-document.getElementById("sfxToggle").addEventListener("change", e => {
-    localStorage.setItem("sfx", e.target.checked ? "on" : "off");
-});
-
-document.getElementById("volumeSlider").addEventListener("input", e => {
-    localStorage.setItem("volume", e.target.value);
-});
-
-document.getElementById("themeSelect").addEventListener("change", e => {
-    localStorage.setItem("theme", e.target.value);
-    // Apply theme change instantly if needed
-});
-
-document.getElementById("resetProgress").addEventListener("click", () => {
-    if (confirm("هل أنت متأكد أنك تريد إعادة التقدم؟")) {
-        localStorage.clear();
-        location.reload();
-    }
-});
 
 
 
