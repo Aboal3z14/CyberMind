@@ -24,7 +24,7 @@
   <!-- ======================================
   🤖 CYBERBUDDY (Always Visible)
   ======================================= -->
-  <div id="cyberbuddy" class="cyberbuddy" onmousedown="dragStart(event)">
+  <div id="cyberbuddy" class="cyberbuddy">
     🤖 <strong>سايبر بودي</strong><br>
     مرحبًا! مستني تسجيل دخولك! 👀
   </div>
@@ -35,7 +35,7 @@
   <div id="welcome-screen" class="welcome-screen">
     <h1 class="game-title">💻 سايبر مايند 💻</h1>
     <p class="subtitle">المحاكي الذكي للتوعية بالأمن السيبراني</p>
-    <button onclick="startGame()" class="start-btn">ابدأ اللعبة</button>
+    <button id="start-btn" class="start-btn">ابدأ اللعبة</button>
   </div>
 
   <!-- ======================================
@@ -53,127 +53,108 @@
         <label for="mfa-check">أريد تفعيل التحقق الثنائي (2FA)</label>
       </div>
 
-      <button onclick="login()">تسجيل الدخول</button>
+      <button id="login-btn">تسجيل الدخول</button>
 
       <div id="otp-area" class="hidden">
         <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" />
-        <button onclick="verifyOTP()">تحقق</button>
+        <button id="verify-otp-btn">تحقق</button>
       </div>
 
       <p id="result-message" class="error-message"></p>
     </div>
   </div>
+
   <!-- ======================================
   🎮 GAME MENU SCREEN
   ======================================= -->
   <div id="menu-screen" class="hidden">
     <div class="menu-card">
       <h1>القائمة الرئيسية</h1>
-      <button onclick="startLevel()">🧠 ابدأ المرحلة الأولى</button>
-      <button onclick="showBadges()">🏅 الشارات</button>
-      <button onclick="showSettings()">⚙️ الإعدادات</button>
+      <button id="start-level-btn">🧠 ابدأ المرحلة الأولى</button>
+      <button id="badges-btn">🏅 الشارات</button>
+      <button id="settings-btn">⚙️ الإعدادات</button>
     </div>
   </div>
 
-<!-- ======================================
+  <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
-======================================= -->
-  <!-- ================= BADGES & SETTINGS OVERLAYS ================= -->
-  
-  <!-- Badges Overlay -->
+  ====================================== -->
+  <!-- ================= BADGES OVERLAY ================= -->
   <div id="badgesOverlay" class="overlay hidden">
       <div class="overlay-content">
           <h2>🏆 شارات الإنجاز</h2>
           <div class="badges-grid">
-              <div class="badge locked" data-id="firstStep">
+              <div class="badge locked" data-id="firstStep" title="انقر لفتح">
                   <img src="badge1.png" alt="أول خطوة">
                   <span class="badge-title">أول خطوة</span>
               </div>
-              <div class="badge locked" data-id="dataProtector">
+              <div class="badge locked" data-id="dataProtector" title="انقر لفتح">
                   <img src="badge2.png" alt="حامي البيانات">
                   <span class="badge-title">حامي البيانات</span>
               </div>
-              <div class="badge locked" data-id="speedMaster">
+              <div class="badge locked" data-id="speedMaster" title="انقر لفتح">
                   <img src="badge3.png" alt="سرعة البرق">
                   <span class="badge-title">سرعة البرق</span>
               </div>
-              <div class="badge locked" data-id="hawkEye">
+              <div class="badge locked" data-id="hawkEye" title="انقر لفتح">
                   <img src="badge4.png" alt="عين الصقر">
                   <span class="badge-title">عين الصقر</span>
               </div>
-              <div class="badge locked" data-id="securityExpert">
+              <div class="badge locked" data-id="securityExpert" title="انقر لفتح">
                   <img src="badge5.png" alt="خبير الأمن">
                   <span class="badge-title">خبير الأمن</span>
               </div>
           </div>
-          <button class="close-btn" onclick="closeOverlay('badgesOverlay')">إغلاق</button>
+          <button class="close-btn" data-close="badgesOverlay">إغلاق</button>
       </div>
   </div>
   
-  <!-- Settings Overlay -->
+  <!-- ================= SETTINGS OVERLAY ================= -->
   <div id="settingsOverlay" class="overlay hidden">
       <div class="overlay-content">
           <h2>⚙ الإعدادات</h2>
-  
+
           <div class="setting-item">
-              <label>🎵 تشغيل الموسيقى</label>
+              <label for="musicToggle">🎵 تشغيل الموسيقى</label>
               <input type="checkbox" id="musicToggle">
           </div>
-  
+
           <div class="setting-item">
-              <label>🔊 المؤثرات الصوتية</label>
+              <label for="sfxToggle">🔊 المؤثرات الصوتية</label>
               <input type="checkbox" id="sfxToggle">
           </div>
-  
+
           <div class="setting-item">
-              <label>🔈 مستوى الصوت</label>
+              <label for="volumeSlider">🔈 مستوى الصوت</label>
               <input type="range" id="volumeSlider" min="0" max="100" value="50">
           </div>
-  
+
           <div class="setting-item">
-              <label>🌗 المظهر</label>
+              <label for="themeSelect">🌗 المظهر</label>
               <select id="themeSelect">
                   <option value="matrix">خلفية ماتريكس</option>
                   <option value="dark">الوضع الداكن</option>
               </select>
           </div>
-  
+
           <div class="setting-item">
               <button id="resetProgress" class="danger-btn">🔄 إعادة التقدم</button>
           </div>
-  
-          <button class="close-btn" onclick="closeOverlay('settingsOverlay')">إغلاق</button>
+
+          <button class="close-btn" data-close="settingsOverlay">إغلاق</button>
       </div>
   </div>
 
+  <!-- ======================================
+  🔊 AUDIO ASSETS
+  ======================================= -->
+  <audio id="otp-sound" src="sounds/otp-sound.mp3" preload="auto"></audio>
+  <audio id="unlock-sound" src="sounds/unlock.mp3" preload="auto"></audio>
+  <audio id="bg-music" src="sounds/bg-music.mp3" preload="auto" loop></audio>
 
-  
-<!-- ======================================
-  🔊 SCRIPTS & AUDIO
+  <!-- ======================================
+  🔊 SCRIPTS
   ======================================= -->
   <script src="main.js"></script>
-  <audio id="otp-sound" src="sounds/otp-sound.mp3" preload="auto"></audio>
-
-
-
-
-
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
