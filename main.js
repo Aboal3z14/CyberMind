@@ -12,6 +12,7 @@ function startGame() {
   document.getElementById("login-screen").classList.remove("hidden");
 }
 
+
 // ============================================
 // 🔐 LOGIN + 2FA SYSTEM
 // ============================================
@@ -313,6 +314,7 @@ document.getElementById("resetProgress").addEventListener("click", () => {
         location.reload();
     }
 });
+
 
 
 
