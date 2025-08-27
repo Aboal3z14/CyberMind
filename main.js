@@ -5,13 +5,138 @@ let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
 
 // ============================================
+// 🚀 STARTUP & DOM INIT
+// ============================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Buttons & elements
+  const startBtn = document.getElementById("start-btn");
+  const loginBtn = document.getElementById("login-btn");
+  const verifyOtpBtn = document.getElementById("verify-otp-btn");
+  const startLevelBtn = document.getElementById("start-level-btn");
+  const badgesBtn = document.getElementById("badges-btn");
+  const settingsBtn = document.getElementById("settings-btn");
+  const otpArea = document.getElementById("otp-area");
+
+  // Event bindings
+  if (startBtn) startBtn.addEventListener("click", startGame);
+  if (loginBtn) loginBtn.addEventListener("click", login);
+  if (verifyOtpBtn) verifyOtpBtn.addEventListener("click", verifyOTP);
+  if (startLevelBtn) startLevelBtn.addEventListener("click", startLevel);
+  if (badgesBtn) badgesBtn.addEventListener("click", showBadges);
+  if (settingsBtn) settingsBtn.addEventListener("click", showSettings);
+
+  // Close buttons inside overlays
+  document.querySelectorAll(".close-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const overlayId = btn.getAttribute("data-close");
+      if (overlayId) closeOverlay(overlayId);
+    });
+  });
+
+  // Click outside overlay-content closes overlay
+  document.querySelectorAll(".overlay").forEach(ov => {
+    ov.addEventListener("click", (e) => {
+      if (e.target === ov) {
+        ov.classList.add("hidden");
+      }
+    });
+  });
+
+  // Esc closes overlays
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".overlay").forEach(ov => ov.classList.add("hidden"));
+    }
+  });
+
+  // Load badge states & attach badge listeners
+  document.querySelectorAll(".badge").forEach(badge => {
+    const id = badge.getAttribute("data-id");
+    if (localStorage.getItem(`badge_${id}`) === "unlocked") {
+      badge.classList.remove("locked");
+      badge.querySelector("img")?.classList.add("unlocked");
+    }
+
+    // click to show / unlock (for testing)
+    badge.addEventListener("click", () => {
+      if (badge.classList.contains("locked")) {
+        // Unlock on click (for demo) — change if you want other unlocking rules
+        unlockBadge(id);
+      } else {
+        // show small info
+        alert(`شارة: ${badge.querySelector(".badge-title")?.innerText || id}\nحالتها: مفتوحة`);
+      }
+    });
+  });
+
+  // Settings initialization
+  const musicToggle = document.getElementById("musicToggle");
+  const sfxToggle = document.getElementById("sfxToggle");
+  const volumeSlider = document.getElementById("volumeSlider");
+  const themeSelect = document.getElementById("themeSelect");
+  const resetBtn = document.getElementById("resetProgress");
+
+  // Elements: audio
+  const bgMusic = document.getElementById("bg-music");
+  const otpSound = document.getElementById("otp-sound");
+  const unlockSound = document.getElementById("unlock-sound");
+
+  // populate from localStorage or defaults
+  if (musicToggle) musicToggle.checked = localStorage.getItem("music") === "on";
+  if (sfxToggle) sfxToggle.checked = localStorage.getItem("sfx") === "on";
+  if (volumeSlider) volumeSlider.value = localStorage.getItem("volume") || 50;
+  if (themeSelect) themeSelect.value = localStorage.getItem("theme") || "matrix";
+
+  // apply audio settings
+  applyAudioSettings();
+
+  // attach settings listeners
+  if (musicToggle) musicToggle.addEventListener("change", (e) => {
+    localStorage.setItem("music", e.target.checked ? "on" : "off");
+    applyAudioSettings();
+  });
+
+  if (sfxToggle) sfxToggle.addEventListener("change", (e) => {
+    localStorage.setItem("sfx", e.target.checked ? "on" : "off");
+  });
+
+  if (volumeSlider) volumeSlider.addEventListener("input", (e) => {
+    localStorage.setItem("volume", e.target.value);
+    applyAudioSettings();
+  });
+
+  if (themeSelect) themeSelect.addEventListener("change", (e) => {
+    localStorage.setItem("theme", e.target.value);
+    applyTheme(e.target.value);
+  });
+
+  if (resetBtn) resetBtn.addEventListener("click", () => {
+    if (confirm("هل أنت متأكد أنك تريد إعادة التقدم؟")) {
+      localStorage.clear();
+      location.reload();
+    }
+  });
+
+  // initial theme
+  applyTheme(themeSelect?.value || "matrix");
+
+  // make cyberbuddy draggable (mouse + touch)
+  const buddy = document.getElementById("cyberbuddy");
+  if (buddy) {
+    buddy.addEventListener("mousedown", dragStart);
+    buddy.addEventListener("touchstart", dragStart, {passive: false});
+  }
+}); // DOMContentLoaded end
+
+// ============================================
 // 🚀 WELCOME SCREEN
 // ============================================
 function startGame() {
-  document.getElementById("welcome-screen").style.display = "none";
-  document.getElementById("login-screen").classList.remove("hidden");
+  const ws = document.getElementById("welcome-screen");
+  const login = document.getElementById("login-screen");
+  if (ws) ws.classList.add("hidden");
+  if (login) login.classList.remove("hidden");
 }
-
 
 // ============================================
 // 🔐 LOGIN + 2FA SYSTEM
@@ -36,11 +161,18 @@ function login() {
     generatedOTP = Math.floor(100000 + Math.random() * 900000);
     document.getElementById("otp-code").textContent = generatedOTP;
 
-    document.getElementById("otp-sound").play();
+    // play OTP sound if SFX enabled
+    const sfxOn = localStorage.getItem("sfx") === "on";
+    const otpSound = document.getElementById("otp-sound");
+    if (sfxOn && otpSound) {
+      otpSound.currentTime = 0;
+      otpSound.play().catch(()=>{});
+    }
+
     document.getElementById("otp-toast").classList.remove("hidden");
     document.getElementById("otp-area").classList.remove("hidden");
 
-    cyberBuddy.innerHTML = `
+    if (cyberBuddy) cyberBuddy.innerHTML = `
       🤖 <strong>سايبر بودي</strong><br>
       تمام! شوف رمز التحقق اللي وصلك وسجّله هنا ✍️
     `;
@@ -54,34 +186,21 @@ function login() {
     result.textContent = "✅ تم التسجيل بنجاح!";
 
     // Show temporary loading message in CyberBuddy
-    cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      جاري تحضير رد ذكي... 🔄
-    `;
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
 
-    console.log("✅ 2FA not enabled – Sending message to GPT");
-
-    // Get dynamic response from ChatGPT
+    // optional: call backend to get message (if available)
     getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
       .then(response => {
-        console.log("🤖 Received response from GPT:", response);
-        cyberBuddy.innerHTML = `
-          🤖 <strong>سايبر بودي</strong><br>
-          ${response}
-        `;
-      }).catch((err) => {
-        console.error("❌ Error getting response from GPT:", err);
-        cyberBuddy.innerHTML = `
-          🤖 <strong>سايبر بودي</strong><br>
-          حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️
-        `;
+        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+      }).catch(() => {
+        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
       });
 
     // Move to menu after short delay
     setTimeout(() => {
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
-    }, 1500);
+    }, 1200);
   }
 }
 
@@ -90,11 +209,17 @@ function verifyOTP() {
   const result = document.getElementById("result-message");
   const cyberBuddy = document.getElementById("cyberbuddy");
 
+  if (!generatedOTP) {
+    result.style.color = "#ff4d4d";
+    result.textContent = "لم يتم إنشاء رمز تحقق، فعّل 2FA أو جرّب تسجيل الدخول ثانية.";
+    return;
+  }
+
   if (input === generatedOTP.toString()) {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
 
-    cyberBuddy.innerHTML = `
+    if (cyberBuddy) cyberBuddy.innerHTML = `
       🤖 <strong>سايبر بودي</strong><br>
       ممتاز يا نجم! جاهز ندخل على المرحلة؟ 🎯
     `;
@@ -102,223 +227,208 @@ function verifyOTP() {
     setTimeout(() => {
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
-    }, 1500);
+    }, 900);
   } else {
     result.style.color = "#ff4d4d";
     result.textContent = "❌ الرمز غير صحيح. حاول مرة تانية.";
-    cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      مفيش مشكلة يا بطل! الغلط وارد، جرب تاني وأنا معاك! 💪
-    `;
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مفيش مشكلة يا بطل! جرب تاني وأنا معاك! 💪`;
   }
 }
 
+// ============================================
+// 🎮 GAMEPLACE PLACEHOLDERS
+// ============================================
 function startLevel() {
   alert("🚧 المرحلة الأولى لسه تحت التطوير!");
 }
 
 function showBadges() {
-  alert("🏅 هنا هيظهر تقدمك وشاراتك قريبًا!");
+  openOverlay("badgesOverlay");
 }
 
 function showSettings() {
-  alert("⚙️ إعدادات اللعبة جاية قريب!");
+  openOverlay("settingsOverlay");
 }
 
 // ============================================
-// 🧠 CYBERBUDDY MOVEMENT
+// 🧠 CYBERBUDDY MOVEMENT (mouse + touch)
 // ============================================
 function dragStart(e) {
+  e.preventDefault();
   const box = document.getElementById("cyberbuddy");
-  isDragging = true;
-  offsetX = e.clientX - box.offsetLeft;
-  offsetY = e.clientY - box.offsetTop;
+  if (!box) return;
 
-  document.onmousemove = drag;
-  document.onmouseup = () => {
-    isDragging = false;
-    document.onmousemove = null;
-  };
+  isDragging = true;
+  const rect = box.getBoundingClientRect();
+
+  const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+  const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+
+  offsetX = clientX - rect.left;
+  offsetY = clientY - rect.top;
+
+  document.addEventListener("mousemove", drag);
+  document.addEventListener("mouseup", dragEnd);
+  document.addEventListener("touchmove", drag, {passive: false});
+  document.addEventListener("touchend", dragEnd);
 }
 
 function drag(e) {
-  if (isDragging) {
-    const box = document.getElementById("cyberbuddy");
-    box.style.left = (e.clientX - offsetX) + "px";
-    box.style.top = (e.clientY - offsetY) + "px";
-  }
+  if (!isDragging) return;
+  e.preventDefault();
+  const box = document.getElementById("cyberbuddy");
+  if (!box) return;
+
+  const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+  const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+
+  const newLeft = clientX - offsetX;
+  const newTop = clientY - offsetY;
+
+  // keep inside viewport
+  const maxLeft = window.innerWidth - box.offsetWidth - 10;
+  const maxTop = window.innerHeight - box.offsetHeight - 10;
+  box.style.left = Math.min(Math.max(10, newLeft), maxLeft) + "px";
+  box.style.top = Math.min(Math.max(10, newTop), maxTop) + "px";
+  box.style.right = "auto"; // ensure RTL doesn't conflict
+  box.style.bottom = "auto";
+}
+
+function dragEnd() {
+  isDragging = false;
+  document.removeEventListener("mousemove", drag);
+  document.removeEventListener("mouseup", dragEnd);
+  document.removeEventListener("touchmove", drag);
+  document.removeEventListener("touchend", dragEnd);
 }
 
 // ============================================
 // 💻 MATRIX BACKGROUND EFFECT
 // ============================================
 const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const ctx = canvas ? canvas.getContext("2d") : null;
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+if (canvas && ctx) {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
 
-function drawMatrix() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#0F0";
-  ctx.font = fontSize + "px monospace";
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0F0";
+    ctx.font = fontSize + "px monospace";
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars[Math.floor(Math.random() * chars.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  let matrixInterval = setInterval(drawMatrix, 50);
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+}
+
+// ============================================
+// 🔄 Overlay Controls (open/close)
+// ============================================
+function openOverlay(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove("hidden");
+}
+
+function closeOverlay(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add("hidden");
+}
+
+// ============================================
+// 🏅 BADGES LOGIC
+// ============================================
+function unlockBadge(id) {
+  const badge = document.querySelector(`.badge[data-id="${id}"]`);
+  if (!badge) return;
+
+  if (badge.classList.contains("locked")) {
+    badge.classList.remove("locked");
+    localStorage.setItem(`badge_${id}`, "unlocked");
+
+    // play sound if allowed
+    const sfxOn = localStorage.getItem("sfx") === "on";
+    const unlock = document.getElementById("unlock-sound");
+    if (sfxOn && unlock) {
+      unlock.currentTime = 0;
+      unlock.play().catch(()=>{});
     }
 
-    drops[i]++;
+    // small visual feedback
+    badge.animate([{ transform: "scale(1.1)" }, { transform: "scale(1)" }], { duration: 350 });
   }
 }
 
-setInterval(drawMatrix, 50);
-
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
 // ============================================
-// 🔄 2FA CHECKBOX REAL-TIME TOGGLE
-// ============================================
-document.addEventListener("DOMContentLoaded", () => {
-  const mfaCheckbox = document.getElementById("mfa-check");
-
-  mfaCheckbox.addEventListener("change", () => {
-    const otpArea = document.getElementById("otp-area");
-    const result = document.getElementById("result-message");
-
-    if (!mfaCheckbox.checked) {
-      otpArea.classList.add("hidden");
-      result.textContent = "";
-      document.getElementById("otp-input").value = "";
-    }
-  });
-});
-
-// ============================================
-// 🧠 CyberBuddy API ChatGPT Link and Prompt
+// 🧠 CyberBuddy API ChatGPT Link (optional)
 // ============================================
 async function getCyberBuddyResponse(userMessage) {
-  console.log("📤 Sending user message to backend:", userMessage);
-
+  // If you have your backend, it can be used. Otherwise this function returns a fallback string.
+  // Replace the URL with your backend endpoint that calls ChatGPT.
   try {
-    const response = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
+    const res = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: userMessage
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage })
     });
-
-    const data = await response.json();
-    console.log("📥 Response from backend:", data);
-
-    if (response.ok && data && data.reply) {
-      return data.reply;
-    } else {
-      console.warn("⚠️ Backend did not return a valid reply.");
-      return "😕 معرفتش أرد دلوقتي، جرب تاني بعد شوية!";
-    }
-
-  } catch (error) {
-    console.error("❌ Error calling backend:", error);
-    return "حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️";
+    const data = await res.json();
+    if (res.ok && data && data.reply) return data.reply;
+    return "حاضر! هحاول أساعدك دلوقتي 😊";
+  } catch (err) {
+    return "حصلت مشكلة في الاتصال بالـ backend، جرب تاني بعد شوية.";
   }
 }
 
-async function triggerBuddyMessage(userAction) {
-  const buddyBox = document.getElementById("cyberbuddy");
-  console.log("🔁 Triggering GPT for action:", userAction);
+// ============================================
+// 🎧 Settings helpers (audio + theme)
+// ============================================
+function applyAudioSettings() {
+  const bgMusic = document.getElementById("bg-music");
+  const volume = Number(localStorage.getItem("volume") || 50) / 100;
+  const musicOn = localStorage.getItem("music") === "on";
 
-  buddyBox.innerHTML = "🤖 <strong>سايبر بودي</strong><br> ... بيحمّل الرد";
-
-  const response = await getCyberBuddyResponse(userAction);
-
-  console.log("✅ Final GPT reply:", response);
-  buddyBox.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
-}
-
-// ======================================
-//  🏆 BADGES & SETTINGS OVERLAYS
-//  ======================================= 
-// ===== OPEN / CLOSE OVERLAYS =====
-function openOverlay(id) {
-    document.getElementById(id).classList.remove("hidden");
-}
-function closeOverlay(id) {
-    document.getElementById(id).classList.add("hidden");
-}
-
-// ===== BADGE UNLOCK FUNCTION =====
-function unlockBadge(id) {
-    let badge = document.querySelector(`.badge[data-id="${id}"]`);
-    if (badge && badge.classList.contains("locked")) {
-        badge.classList.remove("locked");
-        badge.querySelector("img").style.animation = "rotateBadge 8s linear infinite";
-        localStorage.setItem(`badge_${id}`, "unlocked");
-
-        // Play unlock sound if available
-        let audio = new Audio("unlock.mp3");
-        audio.play();
+  if (bgMusic) {
+    bgMusic.volume = volume;
+    if (musicOn) {
+      bgMusic.play().catch(()=>{});
+    } else {
+      bgMusic.pause();
     }
+  }
+
+  // OTP & unlock volume also follow same setting
+  const otp = document.getElementById("otp-sound");
+  const unlock = document.getElementById("unlock-sound");
+  if (otp) otp.volume = volume;
+  if (unlock) unlock.volume = volume;
 }
 
-// ===== LOAD BADGE STATES =====
-document.querySelectorAll(".badge").forEach(badge => {
-    let id = badge.getAttribute("data-id");
-    if (localStorage.getItem(`badge_${id}`) === "unlocked") {
-        badge.classList.remove("locked");
-        badge.querySelector("img").style.animation = "rotateBadge 8s linear infinite";
-    }
-});
-
-// ===== SETTINGS =====
-document.getElementById("musicToggle").checked = localStorage.getItem("music") === "on";
-document.getElementById("sfxToggle").checked = localStorage.getItem("sfx") === "on";
-document.getElementById("volumeSlider").value = localStorage.getItem("volume") || 50;
-document.getElementById("themeSelect").value = localStorage.getItem("theme") || "matrix";
-
-document.getElementById("musicToggle").addEventListener("change", e => {
-    localStorage.setItem("music", e.target.checked ? "on" : "off");
-});
-
-document.getElementById("sfxToggle").addEventListener("change", e => {
-    localStorage.setItem("sfx", e.target.checked ? "on" : "off");
-});
-
-document.getElementById("volumeSlider").addEventListener("input", e => {
-    localStorage.setItem("volume", e.target.value);
-});
-
-document.getElementById("themeSelect").addEventListener("change", e => {
-    localStorage.setItem("theme", e.target.value);
-    // Apply theme change instantly if needed
-});
-
-document.getElementById("resetProgress").addEventListener("click", () => {
-    if (confirm("هل أنت متأكد أنك تريد إعادة التقدم؟")) {
-        localStorage.clear();
-        location.reload();
-    }
-});
-
-
-
-
-
-
-
-
+function applyTheme(theme) {
+  if (theme === "matrix") {
+    document.getElementById("matrix")?.classList.remove("hidden");
+    document.body.style.backgroundColor = "#0f0f1a";
+  } else if (theme === "dark") {
+    document.getElementById("matrix")?.classList.add("hidden");
+    document.body.style.backgroundColor = "#0b0b0d";
+  }
+}
