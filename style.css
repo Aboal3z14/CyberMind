@@ -98,6 +98,18 @@ h1 {
   border: 1px solid rgba(0, 255, 255, 0.2);
   margin: 0 auto;
 }
+#login-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+}
 
 /* ========================================
 ✏️ INPUTS + BUTTONS
@@ -374,3 +386,4 @@ button:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
