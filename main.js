@@ -358,25 +358,80 @@ function closeOverlay(id) {
 // ============================================
 // 🏅 BADGES LOGIC
 // ============================================
-function unlockBadge(id) {
-  const badge = document.querySelector(`.badge[data-id="${id}"]`);
-  if (!badge) return;
+let completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
 
-  if (badge.classList.contains("locked")) {
+function unlockBadge(id) {
+    const badgeRequirements = {
+        'firstLogin': ['level1'],
+        'securityPro': ['level1', 'level2'],
+        'masterHacker': ['level2', 'level3'],
+        'cyberNinja': ['level3', 'level4'],
+        'ultimateDefender': ['level1', 'level2', 'level3', 'level4', 'level5']
+    };
+
+    const badge = document.querySelector(`.badge[data-id="${id}"]`);
+    if (!badge || !badge.classList.contains("locked")) return false;
+
+    if (!badgeRequirements[id]) {
+        console.warn(`Badge ${id} has no defined requirements`);
+        return false;
+    }
+
+    const hasRequiredLevels = badgeRequirements[id].every(level => 
+        completedLevels.includes(level)
+    );
+
+    if (!hasRequiredLevels) {
+        const cyberBuddy = document.getElementById("cyberbuddy");
+        if (cyberBuddy) {
+            const requiredLevels = badgeRequirements[id].join(' و ');
+            cyberBuddy.innerHTML = `
+                🤖 <strong>سايبر بودي</strong><br>
+                🔒 تحتاج إكمال المراحل: ${requiredLevels} لفتح هذه الشارة!
+            `;
+        }
+        return false;
+    }
+
     badge.classList.remove("locked");
     localStorage.setItem(`badge_${id}`, "unlocked");
 
-    // play sound if allowed
     const sfxOn = localStorage.getItem("sfx") === "on";
-    const unlock = document.getElementById("unlock-sound");
-    if (sfxOn && unlock) {
-      unlock.currentTime = 0;
-      unlock.play().catch(()=>{});
+    const unlockSound = document.getElementById("unlock-sound");
+    if (sfxOn && unlockSound) {
+        unlockSound.currentTime = 0;
+        unlockSound.play().catch(() => {});
     }
 
-    // small visual feedback
-    badge.animate([{ transform: "scale(1.1)" }, { transform: "scale(1)" }], { duration: 350 });
-  }
+    badge.animate([
+        { transform: "scale(1.2)", filter: "brightness(1.5)" },
+        { transform: "scale(1)", filter: "brightness(1)" }
+    ], {
+        duration: 500,
+        easing: "ease-out"
+    });
+
+    const cyberBuddy = document.getElementById("cyberbuddy");
+    if (cyberBuddy) {
+        const badgeTitle = badge.querySelector(".badge-title")?.textContent || id;
+        cyberBuddy.innerHTML = `
+            🤖 <strong>سايبر بودي</strong><br>
+            🎉 مبروك! لقد حصلت على شارة ${badgeTitle}!
+        `;
+    }
+
+    return true;
+}
+
+function completeLevel(levelId) {
+    if (!completedLevels.includes(levelId)) {
+        completedLevels.push(levelId);
+        localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
+        
+        Object.keys(badgeRequirements).forEach(badgeId => {
+            unlockBadge(badgeId);
+        });
+    }
 }
 
 // ============================================
