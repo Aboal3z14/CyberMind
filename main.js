@@ -218,6 +218,8 @@ function verifyOTP() {
   if (input === generatedOTP.toString()) {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
+    markOtpUsed();
+
 
     if (cyberBuddy) cyberBuddy.innerHTML = `
       🤖 <strong>سايبر بودي</strong><br>
@@ -356,46 +358,74 @@ function closeOverlay(id) {
 }
 
 // ============================================
-// 🏅 BADGES LOGIC
+// 🏅 BADGES LOGIC (12 Levels + MFA)
 // ============================================
+
 let completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
+let usedOTP = JSON.parse(localStorage.getItem('usedOTP')) || false;
 
+
+// Update the badgeRequirements object to match exact data-ids from HTML
+const badgeRequirements = {
+    //'🛡️ MFA Enforcer': ['usedOTP'],  // Only unlocks with OTP
+    '🧠 Phishing Analyst': ['level2'],
+    '🔒 Digital Lockmaster': ['level3'],
+    '📱 Mobile Defender': ['level4'],
+    '� Social Engineering Aware': ['level5'],
+    '🗣️ Human Firewall': ['level6'],
+    '� Backup Guardian': ['level7'],
+    '🌐 Network Defender': ['level8'],
+    '🧠 App Investigator': ['level9'],
+    '🔥 Firewall Commander': ['level10'],
+    '👁 Threat Hunter': ['level11'],
+    '🏆 CyberMind Master': ['level12']
+};
+
+// Update the unlockBadge function to use exact matching
 function unlockBadge(id) {
-    const badgeRequirements = {
-        'firstLogin': ['level1'],
-        'securityPro': ['level1', 'level2'],
-        'masterHacker': ['level2', 'level3'],
-        'cyberNinja': ['level3', 'level4'],
-        'ultimateDefender': ['level1', 'level2', 'level3', 'level4', 'level5']
-    };
-
     const badge = document.querySelector(`.badge[data-id="${id}"]`);
     if (!badge || !badge.classList.contains("locked")) return false;
 
-    if (!badgeRequirements[id]) {
-        console.warn(`Badge ${id} has no defined requirements`);
-        return false;
-    }
-
-    const hasRequiredLevels = badgeRequirements[id].every(level => 
-        completedLevels.includes(level)
-    );
-
-    if (!hasRequiredLevels) {
+    // Special case for MFA Enforcer
+    if (id === '🛡️ MFA Enforcer' && !usedOTP) {
         const cyberBuddy = document.getElementById("cyberbuddy");
         if (cyberBuddy) {
-            const requiredLevels = badgeRequirements[id].join(' و ');
             cyberBuddy.innerHTML = `
                 🤖 <strong>سايبر بودي</strong><br>
-                🔒 تحتاج إكمال المراحل: ${requiredLevels} لفتح هذه الشارة!
+                🔒 لازم تستخدم التحقق بخطوتين (OTP) عشان تفتح الشارة دي!
             `;
         }
         return false;
     }
 
+    // Check requirements
+    const requirements = badgeRequirements[id];
+    if (!requirements) return false;
+
+    const hasRequired = requirements.every(req => {
+        if (req === 'usedOTP') return usedOTP === true;
+        return completedLevels.includes(req);
+    });
+
+    if (!hasRequired) {
+        const cyberBuddy = document.getElementById("cyberbuddy");
+        if (cyberBuddy) {
+            const reqText = requirements.map(r => 
+                r === 'usedOTP' ? 'استخدام التحقق بخطوتين' : `المرحلة ${r.replace('level', '')}`
+            ).join(' و ');
+            cyberBuddy.innerHTML = `
+                🤖 <strong>سايبر بودي</strong><br>
+                🔒 تحتاج إكمال ${reqText} لفتح هذه الشارة!
+            `;
+        }
+        return false;
+    }
+
+    // Unlock the badge
     badge.classList.remove("locked");
     localStorage.setItem(`badge_${id}`, "unlocked");
 
+    // Play unlock sound if enabled
     const sfxOn = localStorage.getItem("sfx") === "on";
     const unlockSound = document.getElementById("unlock-sound");
     if (sfxOn && unlockSound) {
@@ -403,36 +433,65 @@ function unlockBadge(id) {
         unlockSound.play().catch(() => {});
     }
 
-    badge.animate([
-        { transform: "scale(1.2)", filter: "brightness(1.5)" },
-        { transform: "scale(1)", filter: "brightness(1)" }
-    ], {
-        duration: 500,
-        easing: "ease-out"
-    });
-
-    const cyberBuddy = document.getElementById("cyberbuddy");
-    if (cyberBuddy) {
-        const badgeTitle = badge.querySelector(".badge-title")?.textContent || id;
-        cyberBuddy.innerHTML = `
-            🤖 <strong>سايبر بودي</strong><br>
-            🎉 مبروك! لقد حصلت على شارة ${badgeTitle}!
-        `;
-    }
-
     return true;
 }
 
+// Mark level as completed
 function completeLevel(levelId) {
     if (!completedLevels.includes(levelId)) {
         completedLevels.push(levelId);
         localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
         
-        Object.keys(badgeRequirements).forEach(badgeId => {
-            unlockBadge(badgeId);
-        });
+        Object.keys(badgeRequirements).forEach(badgeId => unlockBadge(badgeId));
     }
 }
+
+function markOtpUsed() {
+    if (!usedOTP) {
+        usedOTP = true;
+        localStorage.setItem('usedOTP', JSON.stringify(true));
+
+        const mfaBadge = document.querySelector('.badge[data-id="🛡️ MFA Enforcer"]');
+        if (mfaBadge) {
+            mfaBadge.classList.remove("locked");
+            localStorage.setItem('badge_🛡️ MFA Enforcer', 'unlocked');
+
+            const sfxOn = localStorage.getItem("sfx") === "on";
+            const unlockSound = document.getElementById("unlock-sound");
+            if (sfxOn && unlockSound) {
+                unlockSound.currentTime = 0;
+                unlockSound.play().catch(() => {});
+            }
+        }
+    }
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    Object.keys(badgeRequirements).forEach(badgeId => {
+        const badge = document.querySelector(`.badge[data-id="${badgeId}"]`);
+        if (!badge) return;
+
+        // Special case: MFA badge
+        if (badgeId === "🛡️ MFA Enforcer") {
+            const otpUsed = JSON.parse(localStorage.getItem("usedOTP")) || false;
+            if (otpUsed && localStorage.getItem(`badge_${badgeId}`) === "unlocked") {
+                badge.classList.remove("locked");
+            } else {
+                badge.classList.add("locked");
+            }
+        } else {
+            // Normal badges
+            if (localStorage.getItem(`badge_${badgeId}`) === "unlocked") {
+                badge.classList.remove("locked");
+            }
+        }
+    });
+});
+
+
 
 // ============================================
 // 🧠 CyberBuddy API ChatGPT Link (optional)
