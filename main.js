@@ -3,7 +3,6 @@
 // ============================================
 let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
-
 // ============================================
 // 🚀 STARTUP & DOM INIT
 // ============================================
@@ -546,3 +545,4 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
