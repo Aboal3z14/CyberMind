@@ -140,6 +140,17 @@ function startGame() {
 // ============================================
 // 🔐 LOGIN + 2FA SYSTEM
 // ============================================
+
+function showSignupScreen() {
+  document.getElementById("signup-screen").classList.remove("hidden");
+  document.getElementById("login-screen").classList.add("hidden");
+}
+
+function showLoginScreen() {
+  document.getElementById("login-screen").classList.remove("hidden");
+  document.getElementById("signup-screen").classList.add("hidden");
+}
+
 const API_BASE = "https://cybermind-backend-i44u.onrender.com";
 
 async function signup(username, password) {
@@ -604,6 +615,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
