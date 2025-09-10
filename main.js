@@ -3,11 +3,27 @@
 // ============================================
 let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
-
 // ============================================
 // 🚀 STARTUP & DOM INIT
 // ============================================
 document.addEventListener("DOMContentLoaded", () => {
+      const signupBtn = document.getElementById("signup-btn");
+    if (signupBtn) {
+      signupBtn.addEventListener("click", handleSignup);
+      console.log("Signup button listener attached"); // For debugging
+    }
+     const toSignupLink = document.querySelector("a[onclick='showSignupScreen()']");
+    const toLoginLink = document.querySelector("a[onclick='showLoginScreen()']");
+    
+    if (toSignupLink) toSignupLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showSignupScreen();
+    });
+    
+    if (toLoginLink) toLoginLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLoginScreen();
+    });
   // Buttons & elements
   const startBtn = document.getElementById("start-btn");
   const loginBtn = document.getElementById("login-btn");
@@ -19,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event bindings
   if (startBtn) startBtn.addEventListener("click", startGame);
-  if (loginBtn) loginBtn.addEventListener("click", login);
+  if (loginBtn) loginBtn.addEventListener("click", handleLogin);
   if (verifyOtpBtn) verifyOtpBtn.addEventListener("click", verifyOTP);
   if (startLevelBtn) startLevelBtn.addEventListener("click", startLevel);
   if (badgesBtn) badgesBtn.addEventListener("click", showBadges);
@@ -173,13 +189,13 @@ async function login(username, password) {
 }
 
 
-function login() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
+function handleLogin() {
+  const username = document.getElementById("login-username").value.trim();
+  const password = document.getElementById("login-password").value.trim();
   const mfaEnabled = document.getElementById("mfa-check").checked;
 
   const cyberBuddy = document.getElementById("cyberbuddy");
-  const result = document.getElementById("result-message");
+  const result = document.getElementById("login-message");
 
   result.textContent = ""; // Clear previous messages
 
@@ -238,7 +254,7 @@ function login() {
 
 function verifyOTP() {
   const input = document.getElementById("otp-input").value.trim();
-  const result = document.getElementById("result-message");
+  const result = document.getElementById("login-message");
   const cyberBuddy = document.getElementById("cyberbuddy");
 
   if (!generatedOTP) {
@@ -279,28 +295,27 @@ function showLogin() {
   document.getElementById("login-section").style.display = "block";
 }
 
-const signupBtn = document.getElementById("signup-btn");
-if (signupBtn) signupBtn.addEventListener("click", handleSignup);
 
 async function handleSignup() {
   const username = document.getElementById("signup-username").value.trim();
   const password = document.getElementById("signup-password").value.trim();
 
  if (!username || !password) {
-    alert("❌ Please enter both username and password");
+    alert("❌ يا معلم، اكتب اسم المستخدم وكلمة السر");
     return;
   }
+
 
   try {
     const result = await signup(username, password);
     if (result.success) {
-      alert("✅ Account created successfully! Please log in.");
+      alert("✅ تمام! الحساب اتعمل، دلوقتي تقدر تسجل دخولك");
       showLoginScreen();
     } else {
-      alert("❌ Signup failed: " + (result.error || "Unknown error"));
+      alert("❌ حصلت مشكلة أثناء التسجيل، حاول تاني بعد شوية");
     }
   } catch (err) {
-    alert("❌ Connection error. Please try again later.");
+    alert("❌ فيه مشكلة في الاتصال بالسيرفر، حاول بعد شوية");
   }
 }
 
@@ -537,23 +552,6 @@ function markOtpUsed() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const signupBtn = document.getElementById("signup-btn");
-    if (signupBtn) {
-      signupBtn.addEventListener("click", handleSignup);
-      console.log("Signup button listener attached"); // For debugging
-    }
-     const toSignupLink = document.querySelector("a[onclick='showSignupScreen()']");
-    const toLoginLink = document.querySelector("a[onclick='showLoginScreen()']");
-    
-    if (toSignupLink) toSignupLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      showSignupScreen();
-    });
-    
-    if (toLoginLink) toLoginLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      showLoginScreen();
-    });
     Object.keys(badgeRequirements).forEach(badgeId => {
         const badge = document.querySelector(`.badge[data-id="${badgeId}"]`);
         if (!badge) return;
@@ -630,7 +628,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
-
 
 
 
