@@ -42,28 +42,52 @@
   <!-- ======================================
   🔐 LOGIN SCREEN (Shown After Welcome)
   ======================================= -->
-  <div id="login-screen" class="hidden">
-    <div class="login-card">
-      <h1>تسجيل الدخول</h1>
+<!-- 🔹 Sign Up Screen -->
+<div id="signup-screen" class="hidden">
+  <div class="login-card">
+    <h1>إنشاء حساب جديد</h1>
 
-      <input type="text" id="username" placeholder="اسم المستخدم" />
-      <input type="password" id="password" placeholder="كلمة المرور" />
+    <input type="text" id="signup-username" placeholder="اسم المستخدم" />
+    <input type="password" id="signup-password" placeholder="كلمة المرور" />
 
-      <div class="custom-checkbox">
-        <input type="checkbox" id="mfa-check" />
-        <label for="mfa-check">أريد تفعيل التحقق الثنائي (2FA)</label>
-      </div>
+    <button id="signup-btn">تسجيل</button>
 
-      <button id="login-btn">تسجيل الدخول</button>
+    <p>لديك حساب بالفعل؟ 
+      <a href="#" onclick="showLoginScreen()">سجّل الدخول</a>
+    </p>
 
-      <div id="otp-area" class="hidden">
-        <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" />
-        <button id="verify-otp-btn">تحقق</button>
-      </div>
-
-      <p id="result-message" class="error-message"></p>
-    </div>
+    <p id="signup-message" class="error-message"></p>
   </div>
+</div>
+
+<!-- 🔹 Login Screen -->
+<div id="login-screen" class="hidden">
+  <div class="login-card">
+    <h1>تسجيل الدخول</h1>
+
+    <input type="text" id="login-username" placeholder="اسم المستخدم" />
+    <input type="password" id="login-password" placeholder="كلمة المرور" />
+
+    <div class="custom-checkbox">
+      <input type="checkbox" id="mfa-check" />
+      <label for="mfa-check">أريد تفعيل التحقق الثنائي (2FA)</label>
+    </div>
+
+    <button id="login-btn">دخول</button>
+
+    <div id="otp-area" class="hidden">
+      <input type="text" id="otp-input" placeholder="ادخل رمز التحقق" />
+      <button id="verify-otp-btn">تحقق</button>
+    </div>
+
+    <p>لا تملك حساب؟ 
+      <a href="#" onclick="showSignupScreen()">إنشاء حساب</a>
+    </p>
+
+    <p id="login-message" class="error-message"></p>
+  </div>
+</div>
+
 
   <!-- ======================================
   🎮 GAME MENU SCREEN
@@ -187,5 +211,6 @@
   <script src="main.js"></script>
 </body>
 </html>
+
 
 
