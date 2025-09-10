@@ -3,7 +3,6 @@
 // ============================================
 let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
-
 // ============================================
 // 🚀 STARTUP & DOM INIT
 // ============================================
@@ -279,31 +278,28 @@ function showLogin() {
   document.getElementById("login-section").style.display = "block";
 }
 
+const signupBtn = document.getElementById("signup-btn");
+if (signupBtn) signupBtn.addEventListener("click", handleSignup);
+
 async function handleSignup() {
-  const username = document.getElementById("signup-username").value;
-  const password = document.getElementById("signup-password").value;
+  const username = document.getElementById("signup-username").value.trim();
+  const password = document.getElementById("signup-password").value.trim();
 
-  const result = await signup(username, password);
-  if (result.success) {
-    alert("✅ Account created! Please log in.");
-    showLogin();
-  } else {
-    alert("❌ Signup failed: " + (result.error || "Unknown error"));
+ if (!username || !password) {
+    alert("❌ Please enter both username and password");
+    return;
   }
-}
 
-async function handleLogin() {
-  const username = document.getElementById("login-username").value;
-  const password = document.getElementById("login-password").value;
-
-  const result = await login(username, password);
-  if (result.success) {
-    alert("✅ Logged in as " + result.username);
-    currentUser = result.username;
-    await loadProgressFromServer(currentUser); // load badges + levels
-    // TODO: move to game menu screen here
-  } else {
-    alert("❌ Login failed: " + (result.error || "Unknown error"));
+  try {
+    const result = await signup(username, password);
+    if (result.success) {
+      alert("✅ Account created successfully! Please log in.");
+      showLoginScreen();
+    } else {
+      alert("❌ Signup failed: " + (result.error || "Unknown error"));
+    }
+  } catch (err) {
+    alert("❌ Connection error. Please try again later.");
   }
 }
 
@@ -540,6 +536,23 @@ function markOtpUsed() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    const signupBtn = document.getElementById("signup-btn");
+    if (signupBtn) {
+      signupBtn.addEventListener("click", handleSignup);
+      console.log("Signup button listener attached"); // For debugging
+    }
+     const toSignupLink = document.querySelector("a[onclick='showSignupScreen()']");
+    const toLoginLink = document.querySelector("a[onclick='showLoginScreen()']");
+    
+    if (toSignupLink) toSignupLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showSignupScreen();
+    });
+    
+    if (toLoginLink) toLoginLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLoginScreen();
+    });
     Object.keys(badgeRequirements).forEach(badgeId => {
         const badge = document.querySelector(`.badge[data-id="${badgeId}"]`);
         if (!badge) return;
@@ -616,7 +629,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
-
 
 
 
