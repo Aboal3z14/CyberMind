@@ -140,6 +140,27 @@ function startGame() {
 // ============================================
 // 🔐 LOGIN + 2FA SYSTEM
 // ============================================
+const API_BASE = "https://cybermind-backend-i44u.onrender.com";
+
+async function signup(username, password) {
+  const res = await fetch(`${API_BASE}/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  return res.json();
+}
+
+async function login(username, password) {
+  const res = await fetch(`${API_BASE}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  return res.json();
+}
+
+
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -545,4 +566,5 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
