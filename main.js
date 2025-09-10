@@ -257,6 +257,44 @@ function verifyOTP() {
   }
 }
 
+function showSignup() {
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("signup-section").style.display = "block";
+}
+
+function showLogin() {
+  document.getElementById("signup-section").style.display = "none";
+  document.getElementById("login-section").style.display = "block";
+}
+
+async function handleSignup() {
+  const username = document.getElementById("signup-username").value;
+  const password = document.getElementById("signup-password").value;
+
+  const result = await signup(username, password);
+  if (result.success) {
+    alert("✅ Account created! Please log in.");
+    showLogin();
+  } else {
+    alert("❌ Signup failed: " + (result.error || "Unknown error"));
+  }
+}
+
+async function handleLogin() {
+  const username = document.getElementById("login-username").value;
+  const password = document.getElementById("login-password").value;
+
+  const result = await login(username, password);
+  if (result.success) {
+    alert("✅ Logged in as " + result.username);
+    currentUser = result.username;
+    await loadProgressFromServer(currentUser); // load badges + levels
+    // TODO: move to game menu screen here
+  } else {
+    alert("❌ Login failed: " + (result.error || "Unknown error"));
+  }
+}
+
 // ============================================
 // 🎮 GAMEPLACE PLACEHOLDERS
 // ============================================
@@ -566,5 +604,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
