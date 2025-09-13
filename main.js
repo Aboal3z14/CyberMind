@@ -192,6 +192,9 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
   if (mfaEnabled) {
     generatedOTP = Math.floor(100000 + Math.random() * 900000);
     document.getElementById("otp-code").textContent = generatedOTP;
+    // Play OTP sound
+    const otpSound = new Audio("sounds/otp.mp3"); // make sure the path is correct
+    otpSound.play();
     document.getElementById("otp-toast").classList.remove("hidden");
     document.getElementById("otp-area").classList.remove("hidden");
     
@@ -570,3 +573,4 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
