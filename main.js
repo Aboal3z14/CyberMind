@@ -194,6 +194,7 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
     document.getElementById("otp-code").textContent = generatedOTP;
     document.getElementById("otp-toast").classList.remove("hidden");
     document.getElementById("otp-area").classList.remove("hidden");
+    
 
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> تمام! شوف رمز التحقق اللي وصلك ✍️`;
 
@@ -223,6 +224,7 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
 function verifyOTP() {
   const input = document.getElementById("otp-input").value.trim();
   const result = document.getElementById("login-message");
+  const cyberBuddy = document.getElementById("cyberbuddy");
 
   if (!generatedOTP) {
     result.style.color = "#ff4d4d";
@@ -233,17 +235,13 @@ function verifyOTP() {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
     markOtpUsed();
-
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>ممتاز يا نجم! جاهز ندخل على المرحلة الاولى؟ 🎯`;
+    
     setTimeout(() => {
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
     }, 900);
 
-
-    if (cyberBuddy) cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      ممتاز يا نجم! جاهز ندخل على المرحلة؟ 🎯
-    `;
 
   } else {
     result.style.color = "#ff4d4d";
@@ -395,7 +393,7 @@ let usedOTP = JSON.parse(localStorage.getItem('usedOTP')) || false;
 
 // Update the badgeRequirements object to match exact data-ids from HTML
 const badgeRequirements = {
-    //'🛡️ MFA Enforcer': ['usedOTP'],  // Only unlocks with OTP
+    '🛡️ MFA Enforcer': ['usedOTP'],  // Only unlocks with OTP
     '🧠 Phishing Analyst': ['level2'],
     '🔒 Digital Lockmaster': ['level3'],
     '📱 Mobile Defender': ['level4'],
@@ -519,6 +517,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// ============================================
+// 🧠 CyberBuddy API ChatGPT Link (optional)
+// ============================================
+async function getCyberBuddyResponse(userMessage) {
+  // If you have your backend, it can be used. Otherwise this function returns a fallback string.
+  // Replace the URL with your backend endpoint that calls ChatGPT.
+  try {
+    const res = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage })
+    });
+    const data = await res.json();
+    if (res.ok && data && data.reply) return data.reply;
+    return "حاضر! هحاول أساعدك دلوقتي 😊";
+  } catch (err) {
+    return "حصلت مشكلة في الاتصال بالـ backend، جرب تاني بعد شوية.";
+  }
+}
 
 // ============================================
 // 🎧 SETTINGS HELPERS
