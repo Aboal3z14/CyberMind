@@ -3,45 +3,58 @@
 // ============================================
 let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
+const API_BASE = "https://cybermind-backend-i44u.onrender.com";
+
 // ============================================
 // 🚀 STARTUP & DOM INIT
 // ============================================
 document.addEventListener("DOMContentLoaded", () => {
-      const signupBtn = document.getElementById("signup-btn");
-    if (signupBtn) {
-      signupBtn.addEventListener("click", handleSignup);
-      console.log("Signup button listener attached"); // For debugging
-    }
-     const toSignupLink = document.querySelector("a[onclick='showSignupScreen()']");
-    const toLoginLink = document.querySelector("a[onclick='showLoginScreen()']");
-    
-    if (toSignupLink) toSignupLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      showSignupScreen();
-    });
-    
-    if (toLoginLink) toLoginLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      showLoginScreen();
-    });
+  console.log("main.js loaded ✅");
+
   // Buttons & elements
-  const startBtn = document.getElementById("start-btn");
+  const signupBtn = document.getElementById("signup-btn");
   const loginBtn = document.getElementById("login-btn");
+  const startBtn = document.getElementById("start-btn");
+  const toSignupLink = document.getElementById("to-signup");
+  const toLoginLink = document.getElementById("to-login");
   const verifyOtpBtn = document.getElementById("verify-otp-btn");
   const startLevelBtn = document.getElementById("start-level-btn");
   const badgesBtn = document.getElementById("badges-btn");
   const settingsBtn = document.getElementById("settings-btn");
-  const otpArea = document.getElementById("otp-area");
 
-  // Event bindings
+  // 🔹 Attach event listeners
+  if (signupBtn) {
+    signupBtn.addEventListener("click", (e) => { e.preventDefault(); handleSignup(); });
+    console.log("signup listener attached");
+  }
+  if (loginBtn) {
+    loginBtn.addEventListener("click", (e) => { e.preventDefault(); handleLogin(); });
+    console.log("login listener attached");
+  }
+  if (toSignupLink) {
+  toSignupLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    showSignupScreen();
+  });
+  }
+  if (toLoginLink) {
+    toLoginLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLoginScreen();
+    });
+  }
   if (startBtn) startBtn.addEventListener("click", startGame);
-  if (loginBtn) loginBtn.addEventListener("click", handleLogin);
   if (verifyOtpBtn) verifyOtpBtn.addEventListener("click", verifyOTP);
   if (startLevelBtn) startLevelBtn.addEventListener("click", startLevel);
   if (badgesBtn) badgesBtn.addEventListener("click", showBadges);
   if (settingsBtn) settingsBtn.addEventListener("click", showSettings);
 
-  // Close buttons inside overlays
+  // Links (signup/login)
+
+  if (toSignupLink) toSignupLink.addEventListener("click", (e) => { e.preventDefault(); showSignupScreen(); });
+  if (toLoginLink) toLoginLink.addEventListener("click", (e) => { e.preventDefault(); showLoginScreen(); });
+
+  // Overlay close buttons
   document.querySelectorAll(".close-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const overlayId = btn.getAttribute("data-close");
@@ -49,128 +62,200 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Click outside overlay-content closes overlay
+  // Overlay click outside to close
   document.querySelectorAll(".overlay").forEach(ov => {
-    ov.addEventListener("click", (e) => {
-      if (e.target === ov) {
-        ov.classList.add("hidden");
-      }
-    });
+    ov.addEventListener("click", (e) => { if (e.target === ov) ov.classList.add("hidden"); });
   });
 
-  // Esc closes overlays
+  // ESC to close
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      document.querySelectorAll(".overlay").forEach(ov => ov.classList.add("hidden"));
-    }
+    if (e.key === "Escape") document.querySelectorAll(".overlay").forEach(ov => ov.classList.add("hidden"));
   });
 
-  // Load badge states & attach badge listeners
-  document.querySelectorAll(".badge").forEach(badge => {
-    const id = badge.getAttribute("data-id");
-    if (localStorage.getItem(`badge_${id}`) === "unlocked") {
-      badge.classList.remove("locked");
-      badge.querySelector("img")?.classList.add("unlocked");
-    }
-
-    // click to show / unlock (for testing)
-    badge.addEventListener("click", () => {
-      if (badge.classList.contains("locked")) {
-        // Unlock on click (for demo) — change if you want other unlocking rules
-        unlockBadge(id);
-      } else {
-        // show small info
-        alert(`شارة: ${badge.querySelector(".badge-title")?.innerText || id}\nحالتها: مفتوحة`);
-      }
-    });
-  });
-
-  // Settings initialization
+  // Init settings
   const musicToggle = document.getElementById("musicToggle");
   const sfxToggle = document.getElementById("sfxToggle");
   const volumeSlider = document.getElementById("volumeSlider");
   const themeSelect = document.getElementById("themeSelect");
   const resetBtn = document.getElementById("resetProgress");
 
-  // Elements: audio
-  const bgMusic = document.getElementById("bg-music");
-  const otpSound = document.getElementById("otp-sound");
-  const unlockSound = document.getElementById("unlock-sound");
-
-  // populate from localStorage or defaults
   if (musicToggle) musicToggle.checked = localStorage.getItem("music") === "on";
   if (sfxToggle) sfxToggle.checked = localStorage.getItem("sfx") === "on";
   if (volumeSlider) volumeSlider.value = localStorage.getItem("volume") || 50;
   if (themeSelect) themeSelect.value = localStorage.getItem("theme") || "matrix";
 
-  // apply audio settings
   applyAudioSettings();
+  if (musicToggle) musicToggle.addEventListener("change", (e) => { localStorage.setItem("music", e.target.checked ? "on" : "off"); applyAudioSettings(); });
+  if (sfxToggle) sfxToggle.addEventListener("change", (e) => localStorage.setItem("sfx", e.target.checked ? "on" : "off"));
+  if (volumeSlider) volumeSlider.addEventListener("input", (e) => { localStorage.setItem("volume", e.target.value); applyAudioSettings(); });
+  if (themeSelect) themeSelect.addEventListener("change", (e) => { localStorage.setItem("theme", e.target.value); applyTheme(e.target.value); });
+  if (resetBtn) resetBtn.addEventListener("click", () => { if (confirm("هل أنت متأكد أنك تريد إعادة التقدم؟")) { localStorage.clear(); location.reload(); } });
 
-  // attach settings listeners
-  if (musicToggle) musicToggle.addEventListener("change", (e) => {
-    localStorage.setItem("music", e.target.checked ? "on" : "off");
-    applyAudioSettings();
-  });
-
-  if (sfxToggle) sfxToggle.addEventListener("change", (e) => {
-    localStorage.setItem("sfx", e.target.checked ? "on" : "off");
-  });
-
-  if (volumeSlider) volumeSlider.addEventListener("input", (e) => {
-    localStorage.setItem("volume", e.target.value);
-    applyAudioSettings();
-  });
-
-  if (themeSelect) themeSelect.addEventListener("change", (e) => {
-    localStorage.setItem("theme", e.target.value);
-    applyTheme(e.target.value);
-  });
-
-  if (resetBtn) resetBtn.addEventListener("click", () => {
-    if (confirm("هل أنت متأكد أنك تريد إعادة التقدم؟")) {
-      localStorage.clear();
-      location.reload();
-    }
-  });
-
-  // initial theme
   applyTheme(themeSelect?.value || "matrix");
 
-  // make cyberbuddy draggable (mouse + touch)
+  // CyberBuddy draggable
   const buddy = document.getElementById("cyberbuddy");
   if (buddy) {
     buddy.addEventListener("mousedown", dragStart);
-    buddy.addEventListener("touchstart", dragStart, {passive: false});
+    buddy.addEventListener("touchstart", dragStart, { passive: false });
   }
-}); // DOMContentLoaded end
+
+  // Init badges + matrix background
+  initBadges();
+  initMatrix();
+});
 
 // ============================================
-// 🚀 WELCOME SCREEN
+// 🔐 SIGNUP HANDLER
 // ============================================
-function startGame() {
-  const ws = document.getElementById("welcome-screen");
-  const login = document.getElementById("login-screen");
-  if (ws) ws.classList.add("hidden");
-  if (login) login.classList.remove("hidden");
+async function handleSignup() {
+  const username = document.getElementById("signup-username").value.trim();
+  const password = document.getElementById("signup-password").value.trim();
+
+  if (!username || !password) {
+    alert("❌ يا معلم، اكتب اسم المستخدم وكلمة السر");
+    return;
+  }
+
+  try {
+    const result = await apiSignup(username, password);
+    if (result && result.success) {
+      alert("✅ تمام! الحساب اتعمل على السيرفر، دلوقتي تقدر تسجل دخولك");
+      showLoginScreen();
+    } else {
+      alert(result?.message || "❌ حصلت مشكلة أثناء التسجيل");
+    }
+  } catch (err) {
+    // 🔹 fallback local (offline)
+    localStorage.setItem(`user_${username}`, JSON.stringify({ password }));
+    alert("⚠ السيرفر مش متاح دلوقتي، الحساب اتخزن محلياً للاختبار.");
+    showLoginScreen();
+  }
 }
 
-// ============================================
-// 🔐 LOGIN + 2FA SYSTEM
-// ============================================
+
+
 
 function showSignupScreen() {
-  document.getElementById("signup-screen").classList.remove("hidden");
   document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("signup-screen").classList.remove("hidden");
 }
 
 function showLoginScreen() {
-  document.getElementById("login-screen").classList.remove("hidden");
   document.getElementById("signup-screen").classList.add("hidden");
+  document.getElementById("login-screen").classList.remove("hidden");
 }
 
-const API_BASE = "https://cybermind-backend-i44u.onrender.com";
 
-async function signup(username, password) {
+// ============================================
+// 🔐 LOGIN HANDLER
+// ============================================
+async function handleLogin() {
+  const username = document.getElementById("login-username").value.trim();
+  const password = document.getElementById("login-password").value.trim();
+  const mfaEnabled = document.getElementById("mfa-check").checked;
+
+  const cyberBuddy = document.getElementById("cyberbuddy");
+  const result = document.getElementById("login-message");
+  result.textContent = "";
+
+  if (!username || !password) {
+    result.style.color = "#ff4d4d";
+    result.textContent = "من فضلك أدخل اسم المستخدم وكلمة المرور.";
+    return;
+  }
+
+  try {
+    const res = await apiLogin(username, password);
+    if (!res || !res.success) {
+      result.style.color = "#ff4d4d";
+      result.textContent = res?.message || "❌ اسم المستخدم أو كلمة المرور غلط.";
+      return;
+    }
+    onLoginSuccess(mfaEnabled, cyberBuddy, result);
+  } catch (err) {
+    // fallback local
+    const localUser = JSON.parse(localStorage.getItem(`user_${username}`) || "null");
+    if (localUser && localUser.password === password) {
+      onLoginSuccess(mfaEnabled, cyberBuddy, result);
+    } else {
+      result.style.color = "#ff4d4d";
+      result.textContent = "❌ السيرفر غير متاح ومفيش حساب محلي مطابق.";
+    }
+  }
+}
+
+// ============================================
+// 🔐 ON LOGIN SUCCESS + OTP
+// ============================================
+function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
+  if (mfaEnabled) {
+    generatedOTP = Math.floor(100000 + Math.random() * 900000);
+    document.getElementById("otp-code").textContent = generatedOTP;
+    document.getElementById("otp-toast").classList.remove("hidden");
+    document.getElementById("otp-area").classList.remove("hidden");
+
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> تمام! شوف رمز التحقق اللي وصلك ✍️`;
+
+    setTimeout(() => { document.getElementById("otp-toast").classList.add("hidden"); }, 7000);
+  } else {
+  resultElem.style.color = "#00ff88";
+  resultElem.textContent = "✅ تم تسجيل الدخول بنجاح!";
+
+  // Show temporary loading message in CyberBuddy
+  if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
+
+  // optional: call backend to get message (if available)
+  getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
+    .then(response => {
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+    }).catch(() => {
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
+    });
+
+  setTimeout(() => {
+    document.getElementById("login-screen").classList.add("hidden");
+    document.getElementById("menu-screen").classList.remove("hidden");
+  }, 900);
+}
+}
+
+function verifyOTP() {
+  const input = document.getElementById("otp-input").value.trim();
+  const result = document.getElementById("login-message");
+
+  if (!generatedOTP) {
+    result.style.color = "#ff4d4d";
+    result.textContent = "❌ مفيش رمز تحقق مولّد.";
+    return;
+  }
+    if (input === generatedOTP.toString()) {
+    result.style.color = "#00ff88";
+    result.textContent = "✅ تم التحقق بنجاح!";
+    markOtpUsed();
+
+    setTimeout(() => {
+      document.getElementById("login-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
+    }, 900);
+
+
+    if (cyberBuddy) cyberBuddy.innerHTML = `
+      🤖 <strong>سايبر بودي</strong><br>
+      ممتاز يا نجم! جاهز ندخل على المرحلة؟ 🎯
+    `;
+
+  } else {
+    result.style.color = "#ff4d4d";
+    result.textContent = "❌ الرمز غير صحيح. حاول مرة تانية.";
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مفيش مشكلة يا بطل! جرب تاني وأنا معاك! 💪`;
+  }
+}
+
+// ============================================
+// 📡 BACKEND API HELPERS
+// ============================================
+async function apiSignup(username, password) {
   const res = await fetch(`${API_BASE}/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -179,7 +264,7 @@ async function signup(username, password) {
   return res.json();
 }
 
-async function login(username, password) {
+async function apiLogin(username, password) {
   const res = await fetch(`${API_BASE}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -189,174 +274,34 @@ async function login(username, password) {
 }
 
 
-function handleLogin() {
-  const username = document.getElementById("login-username").value.trim();
-  const password = document.getElementById("login-password").value.trim();
-  const mfaEnabled = document.getElementById("mfa-check").checked;
-
-  const cyberBuddy = document.getElementById("cyberbuddy");
-  const result = document.getElementById("login-message");
-
-  result.textContent = ""; // Clear previous messages
-
-  if (!username || !password) {
-    result.style.color = "#ff4d4d";
-    result.textContent = "من فضلك أدخل اسم المستخدم وكلمة المرور.";
-    return;
-  }
-
-  if (mfaEnabled) {
-    generatedOTP = Math.floor(100000 + Math.random() * 900000);
-    document.getElementById("otp-code").textContent = generatedOTP;
-
-    // play OTP sound if SFX enabled
-    const sfxOn = localStorage.getItem("sfx") === "on";
-    const otpSound = document.getElementById("otp-sound");
-    if (sfxOn && otpSound) {
-      otpSound.currentTime = 0;
-      otpSound.play().catch(()=>{});
-    }
-
-    document.getElementById("otp-toast").classList.remove("hidden");
-    document.getElementById("otp-area").classList.remove("hidden");
-
-    if (cyberBuddy) cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      تمام! شوف رمز التحقق اللي وصلك وسجّله هنا ✍️
-    `;
-
-    setTimeout(() => {
-      document.getElementById("otp-toast").classList.add("hidden");
-    }, 7000);
-
-  } else {
-    result.style.color = "#00ff88";
-    result.textContent = "✅ تم التسجيل بنجاح!";
-
-    // Show temporary loading message in CyberBuddy
-    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
-
-    // optional: call backend to get message (if available)
-    getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
-      .then(response => {
-        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
-      }).catch(() => {
-        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
-      });
-
-    // Move to menu after short delay
-    setTimeout(() => {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("menu-screen").classList.remove("hidden");
-    }, 1200);
-  }
+// ============================================
+// 🎮 PLACEHOLDER GAME FUNCS
+// ============================================
+function startGame() {
+  document.getElementById("welcome-screen").classList.add("hidden");
+  document.getElementById("login-screen").classList.remove("hidden");
 }
-
-function verifyOTP() {
-  const input = document.getElementById("otp-input").value.trim();
-  const result = document.getElementById("login-message");
-  const cyberBuddy = document.getElementById("cyberbuddy");
-
-  if (!generatedOTP) {
-    result.style.color = "#ff4d4d";
-    result.textContent = "لم يتم إنشاء رمز تحقق، فعّل 2FA أو جرّب تسجيل الدخول ثانية.";
-    return;
-  }
-
-  if (input === generatedOTP.toString()) {
-    result.style.color = "#00ff88";
-    result.textContent = "✅ تم التحقق بنجاح!";
-    markOtpUsed();
-
-
-    if (cyberBuddy) cyberBuddy.innerHTML = `
-      🤖 <strong>سايبر بودي</strong><br>
-      ممتاز يا نجم! جاهز ندخل على المرحلة؟ 🎯
-    `;
-
-    setTimeout(() => {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("menu-screen").classList.remove("hidden");
-    }, 900);
-  } else {
-    result.style.color = "#ff4d4d";
-    result.textContent = "❌ الرمز غير صحيح. حاول مرة تانية.";
-    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مفيش مشكلة يا بطل! جرب تاني وأنا معاك! 💪`;
-  }
-}
-
-function showSignup() {
-  document.getElementById("login-section").style.display = "none";
-  document.getElementById("signup-section").style.display = "block";
-}
-
-function showLogin() {
-  document.getElementById("signup-section").style.display = "none";
-  document.getElementById("login-section").style.display = "block";
-}
-
-
-async function handleSignup() {
-  const username = document.getElementById("signup-username").value.trim();
-  const password = document.getElementById("signup-password").value.trim();
-
- if (!username || !password) {
-    alert("❌ يا معلم، اكتب اسم المستخدم وكلمة السر");
-    return;
-  }
-
-
-  try {
-    const result = await signup(username, password);
-    if (result.success) {
-      alert("✅ تمام! الحساب اتعمل، دلوقتي تقدر تسجل دخولك");
-      showLoginScreen();
-    } else {
-      alert("❌ حصلت مشكلة أثناء التسجيل، حاول تاني بعد شوية");
-    }
-  } catch (err) {
-    alert("❌ فيه مشكلة في الاتصال بالسيرفر، حاول بعد شوية");
-  }
-}
+function startLevel() { alert("🚧 المرحلة الأولى لسه تحت التطوير!"); }
+function showBadges() { openOverlay("badgesOverlay"); }
+function showSettings() { openOverlay("settingsOverlay"); }
 
 // ============================================
-// 🎮 GAMEPLACE PLACEHOLDERS
-// ============================================
-function startLevel() {
-  alert("🚧 المرحلة الأولى لسه تحت التطوير!");
-}
-
-function showBadges() {
-  openOverlay("badgesOverlay");
-}
-
-function showSettings() {
-  openOverlay("settingsOverlay");
-}
-
-// ============================================
-// 🧠 CYBERBUDDY MOVEMENT (mouse + touch)
+// 🧠 CYBERBUDDY MOVEMENT
 // ============================================
 function dragStart(e) {
   e.preventDefault();
   const box = document.getElementById("cyberbuddy");
   if (!box) return;
-
   isDragging = true;
   const rect = box.getBoundingClientRect();
-
   const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
   const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
-
-  offsetX = clientX - rect.left;
-  offsetY = clientY - rect.top;
-
+  offsetX = clientX - rect.left; offsetY = clientY - rect.top;
   document.addEventListener("mousemove", drag);
   document.addEventListener("mouseup", dragEnd);
-  document.addEventListener("touchmove", drag, {passive: false});
+  document.addEventListener("touchmove", drag, { passive: false });
   document.addEventListener("touchend", dragEnd);
 }
-
 function drag(e) {
   if (!isDragging) return;
   e.preventDefault();
@@ -387,7 +332,7 @@ function dragEnd() {
 }
 
 // ============================================
-// 💻 MATRIX BACKGROUND EFFECT
+// 💻 MATRIX BACKGROUND
 // ============================================
 const canvas = document.getElementById("matrix");
 const ctx = canvas ? canvas.getContext("2d") : null;
@@ -426,6 +371,7 @@ if (canvas && ctx) {
   });
 }
 
+
 // ============================================
 // 🔄 Overlay Controls (open/close)
 // ============================================
@@ -440,7 +386,7 @@ function closeOverlay(id) {
 }
 
 // ============================================
-// 🏅 BADGES LOGIC (12 Levels + MFA)
+// 🏅 BADGES LOGIC
 // ============================================
 
 let completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
@@ -574,29 +520,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
 // ============================================
-// 🧠 CyberBuddy API ChatGPT Link (optional)
-// ============================================
-async function getCyberBuddyResponse(userMessage) {
-  // If you have your backend, it can be used. Otherwise this function returns a fallback string.
-  // Replace the URL with your backend endpoint that calls ChatGPT.
-  try {
-    const res = await fetch("https://cybermind-backend-i44u.onrender.com/ask", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMessage })
-    });
-    const data = await res.json();
-    if (res.ok && data && data.reply) return data.reply;
-    return "حاضر! هحاول أساعدك دلوقتي 😊";
-  } catch (err) {
-    return "حصلت مشكلة في الاتصال بالـ backend، جرب تاني بعد شوية.";
-  }
-}
-
-// ============================================
-// 🎧 Settings helpers (audio + theme)
+// 🎧 SETTINGS HELPERS
 // ============================================
 function applyAudioSettings() {
   const bgMusic = document.getElementById("bg-music");
@@ -628,6 +553,3 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
-
-
-
