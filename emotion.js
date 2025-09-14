@@ -50,8 +50,8 @@ const minimizeBtn = document.getElementById("minimize-webcam");
 const maximizeBtn = document.getElementById("maximize-webcam");
 
 minimizeBtn.addEventListener("click", () => {
-  webcamWidget.style.width = "60px";
-  webcamWidget.style.height = "50px";
+  webcamWidget.style.width = "100px";
+  webcamWidget.style.height = "80px";
   webcamWidget.style.overflow = "hidden";
   document.getElementById("webcam").style.display = "none";
   minimizeBtn.style.display = "none";
