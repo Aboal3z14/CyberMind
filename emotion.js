@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function initEmotionDetection() {
+    // Start webcam
+  startWebcam();
   console.log("⏳ Loading models...");
   await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
   await faceapi.nets.faceExpressionNet.loadFromUri("/models");
   console.log("✅ Models loaded!");
 
-  // Start webcam
-  startWebcam();
 
   // Start detection loop after video plays
   const video = document.getElementById("webcam");
