@@ -3,6 +3,7 @@
 // ============================================
 let generatedOTP = null;
 let offsetX = 0, offsetY = 0, isDragging = false;
+let currentUser = null;
 const API_BASE = "https://cybermind-backend-i44u.onrender.com";
 
 // ============================================
@@ -122,6 +123,21 @@ async function handleSignup() {
     if (result && result.success) {
       alert("✅ تمام! الحساب اتعمل على السيرفر، دلوقتي تقدر تسجل دخولك");
       showLoginScreen();
+      try {
+        await fetch(`${API_BASE}/progress/save`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username,
+            badges: {},
+            completed_levels: [],
+            used_otp: false
+          })
+        });
+      } catch (err) {
+        console.warn("⚠️ فشل إنشاء progress على السيرفر:", err);
+      }
+
     } else {
       alert(result?.message || "❌ حصلت مشكلة أثناء التسجيل");
     }
@@ -130,6 +146,7 @@ async function handleSignup() {
     localStorage.setItem(`user_${username}`, JSON.stringify({ password }));
     alert("⚠ السيرفر مش متاح دلوقتي، الحساب اتخزن محلياً للاختبار.");
     showLoginScreen();
+
   }
 }
 
@@ -189,69 +206,77 @@ async function handleLogin() {
 // 🔐 ON LOGIN SUCCESS + OTP
 // ============================================
 function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
+  currentUser = document.getElementById("login-username").value.trim(); // NEW
+
   if (mfaEnabled) {
     generatedOTP = Math.floor(100000 + Math.random() * 900000);
     document.getElementById("otp-code").textContent = generatedOTP;
+
     // Play OTP sound
-    const otpSound = new Audio("sounds/otp-sound.mp3"); // make sure the path is correct
+    const otpSound = new Audio("sounds/otp-sound.mp3"); 
     otpSound.play();
+
     document.getElementById("otp-toast").classList.remove("hidden");
     document.getElementById("otp-area").classList.remove("hidden");
-    
 
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> تمام! شوف رمز التحقق اللي وصلك ✍️`;
 
     setTimeout(() => { document.getElementById("otp-toast").classList.add("hidden"); }, 7000);
   } else {
-  resultElem.style.color = "#00ff88";
-  resultElem.textContent = "✅ تم تسجيل الدخول بنجاح!";
+    resultElem.style.color = "#00ff88";
+    resultElem.textContent = "✅ تم تسجيل الدخول بنجاح!";
 
-  // Show temporary loading message in CyberBuddy
-  if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
+    if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
 
-  // optional: call backend to get message (if available)
-  getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
-    .then(response => {
-      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
-    }).catch(() => {
-      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
-    });
+    getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
+      .then(response => {
+        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+      }).catch(() => {
+        if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
+      });
 
-  setTimeout(() => {
-    document.getElementById("login-screen").classList.add("hidden");
-    document.getElementById("menu-screen").classList.remove("hidden");
-  }, 900);
-}
+    setTimeout(() => {
+      document.getElementById("login-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
+    }, 900);
+  }
 }
 
-function verifyOTP() {
+
+async function verifyOTP() {
   const input = document.getElementById("otp-input").value.trim();
   const result = document.getElementById("login-message");
   const cyberBuddy = document.getElementById("cyberbuddy");
+
+  // Get the logged-in username from login input or from state
+  const username = document.getElementById("login-username").value.trim();
 
   if (!generatedOTP) {
     result.style.color = "#ff4d4d";
     result.textContent = "❌ مفيش رمز تحقق مولّد.";
     return;
   }
-    if (input === generatedOTP.toString()) {
+
+  if (input === generatedOTP.toString()) {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
-    markOtpUsed();
+
+    // Await the backend call
+    await markOtpUsed(username);
+
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>ممتاز يا نجم! جاهز ندخل على المرحلة الاولى؟ 🎯`;
-    
+
     setTimeout(() => {
       document.getElementById("login-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
     }, 900);
-
-
   } else {
     result.style.color = "#ff4d4d";
     result.textContent = "❌ الرمز غير صحيح. حاول مرة تانية.";
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مفيش مشكلة يا بطل! جرب تاني وأنا معاك! 💪`;
   }
 }
+
 
 // ============================================
 // 📡 BACKEND API HELPERS
@@ -467,33 +492,64 @@ function unlockBadge(id) {
 
 // Mark level as completed
 function completeLevel(levelId) {
-    if (!completedLevels.includes(levelId)) {
-        completedLevels.push(levelId);
-        localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
-        
-        Object.keys(badgeRequirements).forEach(badgeId => unlockBadge(badgeId));
+  if (!completedLevels.includes(levelId)) {
+    completedLevels.push(levelId);
+    localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
+    
+    Object.keys(badgeRequirements).forEach(badgeId => unlockBadge(badgeId));
+
+    // NEW: update backend
+    if (currentUser) {
+      fetch(`${API_BASE}/progress/complete-level`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: currentUser, levelId })
+      }).catch(err => console.warn("⚠️ فشل تحديث المستوى على السيرفر:", err));
     }
+  }
 }
 
-function markOtpUsed() {
-    if (!usedOTP) {
-        usedOTP = true;
-        localStorage.setItem('usedOTP', JSON.stringify(true));
 
-        const mfaBadge = document.querySelector('.badge[data-id="🛡️ MFA Enforcer"]');
-        if (mfaBadge) {
-            mfaBadge.classList.remove("locked");
-            localStorage.setItem('badge_🛡️ MFA Enforcer', 'unlocked');
+async function markOtpUsed(username) {
+  if (!username) return;
 
-            const sfxOn = localStorage.getItem("sfx") === "on";
-            const unlockSound = document.getElementById("unlock-sound");
-            if (sfxOn && unlockSound) {
-                unlockSound.currentTime = 0;
-                unlockSound.play().catch(() => {});
-            }
+  try {
+    const res = await fetch(`${API_BASE}/progress/unlock-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      usedOTP = true;
+      localStorage.setItem("usedOTP", JSON.stringify(true));
+
+      const mfaBadge = document.querySelector('.badge[data-id="🛡️ MFA Enforcer"]');
+      if (mfaBadge) {
+        mfaBadge.classList.remove("locked");
+        localStorage.setItem('badge_🛡️ MFA Enforcer', 'unlocked');
+
+        const sfxOn = localStorage.getItem("sfx") === "on";
+        const unlockSound = document.getElementById("unlock-sound");
+        if (sfxOn && unlockSound) {
+          unlockSound.currentTime = 0;
+          unlockSound.play().catch(() => {});
         }
+      }
+    } else {
+      console.error("❌ Backend did not mark OTP used:", data);
     }
+  } catch (err) {
+    console.error("❌ Failed to mark OTP used:", err);
+  }
 }
+
+
+
+
+
 
 
 
@@ -573,5 +629,4 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
-
 
