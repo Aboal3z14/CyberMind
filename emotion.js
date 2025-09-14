@@ -1,13 +1,17 @@
 // ========================================
-// DOM Ready
+// Emotion Detection with dynamic import
 // ========================================
-document.addEventListener("DOMContentLoaded", () => {
+(async () => {
+  // Dynamically import face-api.js
+  await import('https://cdn.jsdelivr.net/npm/face-api.js');
+
+  // Now faceapi is guaranteed to be defined
   initEmotionDetection();
   setupWebcamControls();
-});
+})();
 
 // ========================================
-// Emotion Detection
+// Emotion Detection Functions
 // ========================================
 async function initEmotionDetection() {
   const video = document.getElementById("webcam");
