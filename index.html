@@ -200,16 +200,14 @@
   </div>
 
     <!-- 📷 Webcam Box -->
-  <div id="webcam-wrapper" class="webcam-wrapper">
-    <div class="webcam-header">
-      <span>🎥 Emotion Detector</span>
-      <button id="toggle-webcam">_</button>
-    </div>
-    <div class="webcam-container">
-      <video id="webcam" autoplay muted playsinline></video>
-      <canvas id="overlay"></canvas>
-    </div>
+<div id="webcam-box" style="position:fixed; bottom:10px; right:10px; width:340px; background:#111; border:2px solid #0f0; border-radius:12px; padding:8px; z-index:1000;">
+  <div id="webcam-header" style="display:flex; justify-content:space-between; align-items:center; color:#0f0; font-family:monospace;">
+    😀 Webcam Feed 
+    <button id="toggle-webcam" style="background:#0f0; color:#111; border:none; padding:2px 6px; border-radius:6px; cursor:pointer;">_</button>
   </div>
+  <video id="webcam" autoplay muted playsinline width="320" height="240"></video>
+</div>
+
 
 
   <!-- ======================================
@@ -225,9 +223,9 @@
   <script src="main.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
   <script defer src="emotion.js"></script>
-  <video id="webcam" autoplay muted playsinline width="320" height="240" style="display:none;"></video>
 </body>
 </html>
+
 
 
 
