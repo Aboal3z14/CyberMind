@@ -13,3 +13,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Start webcam
   await startWebcam();
 });
+
+async function startWebcam() {
+  const video = document.getElementById("webcam");
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    console.log("📷 Webcam started");
+  } catch (err) {
+    console.error("❌ Webcam access denied:", err);
+  }
+}
+
