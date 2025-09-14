@@ -19,8 +19,8 @@ async function initEmotionDetection() {
   await startWebcam();
 
   console.log("⏳ Loading face-api models...");
-  await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
-  await faceapi.nets.faceExpressionNet.loadFromUri("/models");
+  await faceapi.nets.tinyFaceDetector.loadFromUri("models");
+  await faceapi.nets.faceExpressionNet.loadFromUri("models");
   console.log("✅ Models loaded!");
 
   // Start detection loop after video plays
