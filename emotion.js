@@ -2,14 +2,21 @@
 // Emotion Detection with dynamic import
 // ========================================
 (async () => {
-  const faceapiModule = await import('https://cdn.jsdelivr.net/npm/face-api.js');
-  console.log("✅ face-api.js loaded:", faceapiModule);
-  
-  // Use faceapi from the module
-  const faceapi = faceapiModule;
-  initEmotionDetection(faceapi);
-  setupWebcamControls();
+  try {
+    const faceapiModule = await import('https://cdn.jsdelivr.net/npm/face-api.js');
+    console.log("✅ face-api.js loaded:", faceapiModule);
+
+    // Assign it globally so you can access it in the console
+    window.faceapi = faceapiModule;
+
+    // Now call your functions
+    initEmotionDetection();
+    setupWebcamControls();
+  } catch (err) {
+    console.error("❌ Failed to load face-api.js:", err);
+  }
 })();
+
 
 // ========================================
 // Emotion Detection Functions
