@@ -1,32 +1,48 @@
-async function loadModels() {
-  await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-  await faceapi.nets.faceExpressionNet.loadFromUri('/models');
-  console.log("✅ Models loaded");
-}
+// Run everything after DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  initEmotionDetection();
+});
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // Load models
+async function initEmotionDetection() {
+  console.log("⏳ Loading models...");
   await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
   await faceapi.nets.faceExpressionNet.loadFromUri("/models");
   console.log("✅ Models loaded!");
 
   // Start webcam
-  await startWebcam();
-});
+  startWebcam();
+
+  // Start detection loop after video plays
+  const video = document.getElementById("webcam");
+  video.addEventListener("playing", () => {
+    setInterval(async () => {
+      const detections = await faceapi
+        .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+        .withFaceExpressions();
+
+      if (detections.length > 0) {
+        const expr = detections[0].expressions;
+        const emotion = Object.keys(expr).reduce((a, b) => expr[a] > expr[b] ? a : b);
+        console.log("😃 Detected emotion:", emotion, expr);
+      }
+    }, 1000); // every second
+  });
+}
 
 async function startWebcam() {
   const video = document.getElementById("webcam");
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
-    console.log("📷 Webcam started");
   } catch (err) {
     console.error("❌ Webcam access denied:", err);
   }
 }
 
-// 🎛️ Toggle Webcam Window
-document.getElementById("toggle-webcam").addEventListener("click", () => {
-  document.getElementById("webcam-wrapper").classList.toggle("collapsed");
+// Minimize/maximize button
+document.addEventListener("click", (e) => {
+  if (e.target.id === "toggle-webcam") {
+    const video = document.getElementById("webcam");
+    video.style.display = video.style.display === "none" ? "block" : "none";
+  }
 });
-
