@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function initEmotionDetection() {
   const video = document.getElementById("webcam");
-  const container = document.getElementById("webcam-container");
-  const toggleBtn = document.getElementById("toggle-webcam");
 
   // Start webcam
   await startWebcam();
@@ -16,10 +14,10 @@ async function initEmotionDetection() {
   await faceapi.nets.faceExpressionNet.loadFromUri("/models");
   console.log("✅ Models loaded!");
 
-  // Detection loop
+  // Emotion detection loop
   video.addEventListener("playing", () => {
     setInterval(async () => {
-      if (container.style.height === "40px") return; // Skip detection if minimized
+      if (video.style.display === "none") return; // Skip if minimized
 
       const detections = await faceapi
         .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
@@ -33,26 +31,18 @@ async function initEmotionDetection() {
     }, 1000);
   });
 
-  // Toggle button
-  toggleBtn.addEventListener("click", () => {
-    if (container.style.height !== "40px") {
-      // Minimize
-      video.style.display = "none";
-      container.style.height = "40px";
-      container.style.width = "80px";
-      toggleBtn.textContent = "Open";
-      toggleBtn.style.fontSize = "10px";
-    } else {
-      // Maximize
-      video.style.display = "block";
-      container.style.height = "200px";
-      container.style.width = "200px";
-      toggleBtn.textContent = "Minimize";
-      toggleBtn.style.fontSize = "12px";
-    }
+  // Minimize button
+  document.getElementById("minimize-webcam").addEventListener("click", () => {
+    video.style.display = "none";
+  });
+
+  // Maximize button
+  document.getElementById("maximize-webcam").addEventListener("click", () => {
+    video.style.display = "block";
   });
 }
 
+// Start webcam
 async function startWebcam() {
   const video = document.getElementById("webcam");
   try {
