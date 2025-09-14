@@ -25,3 +25,8 @@ async function startWebcam() {
   }
 }
 
+// 🎛️ Toggle Webcam Window
+document.getElementById("toggle-webcam").addEventListener("click", () => {
+  document.getElementById("webcam-wrapper").classList.toggle("collapsed");
+});
+
