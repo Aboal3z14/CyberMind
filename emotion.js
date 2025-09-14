@@ -1,23 +1,25 @@
-// Run everything after DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   initEmotionDetection();
 });
 
 async function initEmotionDetection() {
   const video = document.getElementById("webcam");
+  const container = document.getElementById("webcam-container");
+  const toggleBtn = document.getElementById("toggle-webcam");
 
-  // Start webcam first
+  // Start webcam
   await startWebcam();
 
+  // Load models
   console.log("⏳ Loading models...");
   await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
   await faceapi.nets.faceExpressionNet.loadFromUri("/models");
   console.log("✅ Models loaded!");
 
-  // Start detection loop after video plays
+  // Detection loop
   video.addEventListener("playing", () => {
-    const detectionInterval = setInterval(async () => {
-      if (video.style.display === "none") return; // Skip detection if minimized
+    setInterval(async () => {
+      if (container.style.height === "40px") return; // Skip detection if minimized
 
       const detections = await faceapi
         .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
@@ -28,18 +30,25 @@ async function initEmotionDetection() {
         const emotion = Object.keys(expr).reduce((a, b) => expr[a] > expr[b] ? a : b);
         console.log("😃 Detected emotion:", emotion, expr);
       }
-    }, 1000); // every second
+    }, 1000);
   });
 
-  // Setup toggle button
-  const toggleBtn = document.getElementById("toggle-webcam");
+  // Toggle button
   toggleBtn.addEventListener("click", () => {
-    if (video.style.display === "none") {
-      video.style.display = "block";
-      toggleBtn.textContent = "Minimize Webcam";
-    } else {
+    if (container.style.height !== "40px") {
+      // Minimize
       video.style.display = "none";
-      toggleBtn.textContent = "Open Webcam";
+      container.style.height = "40px";
+      container.style.width = "80px";
+      toggleBtn.textContent = "Open";
+      toggleBtn.style.fontSize = "10px";
+    } else {
+      // Maximize
+      video.style.display = "block";
+      container.style.height = "200px";
+      container.style.width = "200px";
+      toggleBtn.textContent = "Minimize";
+      toggleBtn.style.fontSize = "12px";
     }
   });
 }
