@@ -2,7 +2,7 @@
 // 🧠 EMOTION DETECTION SCRIPT
 // ============================================
 
-// Run everything after DOM is ready
+// Run after DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("⏳ Initializing face-api.js...");
 
@@ -25,7 +25,6 @@ async function initEmotionDetection() {
   await startWebcam();
 
   console.log("⏳ Loading face-api models...");
-
   try {
     await faceapi.nets.tinyFaceDetector.loadFromUri("models");
     await faceapi.nets.faceExpressionNet.loadFromUri("models");
@@ -35,22 +34,10 @@ async function initEmotionDetection() {
     return;
   }
 
-  // Start detection loop after video plays
+  // Start continuous detection
   video.addEventListener("playing", () => {
     console.log("🎥 Webcam started. Detecting emotions...");
-    setInterval(async () => {
-      const detections = await faceapi
-        .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-        .withFaceExpressions();
-
-      if (detections.length > 0) {
-        const expr = detections[0].expressions;
-        const emotion = Object.keys(expr).reduce((a, b) =>
-          expr[a] > expr[b] ? a : b
-        );
-        console.log("😃 Current emotion:", emotion, expr);
-      }
-    }, 500); // update every 0.5 second
+    detectEmotions(video);
   });
 }
 
@@ -67,6 +54,30 @@ async function startWebcam() {
   } catch (err) {
     console.error("❌ Webcam access denied:", err);
   }
+}
+
+// ============================================
+// 🖥️ Continuous Emotion Detection
+// ============================================
+async function detectEmotions(video) {
+  const options = new faceapi.TinyFaceDetectorOptions({
+    inputSize: 224,      // bigger = more accurate, smaller = faster
+    scoreThreshold: 0.3   // lower = more sensitive
+  });
+
+  const detections = await faceapi
+    .detectAllFaces(video, options)
+    .withFaceExpressions();
+
+  if (detections.length > 0) {
+    const expr = detections[0].expressions;
+    const emotion = Object.keys(expr).reduce((a, b) =>
+      expr[a] > expr[b] ? a : b
+    );
+    console.log("😃 Current emotion:", emotion, expr);
+  }
+
+  requestAnimationFrame(() => detectEmotions(video));
 }
 
 // ============================================
