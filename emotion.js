@@ -25,15 +25,23 @@ async function initEmotionDetection() {
 
   console.log("⏳ Loading face-api models...");
   try {
-    await faceapi.nets.tinyFaceDetector.loadFromUri("models");
-    await faceapi.nets.faceExpressionNet.loadFromUri("models");
+    const MODEL_URL = "models";
+
+    // Load multiple detectors + expressions + landmarks
+    await Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+      faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),
+      faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL),
+      faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
+    ]);
+
     console.log("✅ Models loaded!");
   } catch (err) {
     console.error("❌ Failed to load models:", err);
     return;
   }
 
-  // Always keep trying detection, even if "playing" missed
+  // Start detection when webcam is ready
   video.addEventListener("playing", () => {
     console.log("🎥 Webcam started. Detecting emotions...");
     runDetectionLoop(video);
@@ -67,19 +75,35 @@ async function startWebcam() {
 // 🔁 Continuous Emotion Detection
 // ============================================
 async function runDetectionLoop(video) {
-  const options = new faceapi.TinyFaceDetectorOptions({
+  const tinyOptions = new faceapi.TinyFaceDetectorOptions({
     inputSize: 320,
-    scoreThreshold: 0.3
+    scoreThreshold: 0.3,
+  });
+
+  const ssdOptions = new faceapi.SsdMobilenetv1Options({
+    minConfidence: 0.5,
   });
 
   const detect = async () => {
     if (video.paused || video.ended) return requestAnimationFrame(detect);
 
-    const detections = await faceapi
-      .detectAllFaces(video, options)
+    let detections;
+
+    // Try SSD first (more accurate)
+    detections = await faceapi
+      .detectAllFaces(video, ssdOptions)
+      .withFaceLandmarks(true)
       .withFaceExpressions();
 
-    if (detections.length > 0) {
+    // Fallback to Tiny if SSD fails
+    if (!detections || detections.length === 0) {
+      detections = await faceapi
+        .detectAllFaces(video, tinyOptions)
+        .withFaceLandmarks(true)
+        .withFaceExpressions();
+    }
+
+    if (detections && detections.length > 0) {
       const expr = detections[0].expressions;
       const emotion = Object.keys(expr).reduce((a, b) =>
         expr[a] > expr[b] ? a : b
