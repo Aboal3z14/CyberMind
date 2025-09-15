@@ -2,7 +2,6 @@
 // 🧠 EMOTION DETECTION SCRIPT
 // ============================================
 
-// Run after DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("⏳ Initializing face-api.js...");
 
@@ -34,11 +33,19 @@ async function initEmotionDetection() {
     return;
   }
 
-  // Start continuous detection
+  // Always keep trying detection, even if "playing" missed
   video.addEventListener("playing", () => {
     console.log("🎥 Webcam started. Detecting emotions...");
-    detectEmotions(video);
+    runDetectionLoop(video);
   });
+
+  // Fallback in case "playing" never fires
+  setTimeout(() => {
+    if (video.readyState >= 2) {
+      console.log("⚡ Forcing detection start...");
+      runDetectionLoop(video);
+    }
+  }, 2000);
 }
 
 // ============================================
@@ -50,34 +57,42 @@ async function startWebcam() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
     await video.play();
-    console.log("✅ Webcam initialized");
+    console.log("✅ Webcam initialized:", video.videoWidth, "x", video.videoHeight);
   } catch (err) {
     console.error("❌ Webcam access denied:", err);
   }
 }
 
 // ============================================
-// 🖥️ Continuous Emotion Detection
+// 🔁 Continuous Emotion Detection
 // ============================================
-async function detectEmotions(video) {
+async function runDetectionLoop(video) {
   const options = new faceapi.TinyFaceDetectorOptions({
-    inputSize: 224,      // bigger = more accurate, smaller = faster
-    scoreThreshold: 0.3   // lower = more sensitive
+    inputSize: 224,
+    scoreThreshold: 0.3
   });
 
-  const detections = await faceapi
-    .detectAllFaces(video, options)
-    .withFaceExpressions();
+  const detect = async () => {
+    if (video.paused || video.ended) return requestAnimationFrame(detect);
 
-  if (detections.length > 0) {
-    const expr = detections[0].expressions;
-    const emotion = Object.keys(expr).reduce((a, b) =>
-      expr[a] > expr[b] ? a : b
-    );
-    console.log("😃 Current emotion:", emotion, expr);
-  }
+    const detections = await faceapi
+      .detectAllFaces(video, options)
+      .withFaceExpressions();
 
-  requestAnimationFrame(() => detectEmotions(video));
+    if (detections.length > 0) {
+      const expr = detections[0].expressions;
+      const emotion = Object.keys(expr).reduce((a, b) =>
+        expr[a] > expr[b] ? a : b
+      );
+      console.log("😃 Detected emotion:", emotion, expr);
+    } else {
+      console.log("👀 No face detected");
+    }
+
+    requestAnimationFrame(detect);
+  };
+
+  detect();
 }
 
 // ============================================
