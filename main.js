@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showLoginScreen();
     });
   }
-  if (startLevelBtn) startLevelBtn.addEventListener("click", startGame);
+  if (startBtn) startBtn.addEventListener("click", startGame);
   if (verifyOtpBtn) verifyOtpBtn.addEventListener("click", verifyOTP);
   if (startLevelBtn) startLevelBtn.addEventListener("click", startLevel);
   if (badgesBtn) badgesBtn.addEventListener("click", showBadges);
@@ -819,6 +819,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
