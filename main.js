@@ -756,7 +756,7 @@ function handleAnswer(isReal) {
   // Update stats
   scoreDisplay.textContent = levelScore;
   correctAnswersDisplay.textContent = levelCorrectAnswers;
-  remainingDisplay.textContent = levelEmailsRemaining;
+  emailsRemainingDisplay.textContent = levelEmailsRemaining;
 
   if (levelEmailsRemaining <= 0) {
     // 🏆 Show results
@@ -867,6 +867,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
