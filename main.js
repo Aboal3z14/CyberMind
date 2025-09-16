@@ -720,6 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show the first email
     loadRandomEmail();
   }
+  initLevel1();
 
     const randomEmail = emails[Math.floor(Math.random() * emails.length)];
 
@@ -774,8 +775,6 @@ function handleAnswer(isReal) {
     }, 1200);
   }
 }
-initLevel1();
-
   function endLevel() {
     feedback.textContent = "🎉 انتهى المستوى! أحسنت.";
     feedback.style.color = "blue";
@@ -860,6 +859,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
