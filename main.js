@@ -307,7 +307,16 @@ function startGame() {
   document.getElementById("welcome-screen").classList.add("hidden");
   document.getElementById("login-screen").classList.remove("hidden");
 }
-function startLevel() { alert("🚧 المرحلة الأولى لسه تحت التطوير!"); }
+function startLevel() {
+  document.getElementById("main-menu").classList.add("hidden");
+  document.getElementById("level1-screen").classList.remove("hidden");
+  // Reset / start Level 1 logic
+  if (typeof initLevel1 === "function") {
+    initLevel1(); // call the Level 1 setup function (defined in level1.js)
+  } else {
+    console.warn("⚠️ initLevel1() not found. Make sure level1.js is loaded!");
+  }
+}
 function showBadges() { openOverlay("badgesOverlay"); }
 function showSettings() { openOverlay("settingsOverlay"); }
 
@@ -575,11 +584,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
-// ============================================
-// 🎮 LEVEL 1: EMAIL PHISHING GAME LOGIC
-// ============================================
-
 // ============================================
 // 🎮 LEVEL 1: EMAIL PHISHING GAME
 // ============================================
@@ -815,5 +819,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
