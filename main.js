@@ -709,6 +709,23 @@ document.addEventListener("DOMContentLoaded", () => {
       endLevel();
       return;
     }
+  function initLevel1() {
+    levelScore = 0;
+    levelCorrectAnswers = 0;
+    levelEmailsRemaining = 5;
+    feedback.textContent = "";
+    btnReal.disabled = false;
+    btnFake.disabled = false;
+    document.getElementById("next-level-btn").classList.add("hidden");
+  
+    // Shuffle emails array and pick 5
+    levelEmails = emails
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 5);
+  
+    // Show the first email
+    loadRandomEmail();
+  }
 
     const randomEmail = emails[Math.floor(Math.random() * emails.length)];
 
@@ -737,7 +754,7 @@ function handleAnswer(isReal) {
 
   // Update stats
   scoreDisplay.textContent = levelScore;
-  correctDisplay.textContent = levelCorrectAnswers;
+  correctAnswersDisplay.textContent = levelCorrectAnswers;
   remainingDisplay.textContent = levelEmailsRemaining;
 
   if (levelEmailsRemaining <= 0) {
@@ -849,6 +866,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
