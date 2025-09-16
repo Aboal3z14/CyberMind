@@ -311,13 +311,6 @@ function startGame() {
 function startLevel() {
   document.getElementById("menu-screen").classList.add("hidden");
   document.getElementById("level1-screen").classList.remove("hidden");
-  // Reset / start Level 1 logic
-  if (typeof initLevel1 === "function") {
-    initLevel1(); // call the Level 1 setup function (defined in level1.js)
-  } else {
-    console.warn("⚠️ initLevel1() not found. Make sure level1.js is loaded!");
-  }
-}
 function showBadges() { openOverlay("badgesOverlay"); }
 function showSettings() { openOverlay("settingsOverlay"); }
 
@@ -781,7 +774,7 @@ function handleAnswer(isReal) {
     }, 1200);
   }
 }
-
+initLevel1();
 
   function endLevel() {
     feedback.textContent = "🎉 انتهى المستوى! أحسنت.";
@@ -867,6 +860,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
