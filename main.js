@@ -720,7 +720,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show the first email
     loadRandomEmail();
   }
-  initLevel1();
+    
+  document.addEventListener("DOMContentLoaded", () => {
+    initLevel1();
+  });
 
     const randomEmail = emails[Math.floor(Math.random() * emails.length)];
 
@@ -859,6 +862,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
