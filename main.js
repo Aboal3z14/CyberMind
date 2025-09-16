@@ -311,6 +311,7 @@ function startGame() {
 function startLevel() {
   document.getElementById("menu-screen").classList.add("hidden");
   document.getElementById("level1-screen").classList.remove("hidden");
+}
 function showBadges() { openOverlay("badgesOverlay"); }
 function showSettings() { openOverlay("settingsOverlay"); }
 
@@ -862,6 +863,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
