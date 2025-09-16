@@ -777,6 +777,17 @@ function handleAnswer(isReal) {
   // -------------------------------
   btnReal.addEventListener("click", () => handleAnswer(true));
   btnFake.addEventListener("click", () => handleAnswer(false));
+  const nextLevelBtn = document.getElementById("next-level-btn");
+  if (nextLevelBtn) {
+    nextLevelBtn.addEventListener("click", () => {
+      // Hide Level 1 screen
+      document.getElementById("level1-screen").classList.add("hidden");
+  
+      // Show the next level (replace this with your next level function)
+      startLevel2(); // <-- create this function later
+    });
+  }
+
 
   // -------------------------------
   // ▶️ START GAME
@@ -838,6 +849,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
