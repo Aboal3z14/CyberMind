@@ -308,7 +308,7 @@ function startGame() {
   document.getElementById("login-screen").classList.remove("hidden");
 }
 function startLevel() {
-  document.getElementById("main-menu").classList.add("hidden");
+  document.getElementById("menu-screen").classList.add("hidden");
   document.getElementById("level1-screen").classList.remove("hidden");
   // Reset / start Level 1 logic
   if (typeof initLevel1 === "function") {
@@ -819,6 +819,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
