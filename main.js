@@ -722,29 +722,48 @@ document.addEventListener("DOMContentLoaded", () => {
     hint.textContent = randomEmail.hint || "";
   }
 
-  function handleAnswer(isReal) {
-    if (isReal === !currentEmailIsFake) {
-      feedback.textContent = "✔️ إجابة صحيحة!";
-      feedback.style.color = "green";
-      levelScore += 10;
-      levelCorrectAnswers++;
-    } else {
-      feedback.textContent = "❌ إجابة خاطئة!";
-      feedback.style.color = "red";
-      playerConfusionLevel++;
-    }
+function handleAnswer(isReal) {
+  if (isReal === !currentEmailIsFake) {
+    feedback.textContent = "✔️ إجابة صحيحة!";
+    feedback.style.color = "green";
+    levelScore += 10;
+    levelCorrectAnswers++;
+  } else {
+    feedback.textContent = "❌ إجابة خاطئة!";
+    feedback.style.color = "red";
+  }
 
-    levelEmailsRemaining--;
+  levelEmailsRemaining--;
 
-    scoreDisplay.textContent = levelScore;
-    correctAnswersDisplay.textContent = levelCorrectAnswers;
-    emailsRemainingDisplay.textContent = levelEmailsRemaining;
+  // Update stats
+  scoreDisplay.textContent = levelScore;
+  correctDisplay.textContent = levelCorrectAnswers;
+  remainingDisplay.textContent = levelEmailsRemaining;
 
+  if (levelEmailsRemaining <= 0) {
+    // 🏆 Show results
+    feedback.style.color = "blue";
+    feedback.innerHTML = `
+      🎉 انتهى المستوى!<br>
+      النقاط: ${levelScore}<br>
+      الإجابات الصحيحة: ${levelCorrectAnswers}
+    `;
+
+    // Disable answer buttons
+    btnReal.disabled = true;
+    btnFake.disabled = true;
+
+    // Show Next Level button
+    const nextBtn = document.getElementById("next-level-btn");
+    if (nextBtn) nextBtn.classList.remove("hidden");
+  } else {
     setTimeout(() => {
       feedback.textContent = "";
       loadRandomEmail();
     }, 1200);
   }
+}
+
 
   function endLevel() {
     feedback.textContent = "🎉 انتهى المستوى! أحسنت.";
@@ -819,6 +838,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
