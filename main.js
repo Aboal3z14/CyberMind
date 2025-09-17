@@ -591,6 +591,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let levelCorrectAnswers = 0;
   let levelEmailsRemaining = 5;
   let currentEmailIsFake = false;
+  let currentDifficulty = 'easy';
   let playerConfusionLevel = 0;
   let emotionDetectionInterval;
 
@@ -886,5 +887,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
