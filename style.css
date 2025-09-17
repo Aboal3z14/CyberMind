@@ -662,8 +662,13 @@ button:hover {
   }
   
 
-
 #congrats-screen {
+  position: fixed;
+  top: 50%;               
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 80%;            
+  height: 50vh;           
   background: #0d0d0d;
   color: #00ff99;
   font-family: "Cairo", sans-serif;
@@ -671,9 +676,10 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   text-align: center;
+  z-index: 999;
 }
+
 
 #congrats-screen h1 {
   font-size: 3rem;
@@ -699,8 +705,6 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
-
-
 
 
 
