@@ -663,6 +663,43 @@ button:hover {
   
 
 }
+#congrats-screen {
+  background: #0d0d0d;
+  color: #00ff99;
+  font-family: "Cairo", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#congrats-screen h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+#congrats-screen p {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+
+#congrats-screen .btn {
+  padding: 12px 25px;
+  background: #00ff99;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+#congrats-screen .btn:hover {
+  background: #00cc77;
+}
+
 
 
 
