@@ -1,7 +1,6 @@
 // ============================================
 // 🎮 LEVEL 1: EMAIL PHISHING GAME
 // ============================================
-
 document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // 🔢 GAME STATE VARIABLES
