@@ -580,7 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 // ============================================
-// 🎮 EMAIL PHISHING GAME
+// 🎮 LEVEL 1: EMAIL PHISHING GAME
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -591,13 +591,14 @@ document.addEventListener("DOMContentLoaded", () => {
   let levelCorrectAnswers = 0;
   let levelEmailsRemaining = 5;
   let currentEmailIsFake = false;
-  let currentDifficulty = 'easy';
-  let levelEmails = [];
+  let playerConfusionLevel = 0;
+  let emotionDetectionInterval;
 
   // -------------------------------
   // 🎯 DOM ELEMENTS
   // -------------------------------
   const emailSender = document.getElementById("email-sender");
+  const emailTime = document.getElementById("email-time");
   const emailSubject = document.getElementById("email-subject");
   const emailBody = document.getElementById("email-body");
   const emailLink = document.getElementById("email-link");
@@ -612,13 +613,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailsRemainingDisplay = document.getElementById("emails-remaining");
   const correctAnswersDisplay = document.getElementById("correct-answers");
 
-  // Level screens
-  const level1Screen = document.getElementById("level1-screen");
-  const congratsScreen = document.getElementById("congrats-screen");
-  const goToLevel2Btn = document.getElementById("go-to-level2");
-
   // -------------------------------
-  // 📧 EMAILS DATA - SORTED BY DIFFICULTY
+  // 📧 EMAILS DATA
   // -------------------------------
   const emails = {
     easy: [
@@ -723,97 +719,90 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
+
   // -------------------------------
   // 📝 FUNCTIONS
   // -------------------------------
-  function initLevel(difficulty) {
-    currentDifficulty = difficulty;
+  function loadRandomEmail() {
+    if (levelEmailsRemaining <= 0) {
+      endLevel();
+      return;
+    }
+  function initLevel1() {
     levelScore = 0;
     levelCorrectAnswers = 0;
     levelEmailsRemaining = 5;
     feedback.textContent = "";
     btnReal.disabled = false;
     btnFake.disabled = false;
-    
-    if (congratsScreen) congratsScreen.classList.add("hidden");
-    if (level1Screen) level1Screen.classList.remove("hidden");
-
-    // Get emails for the selected difficulty
-    levelEmails = [...emails[difficulty]]
+    document.getElementById("next-level-btn").classList.add("hidden");
+  
+    // Shuffle emails array and pick 5
+    levelEmails = emails
       .sort(() => 0.5 - Math.random())
-      .slice(0, levelEmailsRemaining);
-
-    // Update stats display
-    scoreDisplay.textContent = levelScore;
-    correctAnswersDisplay.textContent = levelCorrectAnswers;
-    emailsRemainingDisplay.textContent = levelEmailsRemaining;
-
+      .slice(0, 5);
+  
     // Show the first email
     loadRandomEmail();
   }
-
-  function loadRandomEmail() {
-    if (levelEmails.length <= 0 || levelEmailsRemaining <= 0) {
-      endLevel();
-      return;
-    }
     
-    const email = levelEmails.pop();
-    
-    emailSender.textContent = email.sender;
-    emailSubject.textContent = email.subject;
-    emailBody.innerHTML = email.body;
-    emailLink.textContent = email.link;
-    emailLink.href = email.link;
+  document.addEventListener("DOMContentLoaded", () => {
+    initLevel1();
+  });
 
-    currentEmailIsFake = email.isFake;
-    hint.textContent = email.hint || "";
+    const randomEmail = emails[Math.floor(Math.random() * emails.length)];
+
+    emailSender.textContent = randomEmail.sender;
+    emailSubject.textContent = randomEmail.subject;
+    emailBody.innerHTML = randomEmail.body;
+    emailLink.textContent = randomEmail.link;
+    emailLink.href = randomEmail.link;
+
+    currentEmailIsFake = randomEmail.isFake;
+    hint.textContent = randomEmail.hint || "";
   }
 
-  function handleAnswer(isReal) {
-    if (isReal === !currentEmailIsFake) {
-      feedback.textContent = "✔️ إجابة صحيحة!";
-      feedback.style.color = "green";
-      levelScore += 10;
-      levelCorrectAnswers++;
-    } else {
-      feedback.textContent = "❌ إجابة خاطئة!";
-      feedback.style.color = "red";
-    }
-
-    levelEmailsRemaining--;
-
-    // Update stats
-    scoreDisplay.textContent = levelScore;
-    correctAnswersDisplay.textContent = levelCorrectAnswers;
-    emailsRemainingDisplay.textContent = levelEmailsRemaining;
-
-    if (levelEmailsRemaining <= 0) {
-      // 🏆 Show results
-      feedback.style.color = "blue";
-      feedback.innerHTML = `
-        🎉 انتهى المستوى!<br>
-        النقاط: ${levelScore}<br>
-        الإجابات الصحيحة: ${levelCorrectAnswers}
-      `;
-
-      // Disable answer buttons
-      btnReal.disabled = true;
-      btnFake.disabled = true;
-
-      // Show congrats screen after a delay
-      setTimeout(() => {
-        if (level1Screen) level1Screen.classList.add("hidden");
-        if (congratsScreen) congratsScreen.classList.remove("hidden");
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        feedback.textContent = "";
-        loadRandomEmail();
-      }, 1200);
-    }
+function handleAnswer(isReal) {
+  if (isReal === !currentEmailIsFake) {
+    feedback.textContent = "✔️ إجابة صحيحة!";
+    feedback.style.color = "green";
+    levelScore += 10;
+    levelCorrectAnswers++;
+  } else {
+    feedback.textContent = "❌ إجابة خاطئة!";
+    feedback.style.color = "red";
   }
 
+  levelEmailsRemaining--;
+
+  // Update stats
+  scoreDisplay.textContent = levelScore;
+  correctAnswersDisplay.textContent = levelCorrectAnswers;
+  emailsRemainingDisplay.textContent = levelEmailsRemaining;
+
+  if (levelEmailsRemaining <= 0) {
+    // 🏆 Show results
+    feedback.style.color = "blue";
+    feedback.innerHTML = `
+      🎉 انتهى المستوى!<br>
+      النقاط: ${levelScore}<br>
+      الإجابات الصحيحة: ${levelCorrectAnswers}
+    `;
+
+    // Disable answer buttons
+    btnReal.disabled = true;
+    btnFake.disabled = true;
+
+    // Show Next Level button
+    const nextBtn = document.getElementById("next-level-btn");
+    if (nextBtn) nextBtn.classList.remove("hidden");
+  } else {
+    setTimeout(() => {
+      feedback.textContent = "";
+      loadRandomEmail();
+    }, 1200);
+  }
+}
   function endLevel() {
     feedback.textContent = "🎉 انتهى المستوى! أحسنت.";
     feedback.style.color = "blue";
@@ -826,18 +815,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   btnReal.addEventListener("click", () => handleAnswer(true));
   btnFake.addEventListener("click", () => handleAnswer(false));
+  const nextLevelBtn = document.getElementById("next-level-btn");
+  if (nextLevelBtn) {
+    nextLevelBtn.addEventListener("click", () => {
+      // Hide Level 1 screen
+      document.getElementById("level1-screen").classList.add("hidden");
   
-  if (goToLevel2Btn) {
-    goToLevel2Btn.addEventListener("click", () => {
-      // Start the next level (medium difficulty)
-      initLevel('medium');
+      // Show the next level (replace this with your next level function)
+      startLevel2(); // <-- create this function later
     });
   }
+
 
   // -------------------------------
   // ▶️ START GAME
   // -------------------------------
-  initLevel('easy');
+  loadRandomEmail();
 });
 
 // ============================================
@@ -893,4 +886,5 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
