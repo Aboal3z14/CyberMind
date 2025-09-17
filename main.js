@@ -795,7 +795,7 @@ function handleAnswer(isReal) {
   // ▶️ START GAME
   // -------------------------------
   loadRandomEmail();
-});
+}});
 
 
 // ============================================
@@ -851,6 +851,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
