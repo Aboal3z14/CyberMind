@@ -662,7 +662,7 @@ button:hover {
   }
   
 
-}
+
 #congrats-screen {
   background: #0d0d0d;
   color: #00ff99;
@@ -699,6 +699,7 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
+
 
 
 
