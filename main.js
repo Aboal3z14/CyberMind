@@ -757,13 +757,23 @@ function handleAnswer(isReal) {
   emailsRemainingDisplay.textContent = levelEmailsRemaining;
 
   if (levelEmailsRemaining <= 0) {
-    // 🏆 Show results
-    feedback.style.color = "blue";
-    feedback.innerHTML = `
-      🎉 انتهى المستوى!<br>
-      النقاط: ${levelScore}<br>
-      الإجابات الصحيحة: ${levelCorrectAnswers}
-    `;
+    // Hide Level 1 screen
+    document.getElementById("level1-screen").classList.add("hidden");
+  
+    // Show Congrats screen
+    document.getElementById("congrats-screen").classList.remove("hidden");
+  
+    // Disable answer buttons
+    btnReal.disabled = true;
+    btnFake.disabled = true;
+  } else {
+    setTimeout(() => {
+      feedback.textContent = "";
+      loadRandomEmail();
+    }, 1200);
+  }
+
+
 
     // Disable answer buttons
     btnReal.disabled = true;
@@ -863,6 +873,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
