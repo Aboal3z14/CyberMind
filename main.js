@@ -6,7 +6,6 @@ let offsetX = 0, offsetY = 0, isDragging = false;
 let currentUser = null;
 const API_BASE = "https://cybermind-backend-i44u.onrender.com";
 
-
 // ============================================
 // 🚀 STARTUP & DOM INIT
 // ============================================
@@ -632,6 +631,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
