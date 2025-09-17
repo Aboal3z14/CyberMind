@@ -602,6 +602,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailSubject = document.getElementById("email-subject");
   const emailBody = document.getElementById("email-body");
   const emailLink = document.getElementById("email-link");
+  const nextBtn = document.getElementById("next-level-btn");
+
 
   const feedback = document.getElementById("feedback");
   const hint = document.getElementById("hint");
@@ -772,30 +774,6 @@ function handleAnswer(isReal) {
       loadRandomEmail();
     }, 1200);
   }
-
-
-
-    // Disable answer buttons
-    btnReal.disabled = true;
-    btnFake.disabled = true;
-
-    // Show Next Level button
-    const nextBtn = document.getElementById("next-level-btn");
-    if (nextBtn) nextBtn.classList.remove("hidden");
-  } else {
-    setTimeout(() => {
-      feedback.textContent = "";
-      loadRandomEmail();
-    }, 1200);
-  }
-}
-  function endLevel() {
-    feedback.textContent = "🎉 انتهى المستوى! أحسنت.";
-    feedback.style.color = "blue";
-    btnReal.disabled = true;
-    btnFake.disabled = true;
-  }
-
   // -------------------------------
   // 🎮 EVENT LISTENERS
   // -------------------------------
@@ -873,6 +851,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
