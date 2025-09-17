@@ -657,4 +657,14 @@ button:hover {
   .email-time {
     margin-top: 5px;
   }
+  
+  #level1-screen h1 {
+  text-align: center;   
+  width: 100%;
+  margin: 20px 0;
+  font-size: 2em;      
+  color: #00e5ff;       
 }
+
+}
+
