@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // call detectEmotion repeatedly (every 2s for example)
-  setInterval(detectEmotion, 2000);
+  setInterval(detectEmotion, 500);
 
   // -------------------------------
   // 📝 FUNCTIONS
