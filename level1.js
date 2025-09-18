@@ -1,5 +1,5 @@
 // ============================================
-// 🎮 LEVEL 1: EMAIL PHISHING GAME
+// 🎮 LEVEL 1: EMAIL PHISHING GAME + EMOTION TRACKER
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,6 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentEmailIsFake = false;
   let currentDifficulty = "easy";
   let levelEmails = [];
+
+  // 🧠 Emotion tracking
+  let emotionCounts = {
+    happy: 0,
+    sad: 0,
+    angry: 0,
+    surprised: 0,
+    neutral: 0,
+    fearful: 0,
+    disgusted: 0
+  };
+
+  let dominantEmotion = "neutral"; // default
 
   // -------------------------------
   // 🎯 DOM ELEMENTS
@@ -34,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextLevelBtn = document.getElementById("next-level-btn");
 
   // -------------------------------
-  // 📧 EMAILS DATA
+  // 📧 EMAILS DATA (same as before)...
   // -------------------------------
   const emails = {
     easy: [
@@ -135,6 +148,43 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ]
   };
+
+  // -------------------------------
+  // 🧠 EMOTION DETECTION FUNCTIONS
+  // -------------------------------
+  async function detectEmotion() {
+    if (!window.faceapi || !window.videoElement) return;
+
+    const detections = await faceapi
+      .detectSingleFace(window.videoElement, new faceapi.TinyFaceDetectorOptions())
+      .withFaceExpressions();
+
+    if (detections && detections.expressions) {
+      // find top expression
+      let bestEmotion = "neutral";
+      let bestValue = 0;
+      for (let [emotion, value] of Object.entries(detections.expressions)) {
+        if (value > bestValue) {
+          bestEmotion = emotion;
+          bestValue = value;
+        }
+      }
+
+      // increment counter
+      if (emotionCounts[bestEmotion] !== undefined) {
+        emotionCounts[bestEmotion]++;
+      }
+
+      // update dominantEmotion (the one with highest total count so far)
+      dominantEmotion = Object.entries(emotionCounts).reduce((a, b) =>
+        b[1] > a[1] ? b : a
+      )[0];
+    }
+  }
+
+  // call detectEmotion repeatedly (every 2s for example)
+  setInterval(detectEmotion, 2000);
+
   // -------------------------------
   // 📝 FUNCTIONS
   // -------------------------------
@@ -144,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const email = levelEmails.shift(); // Take first email to prevent repetition
+    const email = levelEmails.shift();
 
     emailSender.textContent = email.sender;
     emailSubject.textContent = email.subject;
@@ -153,7 +203,10 @@ document.addEventListener("DOMContentLoaded", () => {
     emailLink.href = email.link;
 
     currentEmailIsFake = email.isFake;
-    hint.textContent = email.hint || "";
+
+    // 👉 Add hint dynamically to CyberBuddy, with emotion context
+    let emotionMsg = `📊 شعورك الغالب حتى الآن: ${dominantEmotion}`;
+    hint.textContent = (email.hint ? email.hint + " | " + emotionMsg : emotionMsg);
   }
 
   function handleAnswer(isReal) {
@@ -174,36 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
     emailsRemainingDisplay.textContent = levelEmailsRemaining;
 
     if (levelEmailsRemaining < 1) {
-        if (levelCorrectAnswers >= 3) { 
-            // Disable buttons
-            btnReal.disabled = true;
-            btnFake.disabled = true;
-
-            // Hide level 1 screen
-            const level1Screen = document.getElementById("level1-screen");
-            if (level1Screen) level1Screen.classList.add("hidden");
-
-            // Show congrats screen
-            const congratsScreen = document.getElementById("congrats-screen");
-            if (congratsScreen) congratsScreen.classList.remove("hidden");
-        } else {
-            // Player lost, show feedback
-            alert("😢 للأسف، لم تحقق العدد الكافي من الإجابات الصحيحة. حاول مرة أخرى!");
-
-
-            // Reset the level after a short delay
-            setTimeout(() => {
-            initLevel1();   // re-initialize the level
-            feedback.textContent = ""; // clear the feedback
-            }, 2000); // 2 seconds delay
-        }
+      endLevel();
     } else {
-    setTimeout(() => {
+      setTimeout(() => {
         feedback.textContent = "";
         loadRandomEmail();
-    }, 1200);
+      }, 1200);
     }
-}
+  }
 
   function initLevel1() {
     levelScore = 0;
@@ -212,6 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentEmailIsFake = false;
     currentDifficulty = "easy";
     levelEmails = [];
+
+    // reset emotions
+    for (let e in emotionCounts) emotionCounts[e] = 0;
+    dominantEmotion = "neutral";
+
     feedback.textContent = "";
     btnReal.disabled = false;
     btnFake.disabled = false;
@@ -223,29 +259,25 @@ document.addEventListener("DOMContentLoaded", () => {
     loadRandomEmail();
   }
 
-   function endLevel() {
-    if (levelCorrectAnswers >= 3) { 
-            // Disable buttons
-            btnReal.disabled = true;
-            btnFake.disabled = true;
+  function endLevel() {
+    if (levelCorrectAnswers >= 3) {
+      btnReal.disabled = true;
+      btnFake.disabled = true;
 
-            // Hide level 1 screen
-            const level1Screen = document.getElementById("level1-screen");
-            if (level1Screen) level1Screen.classList.add("hidden");
+      document.getElementById("level1-screen").classList.add("hidden");
+      document.getElementById("congrats-screen").classList.remove("hidden");
 
-            // Show congrats screen
-            const congratsScreen = document.getElementById("congrats-screen");
-            if (congratsScreen) congratsScreen.classList.remove("hidden");
-        } else {
-            // Player lost, show feedback
-            alert("😢 للأسف، لم تحقق العدد الكافي من الإجابات الصحيحة. حاول مرة أخرى!");
-            // Reset the level after a short delay
-            setTimeout(() => {
-            initLevel1();   // re-initialize the level
-            feedback.textContent = ""; // clear the feedback
-            }, 2000); // 2 seconds delay
-        }
-   }
+      // 🧠 Show final dominant emotion
+      alert(`🎉 مبروك! انتهيت من المستوى الأول.\n😊 الشعور الغالب عليك كان: ${dominantEmotion}`);
+    } else {
+      alert("😢 للأسف، لم تحقق العدد الكافي من الإجابات الصحيحة. حاول مرة أخرى!");
+      setTimeout(() => {
+        initLevel1();
+        feedback.textContent = "";
+      }, 2000);
+    }
+  }
+
   // -------------------------------
   // 🎮 EVENT LISTENERS
   // -------------------------------
@@ -255,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
       document.getElementById("level1-screen").classList.add("hidden");
-      startLevel2(); // Implement this later
+      startLevel2();
     });
   }
 
@@ -264,3 +296,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   initLevel1();
 });
+
