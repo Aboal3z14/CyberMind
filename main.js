@@ -225,6 +225,7 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
   } else {
     resultElem.style.color = "#00ff88";
     resultElem.textContent = "✅ تم تسجيل الدخول بنجاح!";
+    localStorage.setItem("currentUser", username);
 
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
 
@@ -260,6 +261,7 @@ async function verifyOTP() {
   if (input === generatedOTP.toString()) {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
+    localStorage.setItem("currentUser", username);
 
     // Await the backend call
     await markOtpUsed(username);
@@ -600,6 +602,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
