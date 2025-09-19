@@ -460,7 +460,7 @@ function unlockBadgeLocal(badgeId) {
 
 // ✅ Complete a level and unlock its badge
 function completeLevel(username, levelId, badge) {
-  fetch("https://cybermind-backend-i44u.onrender.com/progress/complete-level", {
+  fetch(`${API_BASE}/progress/complete-level`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, levelId, badge })
@@ -604,6 +604,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
