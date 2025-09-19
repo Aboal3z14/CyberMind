@@ -75,7 +75,9 @@ h1 {
   color: #00ffff;
   margin-bottom: 20px;
   font-size: 24px;
+  font-display: swap; /* if using custom font */
 }
+
 
 .hidden {
   display: none !important;
@@ -705,6 +707,7 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
+
 
 
 
