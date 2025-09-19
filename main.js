@@ -311,7 +311,11 @@ function startLevel() {
   document.getElementById("menu-screen").classList.add("hidden");
   document.getElementById("level1-screen").classList.remove("hidden");
 }
-function showBadges() { openOverlay("badgesOverlay"); }
+function showBadges() {
+  openOverlay("badgesOverlay");
+  document.addEventListener("DOMContentLoaded", restoreBadges);
+
+}
 function showSettings() { openOverlay("settingsOverlay"); }
 
 // ============================================
@@ -438,79 +442,44 @@ const badgeRequirements = {
     '🏆 CyberMind Master': ['level12']
 };
 
-// Update the unlockBadge function to use exact matching
-function unlockBadge(id) {
-    const badge = document.querySelector(`.badge[data-id="${id}"]`);
-    if (!badge || !badge.classList.contains("locked")) return false;
+// ✅ Unlock a badge locally (frontend + localStorage)
+function unlockBadgeLocal(badgeId) {
+  const badgeEl = document.querySelector(`.badge[data-id="${badgeId}"]`);
+  if (badgeEl && badgeEl.classList.contains("locked")) {
+    badgeEl.classList.remove("locked");
+    badgeEl.classList.add("unlocked");
 
-    // Special case for MFA Enforcer
-    if (id === '🛡️ MFA Enforcer' && !usedOTP) {
-        const cyberBuddy = document.getElementById("cyberbuddy");
-        if (cyberBuddy) {
-            cyberBuddy.innerHTML = `
-                🤖 <strong>سايبر بودي</strong><br>
-                🔒 لازم تستخدم التحقق بخطوتين (OTP) عشان تفتح الشارة دي!
-            `;
-        }
-        return false;
-    }
-
-    // Check requirements
-    const requirements = badgeRequirements[id];
-    if (!requirements) return false;
-
-    const hasRequired = requirements.every(req => {
-        if (req === 'usedOTP') return usedOTP === true;
-        return completedLevels.includes(req);
-    });
-
-    if (!hasRequired) {
-        const cyberBuddy = document.getElementById("cyberbuddy");
-        if (cyberBuddy) {
-            const reqText = requirements.map(r => 
-                r === 'usedOTP' ? 'استخدام التحقق بخطوتين' : `المرحلة ${r.replace('level', '')}`
-            ).join(' و ');
-            cyberBuddy.innerHTML = `
-                🤖 <strong>سايبر بودي</strong><br>
-                🔒 تحتاج إكمال ${reqText} لفتح هذه الشارة!
-            `;
-        }
-        return false;
-    }
-
-    // Unlock the badge
-    badge.classList.remove("locked");
-    localStorage.setItem(`badge_${id}`, "unlocked");
-
-    // Play unlock sound if enabled
-    const sfxOn = localStorage.getItem("sfx") === "on";
-    const unlockSound = document.getElementById("unlock-sound");
-    if (sfxOn && unlockSound) {
-        unlockSound.currentTime = 0;
-        unlockSound.play().catch(() => {});
-    }
-
-    return true;
-}
-
-// Mark level as completed
-function completeLevel(levelId) {
-  if (!completedLevels.includes(levelId)) {
-    completedLevels.push(levelId);
-    localStorage.setItem('completedLevels', JSON.stringify(completedLevels));
-    
-    Object.keys(badgeRequirements).forEach(badgeId => unlockBadge(badgeId));
-
-    // NEW: update backend
-    if (currentUser) {
-      fetch(`${API_BASE}/progress/complete-level`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: currentUser, levelId })
-      }).catch(err => console.warn("⚠️ فشل تحديث المستوى على السيرفر:", err));
-    }
+    // Save in localStorage so it stays unlocked after refresh
+    localStorage.setItem(`badge_${badgeId}`, "unlocked");
   }
 }
+
+// ✅ Complete a level and unlock its badge
+function completeLevel(username, levelId, badge) {
+  fetch("https://your-backend-url.com/progress/complete-level", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, levelId, badge })
+  })
+  .then(res => res.json())
+  .then(data => {
+    // Directly unlock the badge in the frontend
+    unlockBadgeLocal(badge);
+  })
+  .catch(err => console.error("❌ Error completing level:", err));
+}
+
+// Restore all badges from localStorage on page load
+function restoreBadges() {
+  document.querySelectorAll(".badge").forEach(badgeEl => {
+    const badgeId = badgeEl.dataset.id;
+    if (localStorage.getItem(`badge_${badgeId}`) === "unlocked") {
+      badgeEl.classList.remove("locked");
+      badgeEl.classList.add("unlocked");
+    }
+  });
+}
+
 
 
 async function markOtpUsed(username) {
@@ -631,6 +600,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
