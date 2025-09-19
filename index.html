@@ -151,6 +151,51 @@
   <p>مستعد للمستوى الثاني؟ 👀</p>
   <button class="btn" id="go-to-level2">➡️ روح للمستوى الثاني</button>
 </div>
+<!-- ======================================
+  🎮 LEVEL 2: PASSWORD STRENGTH CHALLENGE
+  ======================================= -->
+<div id="level2-screen" class="hidden">
+  <div class="level-container">
+    <h1 align="center">المستوى الثاني: أنشئ كلمات سر قوية</h1>
+    <p class="level-description">هدفك: إنشاء 3 كلمات سر قوية تصمد أكثر من 15 يوم! اكتب كل كلمة مرتين للتأكيد.</p>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-value" id="validCount">0</div>
+        <div class="stat-label">كلمات سر قوية تم إنشاؤها</div>
+      </div>
+    </div>
+    
+    <div class="game-area">
+      <div class="input-group">
+        <label>كلمة السر:</label>
+        <input type="password" id="password1" />
+      </div>
+
+      <div class="input-group">
+        <label>تأكيد كلمة السر:</label>
+        <input type="password" id="password2" />
+      </div>
+
+      <button id="checkPasswordBtn">تحقق من قوة كلمة السر</button>
+
+      <p id="strengthFeedback"></p>
+      <p id="passwordEstimate"></p>
+
+      <div id="cyberbuddyBox">
+        🤖 <strong>سايبر بودي</strong><br> هقوللك نصايح 🔄
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="level2-congrats-screen" class="hidden">
+  <h1>🎉 ممتاز! خلصت المستوى الثاني!</h1>
+  <p>كل كلماتك السريّة قوية 💪</p>
+  <button class="btn" id="go-to-level3">➡️ روح للمستوى الثالث</button>
+</div>
+
+
 
   <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
@@ -288,6 +333,7 @@
   <script defer src="main.js"></script>
 </body>
 </html>
+
 
 
 
