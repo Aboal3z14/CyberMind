@@ -717,6 +717,7 @@ button:hover {
   box-shadow: 0 0 15px #00ffff;
   margin: 0 auto;
   align-items: center;
+  justify-content: center;
 }
 
 /* Input Groups */
@@ -769,6 +770,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
