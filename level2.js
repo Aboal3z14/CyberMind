@@ -1,4 +1,4 @@
-const cyberBuddy = document.getElementById("cyberbuddyBox");
+const cyberBuddy = document.getElementById("cyberbuddy");
 const validCountEl = document.getElementById("validCount");
 let validPasswords = 0;
 
