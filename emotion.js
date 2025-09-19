@@ -53,7 +53,7 @@ async function initEmotionDetection() {
       console.log("⚡ Forcing detection start...");
       runDetectionLoop(video);
     }
-  }, 3000);
+  }, 500);
 }
 
 // ============================================
