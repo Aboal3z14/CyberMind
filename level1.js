@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // call detectEmotion repeatedly (every 2s for example)
-  setInterval(detectEmotion, 500);
+  setInterval(detectEmotion, 2000);
 
   // -------------------------------
   // ⚖️ Adjust difficulty based on dominant emotion
