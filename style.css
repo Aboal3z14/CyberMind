@@ -33,6 +33,8 @@
   margin-bottom: 10px;
   color: #00ffcc;
   text-shadow: 0 0 10px #00ffcc;
+  font-display: swap; /* if using custom font */
+
 }
 
 .subtitle {
@@ -707,6 +709,7 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
+
 
 
 
