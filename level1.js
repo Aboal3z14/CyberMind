@@ -186,13 +186,32 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(detectEmotion, 500);
 
   // -------------------------------
+  // ⚖️ Adjust difficulty based on dominant emotion
+  // -------------------------------
+  function adjustDifficulty() {
+    // Map emotions -> difficulty
+    // tweak mapping as you prefer
+    if (dominantEmotion === "surprised") {
+      currentDifficulty = "hard";
+    } else if (dominantEmotion === "happy" || dominantEmotion === "neutral") {
+      currentDifficulty = "medium";
+    } else { // sad, angry, fearful, disgusted, etc.
+      currentDifficulty = "easy";
+    }
+  }
+
+  // -------------------------------
   // 📝 FUNCTIONS
   // -------------------------------
+  
   function loadRandomEmail() {
     if (levelEmailsRemaining < 1 || levelEmails.length === 0) {
       endLevel();
       return;
     }
+      
+    adjustDifficulty();
+
 
     const email = levelEmails.shift();
 
