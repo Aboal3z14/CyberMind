@@ -122,6 +122,7 @@ async function handleSignup() {
     const result = await apiSignup(username, password);
     if (result && result.success) {
       alert("✅ تمام! الحساب اتعمل على السيرفر، دلوقتي تقدر تسجل دخولك");
+      localStorage.setItem("currentUser", username);
       showLoginScreen();
       try {
         await fetch(`${API_BASE}/progress/save`, {
@@ -225,8 +226,8 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
   } else {
     resultElem.style.color = "#00ff88";
     resultElem.textContent = "✅ تم تسجيل الدخول بنجاح!";
-    localStorage.setItem("currentUser", username);
 
+    
     if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> جاري تحضير رد ذكي... 🔄`;
 
     getCyberBuddyResponse("دخلت من غير التحقق الثنائي، وجه رسالة توعية للمستخدم باللهجة المصرية")
@@ -235,6 +236,8 @@ function onLoginSuccess(mfaEnabled, cyberBuddy, resultElem) {
       }).catch(() => {
         if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> حصلت مشكلة في الاتصال، جرّب تاني بعد شوية! ⚠️`;
       });
+
+  
 
     setTimeout(() => {
       document.getElementById("login-screen").classList.add("hidden");
@@ -261,7 +264,6 @@ async function verifyOTP() {
   if (input === generatedOTP.toString()) {
     result.style.color = "#00ff88";
     result.textContent = "✅ تم التحقق بنجاح!";
-    localStorage.setItem("currentUser", username);
 
     // Await the backend call
     await markOtpUsed(username);
@@ -602,6 +604,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
