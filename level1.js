@@ -289,6 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 🧠 Show final dominant emotion
       alert(`🎉 مبروك! انتهيت من المستوى الأول.\n😊 الشعور الغالب عليك كان: ${dominantEmotion}`);
+      completeLevel(username, "level1", "🧠 Phishing Analyst");
     } else {
       alert("😢 للأسف، لم تحقق العدد الكافي من الإجابات الصحيحة. حاول مرة أخرى!");
       setTimeout(() => {
