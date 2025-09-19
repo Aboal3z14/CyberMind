@@ -76,7 +76,7 @@ async function startWebcam() {
 // ============================================
 async function runDetectionLoop(video) {
   const tinyOptions = new faceapi.TinyFaceDetectorOptions({
-    inputSize: 296,
+    inputSize: 288,
     scoreThreshold: 0.3,
   });
 
