@@ -709,6 +709,76 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
+/* Level 2 Container */
+#level2-screen .level-container {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px 25px;
+  border-radius: 15px;
+  width: 360px;
+  box-shadow: 0 0 15px #00ffff;
+  margin: 0 auto;
+}
+
+/* Input Groups */
+#level2-screen .input-group {
+  margin-bottom: 15px;
+}
+
+#level2-screen .input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #00ffff;
+}
+
+#level2-screen .input-group input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #00ffff;
+  background: #001f1f;
+  color: #00ffff;
+}
+
+/* Strength Feedback & Estimate */
+#level2-screen #strengthFeedback,
+#level2-screen #passwordEstimate {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #00ffff;
+}
+
+/* CyberBuddy Box */
+#level2-screen #cyberbuddyBox {
+  background-color: #001f1f;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 10px;
+  min-height: 60px;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+/* Congratulation Screen */
+#level2-congrats-screen {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px 25px;
+  border-radius: 15px;
+  width: 360px;
+  box-shadow: 0 0 15px #00ffff;
+  margin: 0 auto;
+}
+
+#level2-congrats-screen h1 {
+  margin-bottom: 15px;
+}
+
+#level2-congrats-screen p {
+  margin-bottom: 15px;
+  color: #00ffff;
+}
 
 
 
