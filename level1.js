@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailsRemainingDisplay = document.getElementById("emails-remaining");
   const correctAnswersDisplay = document.getElementById("correct-answers");
 
-  const nextLevelBtn = document.getElementById("next-level-btn");
+  const nextLevelBtn = document.getElementById("go-to-level2");
 
   // -------------------------------
   // 📧 EMAILS DATA (same as before)...
