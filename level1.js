@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("level1-screen").classList.add("hidden");
       document.getElementById("congrats-screen").classList.remove("hidden");
-
+      document.getElementById("go-to-level2").classList.remove("hidden");
       // 🧠 Show final dominant emotion
       alert(`🎉 مبروك! انتهيت من المستوى الأول.\n😊 الشعور الغالب عليك كان: ${dominantEmotion}`);
       const currentUser = localStorage.getItem("currentUser"); 
