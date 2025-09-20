@@ -680,6 +680,15 @@ button:hover {
 #congrats-screen .btn:hover {
   background: #00cc77;
 }
+
+#level2-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  z-index: 9999; 
+}
 /* Level 2 Container */
 #level2-screen .level-container {
   background: rgba(0, 0, 0, 0.85);
@@ -746,6 +755,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
