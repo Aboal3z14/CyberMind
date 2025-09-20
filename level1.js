@@ -235,17 +235,29 @@ document.addEventListener("DOMContentLoaded", () => {
       feedback.style.color = "green";
       levelScore += 10;
       levelCorrectAnswers++;
+  
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> تمام! إجابة مظبوطة 💪 خلّيك دايمًا مركز في تفاصيل الرابط أو الإيميل.`;
+      getCyberBuddyResponse("اللاعب جاوب إجابة صح على إيميل في لعبة التصيّد. اديله رسالة تشجيعية باللهجة المصرية")
+        .then(response => {
+          if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+        });
     } else {
       feedback.textContent = "❌ إجابة خاطئة!";
       feedback.style.color = "red";
+  
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> غلطة بسيطة، ركّز أكتر على النطاق أو الكلام المريب في الإيميل.`;
+      getCyberBuddyResponse("اللاعب جاوب غلط على إيميل في لعبة التصيّد. اديله نصيحة باللهجة المصرية")
+        .then(response => {
+          if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+        });
     }
-
+  
     levelEmailsRemaining--;
-
+  
     scoreDisplay.textContent = levelScore;
     correctAnswersDisplay.textContent = levelCorrectAnswers;
     emailsRemainingDisplay.textContent = levelEmailsRemaining;
-
+  
     if (levelEmailsRemaining < 1) {
       endLevel();
     } else {
@@ -255,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1200);
     }
   }
+  
 
   function initLevel1() {
     levelScore = 0;
@@ -280,19 +293,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function endLevel() {
+    btnReal.disabled = true;
+    btnFake.disabled = true;
+  
     if (levelCorrectAnswers >= 3) {
-      btnReal.disabled = true;
-      btnFake.disabled = true;
-
       document.getElementById("level1-screen").classList.add("hidden");
       document.getElementById("congrats-screen").classList.remove("hidden");
       document.getElementById("go-to-level2").classList.remove("hidden");
-      // 🧠 Show final dominant emotion
-      alert(`🎉 مبروك! انتهيت من المستوى الأول.\n😊 الشعور الغالب عليك كان: ${dominantEmotion}`);
+  
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مبروك خلصت المستوى الأول! 🎉`;
+      getCyberBuddyResponse(`اللاعب خلص المرحلة الأولى وعدى المستوى. شعوره الغالب كان ${dominantEmotion}. اديله تهنئة باللهجة المصرية`)
+        .then(response => {
+          if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+        });
+  
       const currentUser = localStorage.getItem("currentUser"); 
       completeLevel(currentUser, "level1", "🧠 Phishing Analyst");
     } else {
-      alert("😢 للأسف، لم تحقق العدد الكافي من الإجابات الصحيحة. حاول مرة أخرى!");
+      if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> لسه محتاج تركيز شوية. جرّب تاني!`;
+      getCyberBuddyResponse("اللاعب فشل في المستوى الأول. اديله نصيحة وتحفيز باللهجة المصرية")
+        .then(response => {
+          if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>${response}`;
+        });
+  
       setTimeout(() => {
         initLevel1();
         feedback.textContent = "";
