@@ -452,6 +452,7 @@ button:hover {
 /* Desk background */
 #level1-screen {
   display: flex;
+  position: absolute; 
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -543,6 +544,7 @@ button:hover {
 /* Emails container (hidden until clicked) */
 #level1-screen .emails-container {
   display: none;
+  position: absolute; 
   z-index: 9999; 
   margin-top: 20px;
 }
@@ -744,6 +746,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
