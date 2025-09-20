@@ -210,8 +210,47 @@
   <button class="btn" id="go-to-level3">➡️ روح للمستوى الثالث</button>
 </div>
 
+<!-- ======================================
+  📱 LEVEL 3: Mobile Defender
+  ======================================= -->
+<div id="level3-screen" class="level-screen hidden">
+  <h1>📱 Defender Mobile</h1>
 
+  <!-- التعليمات -->
+  <div class="instructions">
+    🕵️‍♂️ مهمتك: حدد التطبيقات اللي بتطلب أذونات غريبة أو مش منطقية.
+  </div>
 
+  <!-- شريط التقدم -->
+  <div class="progress-bar">
+    <div id="level3-progress" class="progress-fill"></div>
+  </div>
+
+  <!-- عداد النتيجة -->
+  <div class="score-box">النتيجة: <span id="level3-score">0</span></div>
+
+  <!-- التطبيقات -->
+  <div class="apps-container">
+    <div class="app" data-suspicious="false">📷 CameraX - إذن الكاميرا</div>
+    <div class="app" data-suspicious="true">🎮 SnakePro - إذن الرسائل و المكالمات</div>
+    <div class="app" data-suspicious="false">🎵 Musicify - إذن الصوت</div>
+    <div class="app" data-suspicious="true">📝 Notes++ - إذن الموقع و الكاميرا</div>
+    <div class="app" data-suspicious="true">🔦 FlashUltra - إذن الكاميرا والمايك</div>
+    <div class="app" data-suspicious="false">📚 ReaderNow - إذن الملفات</div>
+  </div>
+
+  <!-- زر التأكيد -->
+  <button id="check-apps">✅ تأكيد الاختيارات</button>
+
+  <!-- فيدباك -->
+  <div id="level3-feedback" class="feedback"></div>
+</div>
+  
+<div id="level3-congrats-screen" class="hidden">
+  <h1>🎉 ممتاز! خلصت المستوى الثاني!</h1>
+  <p>كل كلماتك السريّة قوية 💪</p>
+  <button class="btn" id="go-to-level4">➡️ روح للمستوى الثالث</button>
+</div>
   <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
   ====================================== -->
@@ -346,9 +385,11 @@
   <script defer src="emotion.js"></script>
   <script defer src="level1.js"></script>
   <script defer src="level2.js"></script>
+  <script defer src="level3.js"></script>
   <script defer src="main.js"></script>
 </body>
 </html>
+
 
 
 
