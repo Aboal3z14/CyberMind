@@ -479,7 +479,7 @@ button:hover {
   background: #0b0b0b;
   border-radius: 8px;
   width: 95%;
-  height: 90%;
+  height: 100%;
   padding: 20px;
   overflow-y: auto;
   color: #fff;
@@ -743,6 +743,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
