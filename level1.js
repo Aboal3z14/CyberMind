@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailSubject = document.getElementById("email-subject");
   const emailBody = document.getElementById("email-body");
   const emailLink = document.getElementById("email-link");
+  const cyberBuddy = document.getElementById("cyberbuddy");
 
   const feedback = document.getElementById("feedback");
   const hint = document.getElementById("hint");
