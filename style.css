@@ -453,9 +453,8 @@ button:hover {
 #level1-screen {
   position: relative;
   width: 100%;
-  max-width: 1200px;     /* optional, keeps it neat on large screens */
   margin: auto;
-  aspect-ratio: 16 / 9;  /* adjust to match your desk image ratio */
+  aspect-ratio: 16 / 9; 
   background-image: url("https://media.istockphoto.com/id/913086940/photo/office-desk-with-large-pc-computer-screen-with-green-background-template.jpg?s=170667a&w=0&k=20&c=stl79m5YK6v1fuUuWc2ikJ8KIyhjb0uG9WiHn_sTPac=");
   background-size: contain;
   background-position: center;
@@ -465,10 +464,10 @@ button:hover {
 /* Monitor screen area (scaled to desk) */
 #level1-screen .monitor {
   position: absolute;
-  top: 23%;    /* adjust until it matches monitor screen */
-  left: 19%;   /* adjust horizontally */
-  width: 62%;  /* how wide the screen inside the monitor is */
-  height: 52%; /* how tall it is */
+  top: 11%;    
+  left: 23.9%;   
+  width: 52%;  
+  height: 53.4%; 
   background: black;
   display: flex;
   justify-content: center;
@@ -746,14 +745,21 @@ button:hover {
 
 /* Congratulation Screen */
 #level2-congrats-screen {
+  position: fixed;
+  top: 50%;               
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 80%;            
+  height: 50vh;           
+  background: #0d0d0d;
+  color: #00ff99;
+  font-family: "Cairo", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background: rgba(0, 0, 0, 0.85);
-  padding: 20px 25px;
-  z-index: 9999;
-  border-radius: 15px;
-  width: 360px;
-  box-shadow: 0 0 15px #00ffff;
-  margin: 0 auto;
+  z-index: 999;
 }
 
 #level2-congrats-screen h1 {
@@ -764,6 +770,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
