@@ -691,6 +691,7 @@ button:hover {
   align-items: center;
   display: flex;
   justify-content: center;
+  z-index: 999;
 }
 
 /* Input Groups */
@@ -729,6 +730,7 @@ button:hover {
   text-align: center;
   background: rgba(0, 0, 0, 0.85);
   padding: 20px 25px;
+  z-index: 999;
   border-radius: 15px;
   width: 360px;
   box-shadow: 0 0 15px #00ffff;
@@ -743,6 +745,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
