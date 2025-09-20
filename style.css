@@ -479,7 +479,7 @@ button:hover {
   background: #0b0b0b;
   border-radius: 8px;
   width: 95%;
-  height: 90%;
+  height: 100%;
   padding: 20px;
   overflow-y: auto;
   color: #fff;
@@ -542,7 +542,6 @@ button:hover {
 
 /* Emails container (hidden until clicked) */
 #level1-screen .emails-container {
-  display: none;
   z-index: 9999; 
   margin-top: 20px;
 }
@@ -744,6 +743,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
