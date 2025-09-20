@@ -466,16 +466,14 @@ button:hover {
 
 /* Monitor */
 #level1-screen .monitor {
-  background: #111;
-  border: 12px solid #222;
-  border-radius: 15px;
-  width: 800px;
-  height: 580px;
-  box-shadow: 0 0 40px #00ffff88;
+  width: 975px;
+  height: 520px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-top: -263px;
+  margin-left: -8px;
 }
 
 /* Monitor screen */
@@ -765,6 +763,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
