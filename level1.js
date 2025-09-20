@@ -236,7 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 👉 Add hint dynamically to CyberBuddy, with emotion context
     let emotionMsg = `📊 شعورك الغالب حتى الآن: ${dominantEmotion}`;
-    hint.textContent = (email.hint ? email.hint + " | " + emotionMsg : emotionMsg);
   }
 
   function handleAnswer(isReal) {
