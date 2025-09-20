@@ -209,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (mailApp) {
     mailApp.addEventListener("click", () => {
       document.getElementById("emails-container").classList.remove("hidden");
+      document.getElementById("mail-app").classList.add("hidden");
      
     });
  }
