@@ -451,30 +451,31 @@ button:hover {
 
 /* Desk background */
 #level1-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 20px;
-  z-index: 9999;
   position: relative;
+  width: 100%;
+  max-width: 1200px;     /* optional, keeps it neat on large screens */
+  margin: auto;
+  aspect-ratio: 16 / 9;  /* adjust to match your desk image ratio */
   background-image: url("https://media.istockphoto.com/id/913086940/photo/office-desk-with-large-pc-computer-screen-with-green-background-template.jpg?s=170667a&w=0&k=20&c=stl79m5YK6v1fuUuWc2ikJ8KIyhjb0uG9WiHn_sTPac=");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Monitor */
+/* Monitor screen area (scaled to desk) */
 #level1-screen .monitor {
-  width: 975px;
-  height: 520px;
+  position: absolute;
+  top: 23%;    /* adjust until it matches monitor screen */
+  left: 19%;   /* adjust horizontally */
+  width: 62%;  /* how wide the screen inside the monitor is */
+  height: 52%; /* how tall it is */
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  margin-top: -263px;
-  margin-left: -8px;
+  overflow: hidden;
 }
+
 
 /* Monitor screen */
 #level1-screen .monitor-screen {
@@ -763,6 +764,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
