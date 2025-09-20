@@ -457,7 +457,7 @@ button:hover {
   height: 100vh;
   background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
   padding: 20px;
-  z-index: 950; 
+  z-index: 9999; 
 }
 
 /* Monitor */
@@ -543,7 +543,7 @@ button:hover {
 /* Emails container (hidden until clicked) */
 #level1-screen .emails-container {
   display: none;
-  z-index: 1000; 
+  z-index: 9999; 
   margin-top: 20px;
 }
 
@@ -744,6 +744,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
