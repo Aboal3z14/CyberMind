@@ -704,8 +704,8 @@ button:hover {
   background: rgba(0, 0, 0, 0.85);
   padding: 20px 25px;
   border-radius: 15px;
-  width: 450px;
-  height: 90vh;
+  width: 400px;
+  height: 60vh;
   box-shadow: 0 0 15px #00ffff;
   margin: 0 auto;
   align-items: center;
@@ -767,6 +767,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
