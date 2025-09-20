@@ -445,77 +445,193 @@ button:hover {
   height: 0;
 }
 
-/* ========================================
-🎮 LEVEL 1 DESK & MONITOR STYLES
-======================================== */
+/* ======================================
+   🎨 LEVEL 1: EMAIL PHISHING SCREEN
+   ====================================== */
 
 /* Desk background */
 #level1-screen {
-  background: url('desk-background.jpg') no-repeat center center/cover;
-  width: 100%;
-  height: 100vh;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+  padding: 20px;
 }
 
-/* Monitor frame */
-.monitor {
+/* Monitor */
+#level1-screen .monitor {
   background: #111;
-  border: 15px solid #222;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-  width: 850px;
-  height: 550px;
+  border: 12px solid #222;
+  border-radius: 15px;
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 0 40px #00ffff88;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
 /* Monitor screen */
-.monitor-screen {
-  background: #0d0d0d;
+#level1-screen .monitor-screen {
+  background: #0b0b0b;
   border-radius: 8px;
   width: 95%;
   height: 90%;
   padding: 20px;
   overflow-y: auto;
   color: #fff;
-  box-shadow: inset 0 0 15px rgba(0,255,255,0.2);
+  text-align: center;
 }
 
-/* Mail app icon */
-.mail-app {
-  position: absolute;
-  bottom: 15px;
-  left: 20px;
-  background: #3498db;
-  color: #fff;
+/* Title + description */
+#level1-screen .monitor-screen h1 {
+  font-size: 22px;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+#level1-screen .monitor-screen .level-description {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+/* Stats bar */
+#level1-screen .stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+#level1-screen .stat-item {
+  text-align: center;
+}
+
+#level1-screen .stat-value {
+  font-size: 20px;
   font-weight: bold;
-  padding: 12px 18px;
+  color: #00ffff;
+}
+
+#level1-screen .stat-label {
+  font-size: 12px;
+  color: #bbb;
+}
+
+/* Mail app button */
+#level1-screen .mail-app {
+  background: #00ffff22;
+  border: 2px solid #00ffff;
   border-radius: 10px;
+  padding: 12px 25px;
+  color: #00ffff;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 15px auto;
+  width: fit-content;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: 0.3s;
 }
 
-.mail-app:hover {
-  transform: scale(1.05);
-  background: #2980b9;
+#level1-screen .mail-app:hover {
+  background: #00ffff44;
 }
 
-/* Email cards appear only after clicking mail app */
-.emails-container {
-  display: none; /* hidden at start */
-  width: 100%;
-  height: 100%;
+/* Emails container (hidden until clicked) */
+#level1-screen .emails-container {
+  display: none;
+  margin-top: 20px;
 }
 
-/* When mail app is active */
-.emails-container.active {
+#level1-screen .emails-container.active {
   display: block;
+}
+
+/* Email card */
+#level1-screen .email-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+  box-shadow: 0 0 10px #00ffff33;
+}
+
+#level1-screen .email-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #bbb;
+}
+
+#level1-screen .email-subject {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#level1-screen .email-body {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #ddd;
+}
+
+#level1-screen .email-link {
+  color: #00ffff;
+  text-decoration: underline;
+  font-size: 13px;
+}
+
+/* Feedback + hint */
+#level1-screen .feedback {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#level1-screen .hint {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* Buttons */
+#level1-screen .actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+#level1-screen .btn {
+  background: #00ffff22;
+  border: 2px solid #00ffff;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #00ffff;
+  transition: 0.3s;
+}
+
+#level1-screen .btn:hover {
+  background: #00ffff44;
+}
+
+#level1-screen .btn-real {
+  border-color: #0f0;
+  color: #0f0;
+}
+
+#level1-screen .btn-fake {
+  border-color: #f00;
+  color: #f00;
 }
 
   
@@ -626,6 +742,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
