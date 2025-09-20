@@ -544,7 +544,6 @@ button:hover {
 #level1-screen .emails-container {
   z-index: 9999; 
   margin-top: 20px;
-  display: none !important;
 }
 
 #level1-screen .emails-container.active {
@@ -744,6 +743,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
