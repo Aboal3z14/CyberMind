@@ -101,46 +101,39 @@
     </div>
   </div>
 <!-- ======================================
-  🎮 LEVEL 1: DESKTOP SIMULATION
+  🎮 LEVEL 1: EMAIL PHISHING SCREEN
   ======================================= -->
 <div id="level1-screen" class="hidden">
-
-  <!-- Monitor Frame -->
+  <!-- 🖥️ Monitor -->
   <div class="monitor">
-    
-    <!-- Desktop View -->
-    <div id="desktop-view" class="desktop">
-      <h2 class="desktop-title">💻 سطح المكتب</h2>
-      <div class="desktop-icons">
-        <button id="mail-app" class="app-icon">📧 البريد</button>
-        <button class="app-icon disabled">🌐 المتصفح</button>
-        <button class="app-icon disabled">⚙️ الإعدادات</button>
-      </div>
-    </div>
+    <!-- Monitor screen -->
+    <div class="monitor-screen">
+      <h1 align="center">المستوى الأول: تعرف على الإيميلات المزيفة</h1>
+      <p class="level-description">
+        أنت موظف جديد في الشركة. لازم تفتح تطبيق الإيميل وتحدد إذا الرسائل حقيقية ولا مزيفة.
+      </p>
 
-    <!-- Inbox/Game View (your original content) -->
-    <div id="inbox-view" class="hidden">
-      <div class="level-container">
-        <h1 align="center">المستوى الأول: تعرف على الإيميلات المزيفة</h1>
-        <p class="level-description">
-          أنت موظف جديد في الشركة. يجب أن تميز الإيميلات الحقيقية من المزيفة قبل النقر على أي رابط!
-        </p>
-        
-        <div class="stats">
-          <div class="stat-item">
-            <div class="stat-value" id="level-score">0</div>
-            <div class="stat-label">النقاط</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="emails-remaining">5</div>
-            <div class="stat-label">الإيميلات المتبقية</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="correct-answers">0</div>
-            <div class="stat-label">الإجابات الصحيحة</div>
-          </div>
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="level-score">0</div>
+          <div class="stat-label">النقاط</div>
         </div>
-        
+        <div class="stat-item">
+          <div class="stat-value" id="emails-remaining">5</div>
+          <div class="stat-label">الإيميلات المتبقية</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="correct-answers">0</div>
+          <div class="stat-label">الإجابات الصحيحة</div>
+        </div>
+      </div>
+
+      <!-- Mail app (click to open emails) -->
+      <div class="mail-app" id="mail-app">📧 البريد</div>
+
+      <!-- Emails container (hidden until click) -->
+      <div class="emails-container" id="emails-container">
         <div class="game-area">
           <div class="email-card" id="email-card">
             <div class="email-header">
@@ -151,21 +144,25 @@
             <div class="email-body" id="email-body"></div>
             <a href="#" class="email-link" id="email-link"></a>
           </div>
-          
+
           <div class="feedback" id="feedback"></div>
           <div class="hint" id="hint"></div>
         </div>
-        
+
         <div class="actions">
-          <button class="btn btn-real" id="btn-real"><i class="fas fa-check-circle"></i> إيميل آمن</button>
-          <button class="btn btn-fake" id="btn-fake"><i class="fas fa-times-circle"></i> إيميل مزيف</button>
+          <button class="btn btn-real" id="btn-real">
+            <i class="fas fa-check-circle"></i> إيميل آمن
+          </button>
+          <button class="btn btn-fake" id="btn-fake">
+            <i class="fas fa-times-circle"></i> إيميل مزيف
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Congrats Screen -->
+<!-- Congrats screen -->
 <div id="congrats-screen" class="hidden">
   <h1>🎉 مبروك خلصت المستوى الأول!</h1>
   <p>مستعد للمستوى الثاني؟ 👀</p>
@@ -354,6 +351,7 @@
   <script defer src="main.js"></script>
 </body>
 </html>
+
 
 
 
