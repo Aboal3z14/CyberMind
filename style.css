@@ -457,7 +457,7 @@ button:hover {
   height: 100vh;
   background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
   padding: 20px;
-  z-index: 1000; 
+  z-index: 950; 
 }
 
 /* Monitor */
@@ -744,6 +744,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
