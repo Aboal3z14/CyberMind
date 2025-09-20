@@ -771,7 +771,78 @@ button:hover {
   color: #00ffff;
 }
 
+/* ======================================
+   🎨 LEVEL 3:Mobile Defender
+   ====================================== */
 
+#level3-screen {
+  text-align: center;
+  padding: 20px;
+  color: #00ffff;
+  font-family: "Cairo", sans-serif;
+}
+
+#level3-screen .instructions {
+  background: rgba(0,255,255,0.1);
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+#level3-screen .progress-bar {
+  width: 80%;
+  height: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  margin: 10px auto;
+  overflow: hidden;
+}
+
+#level3-progress {
+  height: 100%;
+  width: 0%;
+  background: lime;
+  transition: width 0.3s ease;
+}
+
+#level3-screen .score-box {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.apps-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.app {
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.app:hover {
+  transform: scale(1.05);
+  background: rgba(0, 255, 255, 0.2);
+}
+
+.app.selected {
+  background: #ff0066;
+  border-color: #ff0066;
+}
+
+#level3-feedback {
+  margin-top: 15px;
+  font-size: 18px;
+}
 
 
 
