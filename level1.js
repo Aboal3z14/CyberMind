@@ -206,12 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // 📝 FUNCTIONS
   // -------------------------------
 
-    if (mailApp) {
+  if (mailApp) {
     mailApp.addEventListener("click", () => {
       document.getElementById("emails-container").classList.remove("hidden");
      
     });
-  }
+ }
   
   function loadRandomEmail() {
     if (levelEmailsRemaining < 1 || levelEmails.length === 0) {
