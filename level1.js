@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const correctAnswersDisplay = document.getElementById("correct-answers");
 
   const nextLevelBtn = document.getElementById("go-to-level2");
+  const mail-app = document.getElementById("mail-app");
 
   // -------------------------------
   // 📧 EMAILS DATA (same as before)...
@@ -204,6 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // 📝 FUNCTIONS
   // -------------------------------
+
+    if (mail-app) {
+    mail-app.addEventListener("click", () => {
+      document.getElementById("emails-container").classList.remove("hidden");
+     
+    });
+  }
   
   function loadRandomEmail() {
     if (levelEmailsRemaining < 1 || levelEmails.length === 0) {
