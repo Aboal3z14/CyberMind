@@ -844,9 +844,144 @@ button:hover {
   font-size: 18px;
 }
 
+/* Congratulation Screen */
+#level3-congrats-screen {
+  position: fixed;
+  top: 50%;               
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 80%;            
+  height: 50vh;           
+  background: #0d0d0d;
+  color: #00ff99;
+  font-family: "Cairo", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 999;
+}
 
+#level3-congrats-screen h1 {
+  margin-bottom: 15px;
+}
 
+#level3-congrats-screen p {
+  margin-bottom: 15px;
+  color: #00ffff;
+}
 
+/* ======================================
+   🎨 LEVEL 4:Social Eng
+   ====================================== */
+
+#level4-screen {
+  text-align: center;
+  padding: 20px;
+  color: #00ffff;
+  font-family: "Cairo", sans-serif;
+}
+
+#level4-screen .instructions {
+  background: rgba(0,255,255,0.1);
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+#level4-screen .progress-bar {
+  width: 80%;
+  height: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  margin: 10px auto;
+  overflow: hidden;
+}
+
+#level4-progress {
+  height: 100%;
+  width: 0%;
+  background: lime;
+  transition: width 0.3s ease;
+}
+
+#level4-screen .score-box {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.usb-container {
+  margin: 20px;
+}
+
+.usb-img {
+  width: 120px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 300px;
+}
+
+.usb-choice {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.usb-choice:hover {
+  background: rgba(0, 255, 255, 0.3);
+}
+
+#level4-feedback {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+/* Congratulation Screen */
+#level4-congrats-screen {
+  position: fixed;
+  top: 50%;               
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 80%;            
+  height: 50vh;           
+  background: #0d0d0d;
+  color: #00ff99;
+  font-family: "Cairo", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 999;
+}
+
+#level4-congrats-screen h1 {
+  margin-bottom: 15px;
+}
+
+#level4-congrats-screen p {
+  margin-bottom: 15px;
+  color: #00ffff;
+}
 
 
 
