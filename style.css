@@ -455,15 +455,13 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
   padding: 20px;
-  z-index: 9999; 
-  body {
+  z-index: 9999;
+  position: relative;
   background-image: url("https://media.istockphoto.com/id/913086940/photo/office-desk-with-large-pc-computer-screen-with-green-background-template.jpg?s=170667a&w=0&k=20&c=stl79m5YK6v1fuUuWc2ikJ8KIyhjb0uG9WiHn_sTPac=");
-  background-size: cover;      /* fill the page */
-  background-position: center; /* keep it centered */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-}
 }
 
 /* Monitor */
@@ -767,6 +765,7 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
+
 
 
 
