@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // 🔢 GAME STATE VARIABLES
   // -------------------------------
+  
   let levelScore = 0;
   let levelCorrectAnswers = 0;
   let levelEmailsRemaining = 5;
