@@ -68,8 +68,12 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
 
       document.getElementById("level2-screen").classList.add("hidden");
       document.getElementById("level2-congrats-screen").classList.remove("hidden");
-      const currentUser = localStorage.getItem("currentUser"); 
+
+
+      const currentUser = localStorage.getItem("currentUser");
       completeLevel(currentUser, "level2", "🔒 Digital Lockmaster");
+
+      
       alert("🎉 ممتاز! خلصت Level 2، كل كلماتك السريّة قوية 💪");
     }
   } else {
