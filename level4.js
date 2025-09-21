@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     disgusted: 0
   };
 
-  
   let dominantEmotion = "neutral"; // default
 
   // Track used scenarios to avoid repetition
