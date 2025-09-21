@@ -82,7 +82,7 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
-      document.getElementById("level2-screen").classList.add("hidden");
+      document.getElementById("level2-congrats-screen").classList.add("hidden");
       document.getElementById("go-to-level3").classList.add("hidden");
       document.getElementById("level3-screen").classList.remove("hidden");
      
