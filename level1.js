@@ -341,6 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
       document.getElementById("congrats-screen").classList.add("hidden");
+      document.getElementById("go-to-level2").classList.add("hidden");
       document.getElementById("level2-screen").classList.remove("hidden");
      
     });
@@ -351,4 +352,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   initLevel1();
 });
-
