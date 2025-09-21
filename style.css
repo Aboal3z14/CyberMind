@@ -759,18 +759,33 @@ button:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 999;
+  z-index: 999;;
 }
 
 #level2-congrats-screen h1 {
+  font-size: 3rem;
   margin-bottom: 15px;
 }
 
 #level2-congrats-screen p {
-  margin-bottom: 15px;
-  color: #00ffff;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
 }
 
+#level2-congrats-screen .btn {
+  padding: 12px 25px;
+  background: #00ff99;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+#level2-congrats-screen .btn:hover {
+  background: #00cc77;
+}
 /* ======================================
    🎨 LEVEL 3:Mobile Defender
    ====================================== */
@@ -868,16 +883,32 @@ button:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 999;
+  z-index: 999;;
 }
 
 #level3-congrats-screen h1 {
+  font-size: 3rem;
   margin-bottom: 15px;
 }
 
 #level3-congrats-screen p {
-  margin-bottom: 15px;
-  color: #00ffff;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+
+#level3-congrats-screen .btn {
+  padding: 12px 25px;
+  background: #00ff99;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+#level3-congrats-screen .btn:hover {
+  background: #00cc77;
 }
 
 /* ======================================
@@ -885,93 +916,123 @@ button:hover {
    ====================================== */
 
 #level4-screen {
-  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
   padding: 20px;
-  color: #00ffff;
-  z-index: 9999;
-  position: relative;
-  justify-content: center;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  font-family: "Cairo", sans-serif;
-  align-content: center;
-  flex-wrap: nowrap;
   align-items: center;
+  font-family: 'Cairo', sans-serif;
 }
 
 #level4-screen .instructions {
-  background: rgba(0,255,255,0.1);
-  border: 1px solid #00ffff;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-#level4-screen .progress-bar {
-  width: 80%;
-  height: 15px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  margin: 10px auto;
-  overflow: hidden;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 800px;
 }
 
-#level4-progress {
-  height: 100%;
-  width: 0%;
-  background: lime;
-  transition: width 0.3s ease;
+#level4-screen .stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
 }
 
-#level4-screen .score-box {
-  margin: 10px 0;
-  font-size: 18px;
+#level4-screen .stat-item {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 100px;
 }
 
-.usb-container {
-  margin: 20px;
+#level4-screen .stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00ffcc;
 }
 
-.usb-img {
-  width: 120px;
-  animation: pulse 2s infinite;
+#level4-screen .stat-label {
+  font-size: 14px;
+  color: #ccc;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+.scenario-container {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  padding: 25px;
+  max-width: 700px;
+  width: 90%;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
-.choices {
+.scenario-title {
+  color: #00ffcc;
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.scenario-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.scenario-options {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 20px auto;
-  max-width: 300px;
 }
 
-.usb-choice {
-  padding: 12px;
-  font-size: 16px;
+.option-btn {
+  background: rgba(0, 0, 0, 0.3);
   border: 2px solid #00ffff;
-  background: rgba(0, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
+  padding: 12px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.3s;
+  text-align: right;
 }
 
-.usb-choice:hover {
-  background: rgba(0, 255, 255, 0.3);
+.option-btn:hover {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+.option-btn.correct {
+  background: rgba(0, 255, 0, 0.2);
+  border-color: #00ff00;
+}
+
+.option-btn.incorrect {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: #ff0000;
 }
 
 #level4-feedback {
+  min-height: 60px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
   margin-top: 15px;
-  font-size: 18px;
 }
 
-/* Congratulation Screen */
 #level4-congrats-screen {
   position: fixed;
   top: 50%;               
@@ -987,14 +1048,39 @@ button:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 999;
+  z-index: 999;;
 }
 
 #level4-congrats-screen h1 {
+  font-size: 3rem;
   margin-bottom: 15px;
 }
 
 #level4-congrats-screen p {
-  margin-bottom: 15px;
-  color: #00ffff;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+
+#level4-congrats-screen .btn {
+  padding: 12px 25px;
+  background: #00ff99;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+#level4-congrats-screen .btn:hover {
+  background: #00cc77;
+}
+
+.emotion-badge {
+  display: inline-block;
+  background: rgba(0, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 0 5px;
+  font-size: 14px;
 }
