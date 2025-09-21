@@ -256,39 +256,37 @@
   � LEVEL 4: Social Engineering
   ======================================= -->
 
+<!-- level4.html -->
 <div id="level4-screen" class="level-screen hidden">
-  <h1>💾 فخ الفلاشة</h1>
-
-  <!-- التعليمات -->
+  <h1>🔓 الهندسة الاجتماعية</h1>
+  
   <div class="instructions">
-    ⚠️ لقيت فلاشة مرمية. هل هتغامر وتوصلها بجهازك ولا هتتصرف صح؟
+    <p>مهمتك: اكتشف محاولات التلاعب النفسي والخداع في 3 مواقف مختلفة.</p>
+    <p>سايبر بودي هيساعدك بناءً على تعابير وشك! 🤖</p>
   </div>
 
-  <!-- صورة الفلاشة -->
-  <div class="usb-container">
-    <img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" alt="USB" class="usb-img">
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level4-score">0</div>
+      <div class="stat-label">النقاط</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="scenarios-remaining">3</div>
+      <div class="stat-label">المواقف المتبقية</div>
+    </div>
   </div>
 
-  <!-- خيارات التفاعل -->
-  <div class="choices">
-    <button class="usb-choice" data-correct="false">🔌 أجرب أشوف إيه اللي عليها</button>
-    <button class="usb-choice" data-correct="true">🙅‍♂️ ما افتحهاش و أديها للـ IT</button>
-    <button class="usb-choice" data-correct="true">📞 أبلغ المسئول في المدرسة/الشركة</button>
-    <button class="usb-choice" data-correct="false">👀 أديها لزميلي يجربها</button>
+  <div class="scenario-container" id="scenario-container">
   </div>
 
-  <!-- شريط التقدم -->
-  <div class="progress-bar">
-    <div id="level4-progress" class="progress-fill"></div>
-  </div>
-
-  <!-- عداد المحاولات -->
-  <div class="score-box">محاولاتك: <span id="level4-score">0</span></div>
-
-  <!-- فيدباك -->
-  <div id="level4-feedback" class="feedback"></div>
+  <div class="feedback" id="level4-feedback"></div>
 </div>
 
+<div id="level4-congrats-screen" class="hidden">
+  <h1>🎉 ممتاز! خلصت المستوى الرابع!</h1>
+  <p>أصبحت الآن أكثر وعيًا بمحاولات التلاعب النفسي!</p>
+  <button class="btn" id="go-to-level5">➡️ المستوى التالي</button>
+</div>
   <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
   ====================================== -->
@@ -428,22 +426,3 @@
   <script defer src="main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
