@@ -779,7 +779,15 @@ button:hover {
   text-align: center;
   padding: 20px;
   color: #00ffff;
+  z-index: 9999;
+  position: relative;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
   font-family: "Cairo", sans-serif;
+  align-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 #level3-screen .instructions {
@@ -880,7 +888,15 @@ button:hover {
   text-align: center;
   padding: 20px;
   color: #00ffff;
+  z-index: 9999;
+  position: relative;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
   font-family: "Cairo", sans-serif;
+  align-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 #level4-screen .instructions {
@@ -982,31 +998,3 @@ button:hover {
   margin-bottom: 15px;
   color: #00ffff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
