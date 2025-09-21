@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreEl = document.getElementById("level4-score");
   const cyberBuddy = document.getElementById("cyberbuddy");
 
+
   let score = 0;
   let attempts = 0;
 
