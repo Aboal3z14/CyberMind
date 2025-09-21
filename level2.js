@@ -78,4 +78,11 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   // Clear inputs for next attempt
   document.getElementById("password1").value = "";
   document.getElementById("password2").value = "";
+  if (nextLevelBtn) {
+    nextLevelBtn.addEventListener("click", () => {
+      document.getElementById("congrats-screen").classList.add("hidden");
+      document.getElementById("level2-screen").classList.remove("hidden");
+     
+    });
+  }
 });
