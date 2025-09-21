@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level4");
 
+  
   let score = 0;
 
   
