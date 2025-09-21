@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       const currentUser = localStorage.getItem("currentUser");
-      completeLevel(currentUser, "level3", "🗣️ Human Firewall");
+      completeLevel(currentUser, "level3", "� Social Engineering Aware");
 
       
       document.getElementById("level3-screen").classList.add("hidden");
