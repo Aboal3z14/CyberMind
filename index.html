@@ -247,10 +247,48 @@
 </div>
   
 <div id="level3-congrats-screen" class="hidden">
-  <h1>🎉 ممتاز! خلصت المستوى الثاني!</h1>
-  <p>كل كلماتك السريّة قوية 💪</p>
-  <button class="btn" id="go-to-level4">➡️ روح للمستوى الثالث</button>
+  <h1>🎉 ممتاز! خلصت المستوى الثالث!</h1>
+  <p>لقد كشفت كل البرامج الخبيثة 💪</p>
+  <button class="btn" id="go-to-level4">➡️ روح للمستوى الرابع</button>
 </div>
+
+<!-- ======================================
+  � LEVEL 4: Social Engineering
+  ======================================= -->
+
+<div id="level4-screen" class="level-screen hidden">
+  <h1>💾 فخ الفلاشة</h1>
+
+  <!-- التعليمات -->
+  <div class="instructions">
+    ⚠️ لقيت فلاشة مرمية. هل هتغامر وتوصلها بجهازك ولا هتتصرف صح؟
+  </div>
+
+  <!-- صورة الفلاشة -->
+  <div class="usb-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" alt="USB" class="usb-img">
+  </div>
+
+  <!-- خيارات التفاعل -->
+  <div class="choices">
+    <button class="usb-choice" data-correct="false">🔌 أجرب أشوف إيه اللي عليها</button>
+    <button class="usb-choice" data-correct="true">🙅‍♂️ ما افتحهاش و أديها للـ IT</button>
+    <button class="usb-choice" data-correct="true">📞 أبلغ المسئول في المدرسة/الشركة</button>
+    <button class="usb-choice" data-correct="false">👀 أديها لزميلي يجربها</button>
+  </div>
+
+  <!-- شريط التقدم -->
+  <div class="progress-bar">
+    <div id="level4-progress" class="progress-fill"></div>
+  </div>
+
+  <!-- عداد المحاولات -->
+  <div class="score-box">محاولاتك: <span id="level4-score">0</span></div>
+
+  <!-- فيدباك -->
+  <div id="level4-feedback" class="feedback"></div>
+</div>
+
   <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
   ====================================== -->
@@ -386,10 +424,10 @@
   <script defer src="level1.js"></script>
   <script defer src="level2.js"></script>
   <script defer src="level3.js"></script>
+  <script defer src="level4.js"></script>
   <script defer src="main.js"></script>
 </body>
 </html>
-
 
 
 
