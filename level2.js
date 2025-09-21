@@ -79,10 +79,12 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   // Clear inputs for next attempt
   document.getElementById("password1").value = "";
   document.getElementById("password2").value = "";
+  
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
       document.getElementById("level2-screen").classList.add("hidden");
-      document.getElementById("level2congrats-screen").classList.remove("hidden");
+      document.getElementById("go-to-level3").classList.add("hidden");
+      document.getElementById("level2-congrats-screen").classList.remove("hidden");
      
     });
   }
