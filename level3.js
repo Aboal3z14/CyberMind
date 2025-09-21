@@ -6,10 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreEl = document.getElementById("level3-score");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level4");
-
   
   let score = 0;
-
   
   apps.forEach(app => {
     app.addEventListener("click", () => {
