@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let dominantEmotion = "neutral"; // default
 
   // Track used scenarios to avoid repetition
+  
   let usedScenarios = {
     easy: [],
     medium: [],
