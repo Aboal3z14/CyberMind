@@ -39,6 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       setTimeout(() => {
       }, 2000);
+
+
+      const currentUser = localStorage.getItem("currentUser");
+      completeLevel(currentUser, "level3", "🗣️ Human Firewall");
+
+      
       document.getElementById("level3-screen").classList.add("hidden");
       document.getElementById("level3-congrats-screen").classList.remove("hidden");
       document.getElementById("go-to-level4").classList.remove("hidden");
