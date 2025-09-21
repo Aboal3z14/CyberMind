@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let score = 0;
 
+  
   apps.forEach(app => {
     app.addEventListener("click", () => {
       app.classList.toggle("selected");
