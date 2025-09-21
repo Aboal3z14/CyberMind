@@ -1,5 +1,6 @@
 const cyberBuddy = document.getElementById("cyberbuddy");
 const validCountEl = document.getElementById("validCount");
+const nextLevelBtn = document.getElementById("go-to-level3");
 let validPasswords = 0;
 
 // ------------------
@@ -80,8 +81,8 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   document.getElementById("password2").value = "";
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
-      document.getElementById("congrats-screen").classList.add("hidden");
-      document.getElementById("level2-screen").classList.remove("hidden");
+      document.getElementById("level2-screen").classList.add("hidden");
+      document.getElementById("level2congrats-screen").classList.remove("hidden");
      
     });
   }
