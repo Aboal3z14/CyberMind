@@ -39,6 +39,7 @@ function sendCyberBuddyHint(promptText) {
 // ------------------
 // Handle Password Check
 // ------------------
+
 document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   const pw1 = document.getElementById("password1").value;
   const pw2 = document.getElementById("password2").value;
