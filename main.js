@@ -12,6 +12,7 @@ const API_BASE = "https://cybermind-backend-i44u.onrender.com";
 document.addEventListener("DOMContentLoaded", () => {
   console.log("main.js loaded ✅");
 
+  
   // Buttons & elements
   const signupBtn = document.getElementById("signup-btn");
   const loginBtn = document.getElementById("login-btn");
@@ -604,3 +605,4 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
