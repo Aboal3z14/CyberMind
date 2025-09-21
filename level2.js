@@ -6,6 +6,7 @@ let validPasswords = 0;
 // ------------------
 // Password Strength Estimation
 // ------------------
+
 function estimateCrackTime(password) {
   let score = 0;
   score += password.length * 2;
