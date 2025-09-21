@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level4-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level5");
+
   
   // Social engineering scenarios by difficulty
   const scenarios = {
