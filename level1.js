@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // 🔢 GAME STATE VARIABLES
   // -------------------------------
-  
   let levelScore = 0;
   let levelCorrectAnswers = 0;
   let levelEmailsRemaining = 5;
@@ -305,10 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function endLevel() {
     btnReal.disabled = true;
     btnFake.disabled = true;
-  
+    document.getElementById("final-level1-score").textContent = levelCorrectAnswers*10;
+
     if (levelCorrectAnswers >= 3) {
       document.getElementById("level1-screen").classList.add("hidden");
-      document.getElementById("congrats-screen").classList.remove("hidden");
+      document.getElementById("level1-congrats-screen").classList.remove("hidden");
       document.getElementById("go-to-level2").classList.remove("hidden");
   
       if (cyberBuddy) cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br> مبروك خلصت المستوى الأول! 🎉`;
@@ -341,12 +341,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
-      document.getElementById("congrats-screen").classList.add("hidden");
+      document.getElementById("level1-congrats-screen").classList.add("hidden");
       document.getElementById("go-to-level2").classList.add("hidden");
       document.getElementById("level2-screen").classList.remove("hidden");
-     
     });
   }
+  
 
   // -------------------------------
   // ▶️ START GAME
