@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         
     const currentUser = localStorage.getItem("currentUser");
-    completeLevel(currentUser, "level4", "🗣️ Human Firewall");
+    completeLevel(currentUser, "level4", "👨🏻‍💻 Social Engineering Aware");
     
   }
 
