@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let dominantEmotion = "neutral"; // default
 
   // Track used scenarios to avoid repetition
-  
   let usedScenarios = {
     easy: [],
     medium: [],
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level4-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level5");
-
   
   // Social engineering scenarios by difficulty
   const scenarios = {
@@ -258,10 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load first scenario
     loadNextScenario();
     
-    // Setup CyberBuddy initial message
-    if (cyberBuddy) {
-      cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>شعورك اليوم: <span class="emotion-badge">${dominantEmotion}</span>. هنبدأ بمستوى ${currentDifficulty === 'easy' ? 'سهل' : currentDifficulty === 'medium' ? 'متوسط' : 'صعب'} بناءً على مزاجك.`;
-    }
   }
 
   // Handle user's answer
@@ -293,6 +287,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End the level
   function endLevel() {
+    document.getElementById("final-level4-score").textContent = level4Score;
+
     document.getElementById("level4-screen").classList.add("hidden");
     document.getElementById("level4-congrats-screen").classList.remove("hidden");
     
@@ -313,23 +309,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nextLevelBtn) {
     nextLevelBtn.addEventListener("click", () => {
       document.getElementById("level4-congrats-screen").classList.add("hidden");
+      document.getElementById("go-to-level5").classList.add("hidden");
+      document.getElementById("level5-screen").classList.remove("hidden");
     });
   }
 
-  // Initialize level 4 when the screen is shown
-  const level4Screen = document.getElementById("level4-screen");
-  if (level4Screen) {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (!mutation.target.classList.contains('hidden')) {
-          initLevel4();
-        }
-      });
-    });
-    
-    observer.observe(level4Screen, { 
-      attributes: true, 
-      attributeFilter: ['class'] 
-    });
-  }
+  initLevel4();
 });
