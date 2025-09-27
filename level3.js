@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("final-level3-score").textContent = 30;
 
       const currentUser = localStorage.getItem("currentUser");
-      completeLevel(currentUser, "level3", "� Social Engineering Aware");
+      completeLevel(currentUser, "level3", "📱 Mobile Defender");
 
 
       document.getElementById("level3-screen").classList.add("hidden");
