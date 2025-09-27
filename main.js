@@ -100,10 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     buddy.addEventListener("mousedown", dragStart);
     buddy.addEventListener("touchstart", dragStart, { passive: false });
   }
-
-  // Init badges + matrix background
-  initBadges();
-  initMatrix();
 });
 
 // ============================================
@@ -313,7 +309,7 @@ function startGame() {
 }
 function startLevel() {
   document.getElementById("menu-screen").classList.add("hidden");
-  document.getElementById("level1-screen").classList.remove("hidden");
+  document.getElementById("level11-screen").classList.remove("hidden");
 }
 function showBadges() {
   openOverlay("badgesOverlay");
@@ -436,9 +432,9 @@ const badgeRequirements = {
     '🧠 Phishing Analyst': ['level2'],
     '🔒 Digital Lockmaster': ['level3'],
     '📱 Mobile Defender': ['level4'],
-    '� Social Engineering Aware': ['level5'],
+    '👨🏻‍💻 Social Engineering Aware': ['level5'],
     '🧱 Human Firewall': ['level6'],
-    '� Backup Guardian': ['level7'],
+    '💾 Backup Guardian': ['level7'],
     '🌐 Network Defender': ['level8'],
     '🧠 App Investigator': ['level9'],
     '🔥 Firewall Commander': ['level10'],
