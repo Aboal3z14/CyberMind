@@ -415,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const user = localStorage.getItem("currentUser");
-    if (typeof completeLevel === 'function') completeLevel(user, "level6", "💾 Guardian Backup");
+    if (typeof completeLevel === 'function') completeLevel(user, "level6", "💾 Backup Guardian");
   }
 
   // -------------------------------
