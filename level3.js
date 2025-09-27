@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level4");
 
-  
   let score = 0;
 
   
@@ -41,11 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
       }, 2000);
 
+      document.getElementById("final-level3-score").textContent = 30;
 
       const currentUser = localStorage.getItem("currentUser");
       completeLevel(currentUser, "level3", "� Social Engineering Aware");
 
-      
+
       document.getElementById("level3-screen").classList.add("hidden");
       document.getElementById("level3-congrats-screen").classList.remove("hidden");
       document.getElementById("go-to-level4").classList.remove("hidden");
