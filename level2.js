@@ -6,7 +6,6 @@ let validPasswords = 0;
 // ------------------
 // Password Strength Estimation
 // ------------------
-
 function estimateCrackTime(password) {
   let score = 0;
   score += password.length * 2;
@@ -39,7 +38,6 @@ function sendCyberBuddyHint(promptText) {
 // ------------------
 // Handle Password Check
 // ------------------
-
 document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   const pw1 = document.getElementById("password1").value;
   const pw2 = document.getElementById("password2").value;
@@ -67,7 +65,9 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
 
     if (validPasswords >= 3) {
 
+      document.getElementById("final-level2-score").textContent = 30;
 
+      
       document.getElementById("level2-screen").classList.add("hidden");
       document.getElementById("level2-congrats-screen").classList.remove("hidden");
 
@@ -76,7 +76,6 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
       completeLevel(currentUser, "level2", "🔒 Digital Lockmaster");
 
       
-      alert("🎉 ممتاز! خلصت Level 2، كل كلماتك السريّة قوية 💪");
     }
   } else {
     sendCyberBuddyHint("كلمة السر ضعيفة، اعطيه نصايح لتحسينها باللهجة المصرية");
