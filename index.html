@@ -161,10 +161,11 @@
 </div>
 
 <!-- Congrats screen -->
-<div id="congrats-screen" class="hidden">
-  <h1>🎉 مبروك خلصت المستوى الأول!</h1>
-  <p>مستعد للمستوى الثاني؟ 👀</p>
-  <button class="btn" id="go-to-level2">➡️ روح للمستوى الثاني</button>
+<div id="level1-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى الأول!</h1>
+  <div class="final-score">النتيجة: <span id="final-level1-score">0</span>/50 نقطة</div>
+  <p>أنت دلوقتي خبير كشف الإيميلات المزيفة! 📧</p>
+  <button class="btn" id="go-to-level2">➡️ المستوى التالي - أنشئ كلمات سر قوية</button>
 </div>
 
 
@@ -204,10 +205,11 @@
   </div>
 </div>
 
-<div id="level2-congrats-screen" class="hidden">
-  <h1>🎉 ممتاز! خلصت المستوى الثاني!</h1>
-  <p>كل كلماتك السريّة قوية 💪</p>
-  <button class="btn" id="go-to-level3">➡️ روح للمستوى الثالث</button>
+<div id="level2-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى الثاني!</h1>
+  <div class="final-score">النتيجة: <span id="final-level2-score">0</span>/30 نقطة</div>
+  <p>كل كلماتك السريّة قوية جدًا! 🔒</p>
+  <button class="btn" id="go-to-level3">➡️ المستوى التالي - Defender Mobile</button>
 </div>
 
 <!-- ======================================
@@ -246,10 +248,12 @@
   <div id="level3-feedback" class="feedback"></div>
 </div>
   
-<div id="level3-congrats-screen" class="hidden">
-  <h1>🎉 ممتاز! خلصت المستوى الثالث!</h1>
-  <p>لقد كشفت كل البرامج الخبيثة 💪</p>
-  <button class="btn" id="go-to-level4">➡️ روح للمستوى الرابع</button>
+<!-- Level 3 Congrats Screen -->
+<div id="level3-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى الثالث!</h1>
+  <div class="final-score">النتيجة: <span id="final-level3-score">0</span>/30 نقطة</div>
+  <p>كشفت كل البرامج الخبيثة! 📱</p>
+  <button class="btn" id="go-to-level4">➡️ المستوى التالي - الهندسة الاجتماعية</button>
 </div>
 
 <!-- ======================================
@@ -282,10 +286,250 @@
   <div class="feedback" id="level4-feedback"></div>
 </div>
 
-<div id="level4-congrats-screen" class="hidden">
-  <h1>🎉 ممتاز! خلصت المستوى الرابع!</h1>
-  <p>أصبحت الآن أكثر وعيًا بمحاولات التلاعب النفسي!</p>
-  <button class="btn" id="go-to-level5">➡️ المستوى التالي</button>
+<div id="level4-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى الرابع!</h1>
+  <div class="final-score">النتيجة: <span id="final-level4-score">0</span>/30 نقطة</div>
+  <p>كتشف محاولات التلاعب النفسي والخداع ! 📱</p>
+  <button class="btn" id="go-to-level5">➡️ المستوى التالي - فخ الدعم الفني</button>
+</div>
+
+<!-- ======================================
+  � LEVEL 5: FIREWALL HUMAN (with 3 options each)
+  ======================================= -->
+<div id="level5-screen" class="level-screen hidden">
+  <h1>🗣️ فخ الدعم الفني</h1>
+  
+  <div class="instructions">
+    <p>مهمتك: ازاي هتتصرف مع مكالمات مزيفة تطلب بياناتك؟</p>
+    <p>سايبر بودي هيساعدك ويلاحظ تعابير وشك! 🤖</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level5-score">0</div>
+      <div class="stat-label">النقاط</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="calls-remaining">6</div>
+      <div class="stat-label">المكالمات المتبقية</div>
+    </div>
+  </div>
+
+  <div class="scenario-container" id="level5-container">
+    <!-- يتم إدخال الأسئلة والخيارات من خلال JavaScript -->
+  </div>
+
+  <div class="feedback" id="level5-feedback"></div>
+</div>
+
+<div id="level5-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى الخامس!</h1>
+  <div class="final-score">النتيجة: <span id="final-level5-score">0</span>/50 نقطة</div>
+  <p>أنت دلوقتي خبير في كشف المكالمات المزيفة! 🗣️</p>
+  <button class="btn" id="go-to-level6">➡️ المستوى التالي - Guardian Backup</button>
+</div>
+
+<!-- ======================================
+   LEVEL 6: 💾 Guardian Backup
+  ======================================= -->
+
+<div id="level6-screen" class="level-screen hidden">
+  <h1>💾 Guardian Backup - لعبة الاستجابة للفدية</h1>
+  
+  <div class="instructions">
+    <p><strong>🎮 اللعبة:</strong> اسحب واترك الخطوات في الترتيب الصحيح للتعامل مع هجوم الفدية!</p>
+    <p>سايبر بودي هيساعدك ويلاحظ تعابيرك! 🤖</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level6-score">0</div>
+      <div class="stat-label">النقاط</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="calls-remaining"><span id="level6-calls-remaining">3</span></div>
+      <div class="stat-label">السيناريوهات المتبقية</div>
+    </div>
+  </div>
+
+  <div class="scenario-container" id="level6-container">
+    <!-- اللعبة التفاعلية هتتحمل هنا -->
+  </div>
+
+  <div class="feedback" id="level6-feedback"></div>
+</div>
+
+<div id="level6-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت المستوى السادس!</h1>
+  <div class="final-score">النتيجة: <span id="final-level6-score">0</span>/45 نقطة</div>
+  <p>أنت دلوقتي خبير ترتيب خطوات الاستجابة للفدية! 💾</p>
+  <button class="btn" id="go-to-level7">➡️ المستوى التالي - Defender Network</button>
+</div>
+<!-- ======================================
+   LEVEL 7: 🌐 Defender Network
+  ======================================= -->
+
+<div id="level7-screen" class="level-screen hidden">
+  <h1>🌐 Defender Network - لعبة كشف الاختراق</h1>
+  
+  <div class="instructions">
+    <p><strong>🎮 اللعبة:</strong> اضغط على العقد لتربط بينها واكتشف مسار الهجوم!</p>
+    <p>العقد الحمرا = التهديدات | العقد الزرقا = الأجهزة | العقد الخضرا = الشبكة</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level7-score"><span id="level7-calls-remaining">3</span></div>
+      <div class="stat-label">النقاط</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="calls-remaining">3</div>
+      <div class="stat-label">الشبكات المتبقية</div>
+    </div>
+  </div>
+
+  <div class="scenario-container" id="level7-container">
+    <!-- اللعبة الشبكية هتتحمل هنا -->
+  </div>
+
+  <div class="feedback" id="level7-feedback"></div>
+</div>
+
+<div id="level7-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت لعبة الشبكات!</h1>
+  <div class="final-score">النتيجة: <span id="final-level7-score">0</span>/45 نقطة</div>
+  <p>أنت دلوقتي محقق شبكات محترف! 🌐</p>
+  <button class="btn" id="go-to-level8">➡️ المستوى التالي - VPN Buddy</button>
+</div>
+<!-- ======================================
+   LEVEL 8: 🌐 VPN Buddy
+  ======================================= -->
+<div id="level8-screen" class="level-screen hidden">
+  <h1>🔍 App Investigator - محقق التطبيقات</h1>
+  
+  <div class="instructions">
+    <p><strong>🎮 اللعبة:</strong> افحص التطبيقات واكتشف اللي مش آمنة! اضغط عليها لتحليلها وشوف معلوماتها. هناك 7 تطبيقات، 4 منها VPN (3 غير آمنة و1 آمنة)، الباقي تطبيقات عامة. ركز على الصلاحيات والتقييمات لتحديد الآمنة من الغير آمنة.</p>
+    <p>اضغط على كل تطبيق، ثم حدد إذا كان آمن أو غير آمن. اختيار صحيح = +10 نقاط، خطأ = -5 نقاط.</p>
+    <p>اكمل تحليل كل التطبيقات لإنهاء المستوى!</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level8-score">0</div>
+      <div class="stat-label">النقاط</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="level8-apps-analyzed">0</div>
+      <div class="stat-label">التطبيقات المحللة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="level8-apps-total">7</div>
+      <div class="stat-label">إجمالي التطبيقات</div>
+    </div>
+  </div>
+
+  <div class="scenario-container" id="level8-container">
+    <!-- التطبيقات هتظهر هنا كأيقونات تفاعلية -->
+  </div>
+
+  <div class="feedback" id="level8-feedback"></div>
+  <div class="overlay hidden" id="level8-overlay">
+    <div class="overlay-content">
+      <h2 id="app-title">تفاصيل التطبيق</h2>
+      <p id="app-downloads">عدد التنزيلات: <span id="downloads-value"></span></p>
+      <p id="app-rating">التقييم: <span id="rating-value"></span>/5</p>
+      <div id="app-reviews">
+        <h3>التقييمات:</h3>
+        <ul id="reviews-list"></ul>
+      </div>
+      <div id="app-permissions">
+        <h3>الصلاحيات المطلوبة:</h3>
+        <ul id="permissions-list"></ul>
+      </div>
+      <button class="btn" id="mark-safe">آمن</button>
+      <button class="btn" id="mark-unsafe">غير آمن</button>
+    </div>
+  </div>
+</div>
+
+<div id="level8-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! خلّصت تحقيق التطبيقات!</h1>
+  <div class="final-score">النتيجة: <span id="final-level8-score">0</span> /70 نقطة</div>
+  <p>أنت دلوقتي محقق تطبيقات محترف! 🔍</p>
+  <button class="btn" id="go-to-level9">➡️ المستوى التالي - Firewall Commander</button>
+</div>
+<!-- ======================================
+   LEVEL 9: 🔥 Firewall Commander
+  ======================================= -->
+<div id="level9-screen" class="level-screen hidden">
+  <h1>🛡️ Firewall Commander - قائد الجدار الناري</h1>
+  
+  <div class="instructions">
+    <p><strong>🎮 اللعبة:</strong> اكتب الأوامر الصحيحة لصد الهجمات السيبرانية!</p>
+    <p>اختر الأوامر من القائمة المتاحة لإغلاق الثغرات في كل سيناريو.</p>
+    <p>الشعور يحدد الصعوبة: مفاجأة = صعب (أوامر أكثر)، سعيد/محايد = متوسط، غيره = سهل</p>
+    <p>أكمل 3 مهام لتصبح قائد الجدار الناري!</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level9-score">0</div>
+      <div class="stat-label">النقاط الكلية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="level9-scenarios-remaining">0</div>
+      <div class="stat-label">المهام المتبقية</div>
+    </div>
+  </div>
+
+  <div class="scenario-container" id="level9-container"></div>
+  <div class="feedback" id="level9-feedback"></div>
+</div>
+
+<div id="level9-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 ممتاز! سيطرت على الجدار الناري!</h1>
+  <div class="final-score">النتيجة: <span id="level9-final-score">0</span>/45 نقطة</div>
+  <p>أنت دلوقتي Firewall Commander 🔥</p>
+  <button class="btn" id="go-to-level10">➡️ المستوى التالي - Threat Hunter</button>
+</div>
+
+<!-- ======================================
+   LEVEL 10: 👁️ Threat Hunter
+  ======================================= -->
+<div id="level10-screen" class="level-screen hidden">
+  <h1>🔍 Threat Hunter</h1>
+  
+  <div class="instructions">
+    <p><strong>🎮 اللعبة:</strong> راجع قائمة الأنشطة في الطرفية واكتشف الأنشطة المشبوهة!</p>
+    <p>حدد الأنشطة المشبوهة بالضغط على المربعات. الصيد الصحيح يمنحك 10 نقاط، لكن الخطأ يكلفك 5 نقاط!</p>
+    <p>مرر مؤشر الفأرة على النشاط للحصول على تلميحات من <strong>سايبر بودي</strong>!</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value" id="level10-score">0</div>
+      <div class="stat-label">النقاط الكلية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="level10-actions-remaining">30</div>
+      <div class="stat-label">الأنشطة المتبقية</div>
+    </div>
+  </div>
+
+  <div class="terminal" id="level10-terminal">
+    <ul class="action-list" id="level10-action-list"></ul>
+    <div class="action-controls">
+      <button class="btn-submit" onclick="submitSelections()">📤 إرسال الاختيارات</button>
+    </div>
+  </div>
+  <div class="feedback" id="level10-feedback"></div>
+</div>
+
+<div id="level10-congrats-screen" class="congrats-screen hidden">
+  <h1>🎉 مبروك! أنت صياد تهديدات محترف!</h1>
+  <div class="final-score">النتيجة: <span id="level10-final-score">0</span>/70 نقطة</div>
+  <p>لقد أثبتت مهاراتك في رصد التهديدات! 🔥</p>
+  <button class="btn" id="level10-go-to-next">➡️ المستوى الاخير - 🏆 CyberMind Master</button>
 </div>
   <!-- ======================================
   🏆 BADGES & SETTINGS OVERLAYS
@@ -315,9 +559,9 @@
                   <img src="badge5.png" alt="� Social Engineering Aware ">
                   <span class="badge-title">� Social Engineering Aware </span>
               </div>
-              <div class="badge locked" data-id="🗣️ Human Firewall"  >
-                  <img src="badge6.png" alt="🗣️ Human Firewall">
-                  <span class="badge-title">🗣️ Human Firewall</span>
+              <div class="badge locked" data-id="🧱 Human Firewall"  >
+                  <img src="badge6.png" alt="🧱 Human Firewall">
+                  <span class="badge-title">🧱 Human Firewall</span>
               </div>
               <div class="badge locked" data-id="� Backup Guardian"  >
                   <img src="badge7.png" alt="� Backup Guardian">
@@ -423,6 +667,12 @@
   <script defer src="level2.js"></script>
   <script defer src="level3.js"></script>
   <script defer src="level4.js"></script>
+  <script defer src="level5.js"></script>
+  <script defer src="level6.js"></script>
+  <script defer src="level7.js"></script>
+  <script defer src="level8.js"></script>
+  <script defer src="level9.js"></script>
+  <script defer src="level10.js"></script>
   <script defer src="main.js"></script>
 </body>
 </html>
