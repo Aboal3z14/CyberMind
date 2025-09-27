@@ -424,6 +424,9 @@ function closeOverlay(id) {
 
 let completedLevels = JSON.parse(localStorage.getItem('completedLevels')) || [];
 let usedOTP = JSON.parse(localStorage.getItem('usedOTP')) || false;
+let progressLevel = localStorage.getItem("progressLevel") 
+  ? parseInt(localStorage.getItem("progressLevel")) 
+  : 1; // لو مفيش بيانات يبدأ من 1
 
 
 // Update the badgeRequirements object to match exact data-ids from HTML
@@ -451,6 +454,7 @@ function unlockBadgeLocal(badgeId) {
 
     // Save in localStorage so it stays unlocked after refresh
     localStorage.setItem(`badge_${badgeId}`, "unlocked");
+
   }
 }
 
@@ -465,6 +469,10 @@ function completeLevel(username, levelId, badge) {
   .then(data => {
     // Directly unlock the badge in the frontend
     unlockBadgeLocal(badge);
+    progressLevel++;
+    localStorage.setItem("progressLevel", progressLevel);
+    console.log(progressLevel);
+
   })
   .catch(err => console.error("❌ Error completing level:", err));
 }
@@ -479,6 +487,26 @@ function restoreBadges() {
     }
   });
 }
+
+
+document.getElementById("continue-btn").addEventListener("click", () => {
+  let progressLevel = localStorage.getItem("progressLevel") 
+    ? parseInt(localStorage.getItem("progressLevel")) 
+    : 1;
+
+  if (progressLevel > 10) {
+    alert("🎉 مبروك! خلصت اللعبة كلها");
+    return;
+  }
+
+  let nextLevelId = "level" + progressLevel + "-screen";
+
+  document.querySelectorAll(".level-screen").forEach(s => s.classList.add("hidden"));
+  document.getElementById(nextLevelId).classList.remove("hidden");
+  document.getElementById("menu-screen").classList.add("hidden");
+
+  console.log("🎮 دخلت على:", nextLevelId);
+});
 
 
 
@@ -547,6 +575,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+
+
 // ============================================
 // 🧠 CyberBuddy API ChatGPT Link (optional)
 // ============================================
@@ -600,4 +632,3 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
-
