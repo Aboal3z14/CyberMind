@@ -535,7 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const currentUser = localStorage.getItem("currentUser");
     if (typeof completeLevel === 'function') {
-      completeLevel(currentUser, "level7", "🌐 Defender Network");
+      completeLevel(currentUser, "level7", "🌐 Network Defender");
     }
   }
 
