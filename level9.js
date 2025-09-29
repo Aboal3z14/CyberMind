@@ -251,4 +251,5 @@ System: أمر خاطئ! <small>${currentScenarioData.hint}</small></div>`;
     document.getElementById("level10-screen").classList.remove("hidden");
   });
 
+  
 });
