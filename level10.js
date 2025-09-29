@@ -164,11 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (nextLevelBtn) {
-    nextLevelBtn.addEventListener("click", () => {
-      document.getElementById("level10-congrats-screen").classList.add("hidden");
-    });
-  }
 
 
 });
