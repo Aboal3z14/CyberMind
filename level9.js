@@ -247,7 +247,7 @@ System: أمر خاطئ! <small>${currentScenarioData.hint}</small></div>`;
 
   if (nextLevelBtn) nextLevelBtn.addEventListener("click", () => {
     document.getElementById("level9-congrats-screen").classList.add("hidden");
-    ocument.getElementById("go-to-level10").classList.add("hidden");
+    document.getElementById("go-to-level10").classList.add("hidden");
     document.getElementById("level10-screen").classList.remove("hidden");
   });
 
