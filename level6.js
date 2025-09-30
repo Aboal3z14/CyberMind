@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level6-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level7");
+  const menuBtn = document.getElementById("go-to-menu-screen6");
 
   // Compact scenarios
   const scenarios = {
@@ -446,6 +447,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const level7Screen = document.getElementById("level7-screen");
       if (congratsScreen) congratsScreen.classList.add("hidden");
       if (level7Screen) level7Screen.classList.remove("hidden");
+    });
+  }
+
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      document.getElementById("level6-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 
