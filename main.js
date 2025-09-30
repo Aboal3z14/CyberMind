@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (startLevelBtn) startLevelBtn.addEventListener("click", startLevel);
   if (badgesBtn) badgesBtn.addEventListener("click", showBadges);
   if (settingsBtn) settingsBtn.addEventListener("click", showSettings);
-  if (menuscreen) menuscreen.addEventListener("click", returntomenuscreen);
 
   // Links (signup/login)
 
@@ -638,5 +637,6 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
