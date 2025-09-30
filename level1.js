@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   if (menuBtn) {
-    nextLevelBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", () => {
       document.getElementById("level1-congrats-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
     });
