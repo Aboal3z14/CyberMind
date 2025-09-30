@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const correctAnswersDisplay = document.getElementById("correct-answers");
 
   const nextLevelBtn = document.getElementById("go-to-level2");
+  const menuBtn = document.getElementById("go-to-menu-screen1");
   const mailApp = document.getElementById("mail-app");
 
   // -------------------------------
@@ -344,6 +345,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("level1-congrats-screen").classList.add("hidden");
       document.getElementById("go-to-level2").classList.add("hidden");
       document.getElementById("level2-screen").classList.remove("hidden");
+    });
+  }
+  
+  if (menuBtn) {
+    nextLevelBtn.addEventListener("click", () => {
+      document.getElementById("level1-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
   
