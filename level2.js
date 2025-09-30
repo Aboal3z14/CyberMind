@@ -1,7 +1,7 @@
 const cyberBuddy = document.getElementById("cyberbuddy");
 const validCountEl = document.getElementById("validCount");
 const nextLevelBtn = document.getElementById("go-to-level3");
-const menuBtn = document.getElementById("go-to-menu-screen2);
+const menuBtn = document.getElementById("go-to-menu-screen2");
 let validPasswords = 0;
 
 // ------------------
