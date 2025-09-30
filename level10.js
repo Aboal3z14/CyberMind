@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let actionsRemaining = 30;
   let selectedActions = new Set();
 
+  
   const scoreDisplay = document.getElementById("level10-score");
   const actionsDisplay = document.getElementById("level10-actions-remaining");
   const actionList = document.getElementById("level10-action-list");
