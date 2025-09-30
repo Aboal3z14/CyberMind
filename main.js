@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const startLevelBtn = document.getElementById("start-level-btn");
   const badgesBtn = document.getElementById("badges-btn");
   const settingsBtn = document.getElementById("settings-btn");
-  const menuscreen = document.getElementById("go-to-menu-screen");
 
   // 🔹 Attach event listeners
   if (signupBtn) {
@@ -320,19 +319,6 @@ function showBadges() {
 }
 function showSettings() { openOverlay("settingsOverlay"); }
 
-function returntomenuscreen() {
-  document.getElementById("menu-screen").classList.remove("hidden");
-  document.getElementById("level1-congrats-screen").classList.add("hidden");
-  document.getElementById("level2-congrats-screen").classList.add("hidden");
-  document.getElementById("level3-congrats-screen").classList.add("hidden");
-  document.getElementById("level4-congrats-screen").classList.add("hidden");
-  document.getElementById("level5-congrats-screen").classList.add("hidden");
-  document.getElementById("level6-congrats-screen").classList.add("hidden");
-  document.getElementById("level7-congrats-screen").classList.add("hidden");
-  document.getElementById("level8-congrats-screen").classList.add("hidden");
-  document.getElementById("level9-congrats-screen").classList.add("hidden");
-  document.getElementById("level10-congrats-screen").classList.add("hidden");
-}
 // ============================================
 // 🧠 CYBERBUDDY MOVEMENT
 // ============================================
@@ -647,3 +633,4 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
