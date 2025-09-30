@@ -96,7 +96,7 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
   }
 
   if (menuBtn) {
-    go-to-menu-screen2.addEventListener("click", () => {
+    menuBtn.addEventListener("click", () => {
       document.getElementById("level2-congrats-screen").classList.add("hidden");
       document.getElementById("menu-screen").classList.remove("hidden");
     });
