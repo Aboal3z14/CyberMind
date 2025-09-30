@@ -93,4 +93,11 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
      
     });
   }
+  const menuscreen = document.getElementById("go-to-menu-screen");
+  if (menuscreen) {
+    nextLevelBtn.addEventListener("click", () => {
+      document.getElementById("level2-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
+    });
+  }
 });
