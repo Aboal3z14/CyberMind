@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level7-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level8");
+  const menuBtn = document.getElementById("go-to-menu-screen7");
 
   // Network Attack Scenarios
   const scenarios = {
@@ -544,6 +545,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("level7-congrats-screen").classList.add("hidden");
       document.getElementById("level8-screen").classList.remove("hidden");
       document.getElementById("go-to-level8").classList.add("hidden");
+    });
+  }
+
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      document.getElementById("level7-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 
