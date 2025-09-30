@@ -123,6 +123,15 @@ document.getElementById("go-to-level9").addEventListener("click", () => {
   
 });
 
+const menuBtn = document.getElementById("go-to-menu-screen8");
+
+if (menuBtn) {
+  menuBtn.addEventListener("click", () => {
+    document.getElementById("level8-congrats-screen").classList.add("hidden");
+    document.getElementById("menu-screen").classList.remove("hidden");
+  });
+}
+
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
   setupLevel8Apps();
