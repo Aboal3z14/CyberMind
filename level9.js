@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level9-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level10");
+  const menuBtn = document.getElementById("go-to-menu-screen9");
 
   const scenarios = {
     easy: [
@@ -250,6 +251,13 @@ System: أمر خاطئ! <small>${currentScenarioData.hint}</small></div>`;
     document.getElementById("go-to-level10").classList.add("hidden");
     document.getElementById("level10-screen").classList.remove("hidden");
   });
+
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      document.getElementById("level9-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
+    });
+  }
 
   
 });
