@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level10-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("level10-go-to-next");
+  const menuBtn = document.getElementById("go-to-menu-screen10");
 
   const actions = [
     // Suspicious Actions (7)
@@ -161,6 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(level10Screen, {
       attributes: true,
       attributeFilter: ["class"]
+    });
+  }
+  if (menuBtn) {
+    nextLevelBtn.addEventListener("click", () => {
+      document.getElementById("level10-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 
