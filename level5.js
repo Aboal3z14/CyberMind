@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level5-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level6");
+  const menuBtn = document.getElementById("go-to-menu-screen5");
   
   const scenarios = {
     easy: [
@@ -361,6 +362,13 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("level5-congrats-screen").classList.add("hidden");
       document.getElementById("level6-screen").classList.remove("hidden");
       nextLevelBtn.classList.add("hidden");      
+    });
+  }
+  
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      document.getElementById("level5-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 
