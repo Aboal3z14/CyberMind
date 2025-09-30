@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("level4-feedback");
   const cyberBuddy = document.getElementById("cyberbuddy");
   const nextLevelBtn = document.getElementById("go-to-level5");
-  
+  const menuBtn = document.getElementById("go-to-menu-screen4");
   // Social engineering scenarios by difficulty
   const scenarios = {
     easy: [
@@ -311,6 +311,12 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("level4-congrats-screen").classList.add("hidden");
       document.getElementById("go-to-level5").classList.add("hidden");
       document.getElementById("level5-screen").classList.remove("hidden");
+    });
+  }
+   if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      document.getElementById("level4-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 
