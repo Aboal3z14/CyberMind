@@ -57,12 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toLoginLink) toLoginLink.addEventListener("click", (e) => { e.preventDefault(); showLoginScreen(); });
 
   // Overlay close buttons
+document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".close-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const overlayId = btn.getAttribute("data-close");
-      if (overlayId) closeOverlay(overlayId);
+      if (overlayId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) overlay.style.display = "none";
+      }
     });
   });
+});
 
   // Overlay click outside to close
   document.querySelectorAll(".overlay").forEach(ov => {
@@ -633,4 +638,5 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
