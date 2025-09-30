@@ -1,6 +1,7 @@
 const cyberBuddy = document.getElementById("cyberbuddy");
 const validCountEl = document.getElementById("validCount");
 const nextLevelBtn = document.getElementById("go-to-level3");
+const menuBtn = document.getElementById("go-to-menu-screen2);
 let validPasswords = 0;
 
 // ------------------
@@ -91,6 +92,13 @@ document.getElementById("checkPasswordBtn").addEventListener("click", () => {
       document.getElementById("go-to-level3").classList.add("hidden");
       document.getElementById("level3-screen").classList.remove("hidden");
      
+    });
+  }
+
+  if (menuBtn) {
+    go-to-menu-screen2.addEventListener("click", () => {
+      document.getElementById("level2-congrats-screen").classList.add("hidden");
+      document.getElementById("menu-screen").classList.remove("hidden");
     });
   }
 });
