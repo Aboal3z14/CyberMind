@@ -442,13 +442,13 @@ document.addEventListener("DOMContentLoaded", () => {
       feedbackEl.textContent = '🎉 اكتشاف مثالي لمسار الهجوم! أنت محقق شبكات!';
       feedbackEl.className = 'feedback success';
       if (cyberBuddy) {
-        cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>برافو! كشفت الاختراق زي المحترفين! 🕵️‍♂️🌐`;
+        cyberBuddy.innerHTML = `🤖 سايبر بودي : برافو! كشفت الاختراق زي المحترفين! 🕵️‍♂️🌐`;
       }
     } else {
       feedbackEl.textContent = `❌ مش كل الاتصالات صح! تلميح: ${hint}`;
       feedbackEl.className = 'feedback error';
       if (cyberBuddy) {
-        cyberBuddy.innerHTML = `🤖 <strong>سايبر بودي</strong><br>لسه فيه اتصالات مخفية! ركّز أكتر يا محقق! 🔍`;
+        cyberBuddy.innerHTML = `🤖 سايبر بودي : لسه فيه اتصالات مخفية! ركّز أكتر يا محقق! 🔍`;
       }
     }
 
