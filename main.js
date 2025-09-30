@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startLevelBtn = document.getElementById("start-level-btn");
   const badgesBtn = document.getElementById("badges-btn");
   const settingsBtn = document.getElementById("settings-btn");
-  const badgesoverBtn = document.getElementById("close-btn");
-
+  
   // 🔹 Attach event listeners
   if (signupBtn) {
     signupBtn.addEventListener("click", (e) => { e.preventDefault(); handleSignup(); });
@@ -55,13 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (toSignupLink) toSignupLink.addEventListener("click", (e) => { e.preventDefault(); showSignupScreen(); });
   if (toLoginLink) toLoginLink.addEventListener("click", (e) => { e.preventDefault(); showLoginScreen(); });
-
-  // Overlay close buttons
-  if (badgesoverBtn) {
-    badgesoverBtn.addEventListener("click", () => {
-      closeOverlay("settingsOverlay");
-    });
-  }
 
   // Overlay click outside to close
   document.querySelectorAll(".overlay").forEach(ov => {
@@ -632,6 +624,7 @@ function applyTheme(theme) {
     document.body.style.backgroundColor = "#0b0b0d";
   }
 }
+
 
 
 
